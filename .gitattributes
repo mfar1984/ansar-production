@@ -1,0 +1,14 @@
+# ============================================================================
+# This repository is a DEPLOYMENT. Every file must arrive on the server byte for
+# byte identical to what the build produced.
+#
+# `* -text` disables end-of-line conversion entirely, in both directions. Without
+# it, git on Windows stores LF and rewrites to CRLF in the working tree, and any
+# file it misdetects as text — a `.node` addon, a `.dll`, a font, a WASM blob —
+# is silently altered. `node_modules` here contains an 18 MB `libvips-42.dll` and
+# several compiled binaries, and a corrupted one fails at require time on the
+# server with an error that says nothing about line endings.
+#
+# There is no reason to want conversion here. Nobody edits these files; they are
+# build output.
+* -text

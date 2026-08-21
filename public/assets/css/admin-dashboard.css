@@ -1,0 +1,329 @@
+/* Admin Dashboard Styles - EXACT from kf-next */
+
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 256px;
+    background-color: #ffffff;
+    color: #1f2937;
+    transition: all 0.3s;
+    z-index: 30;
+    border-right: 1px solid #e5e7eb;
+    margin-right: -1px;
+}
+
+/* The height of the page header, and therefore of the band at the top of the sidebar.
+   
+   48px topbar + 1px its border + 32px breadcrumb + 1px the header border = 82px. Declared ONCE here
+   and used by the sidebar band and by the scroll container below, so the horizontal rule under the
+   breadcrumb continues straight across into the sidebar instead of missing it by a pixel or two.
+   
+   Change `.topbar-container` or `.breadcrumb-container` and this must change with them.
+   `tests/sql/sidebar.test.js` reads all three numbers out of this file and refuses the mismatch, so
+   the alignment cannot break quietly. */
+:root {
+    --adm-header-h: 82px;
+}
+
+/* `.sidebar-header` is GONE, with the logo band it styled. The workspace switcher occupies that
+   82px now — see `src/components/admin/AdminModuleSwitcher.css`. The rule is deleted rather than
+   left behind: dead CSS reads as a claim that something still renders. */
+
+.sidebar-nav {
+    padding: 0;
+    overflow-y: auto;
+    max-height: calc(100vh - var(--adm-header-h));
+}
+
+/* No switcher above it — the ESS and client portals — so the nav owns the whole height. */
+.sidebar-nav:not(.has-switcher) {
+    max-height: 100vh;
+}
+
+/* The navigation inside `.sidebar-nav` is styled by
+   `src/components/admin/AdminSidebar.css`, ported from atline-backend. The rules
+   that used to sit here — `.sidebar-nav-item`, `.submenu-item`,
+   `.sidebar-separator` and friends — were removed with the markup that used them.
+   Only the shell above (position, width, header, scroll container) stays global,
+   because the layout depends on it. */
+
+/* Main Content */
+.main-content {
+    margin-left: 256px;
+    transition: all 0.3s;
+}
+
+/* ── Page surface and page card ──
+   Ported from atline-backend: `body { background: #f1f5f9 }` plus
+   `.admin-content { padding: 24px; background: #f1f5f9 }`, and a page card
+   rendered as `card border-0 shadow-sm` with `borderRadius: 12` and
+   `card-body { padding: 24 }`.
+
+   The surface colour is what makes the card read as a card. Without it the
+   white card sat on a white page and the radius and shadow were invisible.
+   `.admin-body` also contains the sidebar, but the sidebar is
+   `position: fixed` with its own white background, so it is unaffected.
+
+   Every view in the admin shell renders inside this card, so no existing
+   component ends up sitting directly on the grey surface. */
+.admin-body {
+    background-color: #f1f5f9;
+}
+
+.admin-page-card {
+    border-radius: 12px;
+}
+
+.admin-page-card > .card-body {
+    padding: 24px;
+}
+
+/* Header Styles */
+.header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    margin: 0;
+    padding: 0;
+}
+
+/* Top Bar */
+.topbar {
+    background-color: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+    margin: 0;
+    padding: 0;
+}
+
+.topbar-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    margin: 0;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 11px;
+    color: #4b5563;
+}
+
+.welcome-text {
+    font-weight: 400;
+    color: #374151;
+}
+
+.topbar-separator {
+    color: #9ca3af;
+}
+
+.current-date {
+    color: #4b5563;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+/* Icon Buttons */
+.topbar-notification-btn,
+.topbar-grid-btn,
+.topbar-help-btn {
+    position: relative;
+    color: #6b7280;
+    transition: color 0.2s;
+    padding: 0.25rem;
+    border-radius: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+}
+
+.topbar-notification-btn .material-symbols-outlined,
+.topbar-grid-btn .material-symbols-outlined,
+.topbar-help-btn .material-symbols-outlined {
+    font-size: 20px;
+    line-height: 1;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+}
+
+.topbar-notification-btn:hover,
+.topbar-grid-btn:hover,
+.topbar-help-btn:hover {
+    color: #1e40af;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    background-color: #ef4444;
+    color: #ffffff;
+    font-size: 10px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    line-height: 1;
+}
+
+/* User Button */
+.topbar-user-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 11px;
+    color: #374151;
+    transition: color 0.2s;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.topbar-user-btn:hover {
+    color: #1e40af;
+}
+
+.user-avatar {
+    width: 24px;
+    height: 24px;
+    background-color: #1e40af;
+    color: #ffffff;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+/* Breadcrumb Bar */
+.breadcrumb-bar {
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.breadcrumb-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    display: flex;
+    align-items: center;
+    height: 32px;
+    margin: 0;
+}
+
+.breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 12px;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.breadcrumb-item {
+    color: #1e40af;
+    transition: color 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    font-size: 12px;
+}
+
+.breadcrumb-item:hover {
+    color: #1d4ed8;
+}
+
+.breadcrumb-item .material-symbols-outlined {
+    font-size: 16px;
+    line-height: 1;
+    vertical-align: middle;
+    margin-right: 4px;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+}
+
+.breadcrumb-separator {
+    color: #9ca3af;
+    margin: 0 8px;
+    font-size: 12px;
+}
+
+.breadcrumb-current {
+    color: #374151;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+/* Dropdown - Override Bootstrap */
+.topbar-dropdown,
+.dropdown-menu.dropdown-menu-end {
+    position: absolute;
+    right: 0;
+    margin-top: 0.5rem;
+    width: 12rem;
+    background-color: #ffffff;
+    border-radius: 0.375rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e7eb;
+    padding: 0.25rem 0;
+    z-index: 50;
+}
+
+.topbar-dropdown-item,
+.dropdown-item {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.5rem 0.75rem !important;
+    font-size: 11px !important;
+    color: #1f2937 !important;
+    transition: background-color 0.2s !important;
+    text-decoration: none !important;
+    gap: 0.75rem !important;
+}
+
+.topbar-dropdown-item:hover,
+.dropdown-item:hover {
+    background-color: #f9fafb !important;
+}
+
+/* Body Font */
+body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    background-color: #f9fafb;
+}

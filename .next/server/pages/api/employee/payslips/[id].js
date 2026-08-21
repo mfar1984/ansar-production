@@ -1,0 +1,26 @@
+"use strict";(()=>{var a={};a.id=1626,a.ids=[1626],a.modules={3498:a=>{a.exports=require("mysql2/promise")},69414:(a,b,c)=>{c.r(b),c.d(b,{config:()=>o,default:()=>n,handler:()=>q});var d={};c.r(d),c.d(d,{default:()=>k});var e=c(29046),f=c(8667),g=c(33480),h=c(86435),i=c(88251);async function j(a){if(!a)return null;let[b]=await i.Ay.query("SELECT user_type, employee_id, expires_at FROM admin_sessions WHERE hash = ? LIMIT 1",[a]);if(!b||0===b.length)return null;let c=b[0];return new Date(c.expires_at)<new Date||"employee"!==c.user_type?null:c}async function k(a,b){if("GET"!==a.method)return b.setHeader("Allow","GET"),b.status(405).json({error:"Method not allowed"});b.setHeader("Cache-Control","no-store");let{id:c,hash:d}=a.query,e=await j(String(d||""));if(!e)return b.status(401).json({error:"Unauthorized"});try{let[a]=await i.Ay.query(`SELECT 
+         pr.*,
+         e.employee_id AS employee_number,
+         e.full_name AS employee_name,
+         e.ic_number,
+         e.position,
+         e.epf_number,
+         e.socso_number,
+         e.tax_number,
+         e.bank_name,
+         e.bank_account_number,
+         d.name AS department_name,
+         pp.period_name,
+         pp.period_month,
+         pp.period_year,
+         DATE_FORMAT(pp.start_date, '%Y-%m-%d')   AS start_date,
+         DATE_FORMAT(pp.end_date, '%Y-%m-%d')     AS end_date,
+         DATE_FORMAT(pp.payment_date, '%Y-%m-%d') AS payment_date
+       FROM payroll_records pr
+       INNER JOIN employees e ON pr.employee_id = e.id
+       LEFT JOIN departments d ON e.department_id = d.id
+       INNER JOIN payroll_periods pp ON pr.payroll_period_id = pp.id
+       WHERE pr.id = ?
+         AND pr.employee_id = ?
+         AND pr.status IN ('approved', 'paid')
+       LIMIT 1`,[Number(c),Number(e.employee_id)]);if(!a||0===a.length)return b.status(404).json({error:"Payslip not found"});return b.status(200).json({record:a[0]})}catch(a){return console.error("Employee payslip record error:",a),b.status(500).json({error:"Failed to fetch payslip"})}}var l=c(58112),m=c(18766);let n=(0,h.M)(d,"default"),o=(0,h.M)(d,"config"),p=new g.PagesAPIRouteModule({definition:{kind:f.A.PAGES_API,page:"/api/employee/payslips/[id]",pathname:"/api/employee/payslips/[id]",bundlePath:"",filename:""},userland:d,distDir:".next",relativeProjectDir:""});async function q(a,b,c){let d=await p.prepare(a,b,{srcPage:"/api/employee/payslips/[id]"});if(!d){b.statusCode=400,b.end("Bad Request"),null==c.waitUntil||c.waitUntil.call(c,Promise.resolve());return}let{query:f,params:g,prerenderManifest:h,routerServerContext:i}=d;try{let c=a.method||"GET",d=(0,l.getTracer)(),e=d.getActiveScopeSpan(),j=p.instrumentationOnRequestError.bind(p),k=async e=>p.render(a,b,{query:{...f,...g},params:g,allowedRevalidateHeaderKeys:[],multiZoneDraftMode:!1,trustHostHeader:!1,previewProps:h.preview,propagateError:!1,dev:p.isDev,page:"/api/employee/payslips/[id]",internalRevalidate:null==i?void 0:i.revalidate,onError:(...b)=>j(a,...b)}).finally(()=>{if(!e)return;e.setAttributes({"http.status_code":b.statusCode,"next.rsc":!1});let f=d.getRootSpanAttributes();if(!f)return;if(f.get("next.span_type")!==m.BaseServerSpan.handleRequest)return void console.warn(`Unexpected root span type '${f.get("next.span_type")}'. Please report this Next.js issue https://github.com/vercel/next.js`);let g=f.get("next.route");if(g){let a=`${c} ${g}`;e.setAttributes({"next.route":g,"http.route":g,"next.span_name":a}),e.updateName(a)}else e.updateName(`${c} ${a.url}`)});e?await k(e):await d.withPropagatedContext(a.headers,()=>d.trace(m.BaseServerSpan.handleRequest,{spanName:`${c} ${a.url}`,kind:l.SpanKind.SERVER,attributes:{"http.method":c,"http.target":a.url}},k))}catch(a){if(p.isDev)throw a;(0,e.sendError)(b,500,"Internal Server Error")}finally{null==c.waitUntil||c.waitUntil.call(c,Promise.resolve())}}},75600:a=>{a.exports=require("next/dist/compiled/next-server/pages-api.runtime.prod.js")},88251:(a,b,c)=>{c.d(b,{Ay:()=>i,G$:()=>h,P:()=>f,rN:()=>g});var d=c(3498);let e=c.n(d)().createPool({host:process.env.DB_HOST||"localhost",user:process.env.DB_USER||"root",password:process.env.DB_PASSWORD||"root",database:process.env.DB_NAME||"ansar",waitForConnections:!0,connectionLimit:10,queueLimit:0});async function f(a,b){let[c]=b&&b.length>0?await e.query(a,b):await e.query(a);return c}async function g(){try{return(await e.getConnection()).release(),!0}catch(a){return console.error("Database connection test failed:",a),!1}}function h(){return{totalConnections:10,activeConnections:0,idleConnections:0,queuedRequests:0}}let i=e}};var b=require("../../../../webpack-api-runtime.js");b.C(a);var c=b.X(0,[7169],()=>b(b.s=69414));module.exports=c})();

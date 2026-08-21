@@ -1,0 +1,9 @@
+{
+  "name": "ansartechnologies",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "_note": "Dependencies are already installed in ./node_modules by the Next.js standalone build. Do NOT run npm install: it would reinstall hundreds of packages over a folder that is already correct, and can remove what the build traced. Rebuild and repackage on the development machine instead."
+}

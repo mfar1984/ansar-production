@@ -1,0 +1,272 @@
+/* ============================================================================
+   MOBILE AND TABLET — THE ADMIN SHELL ONLY.
+   
+   Sidebar drawer, topbar, breadcrumb, page surface. Nothing else. Loaded by the admin shell page
+   with a `<link>`, immediately after `admin-dashboard.css`.
+   
+   ── WHAT THIS FILE IS NOT ──
+   
+   It is not the mobile stylesheet for the product. It used to be, and it was on its way to holding
+   every mobile rule in the admin — filters, tables, modals, tabs, metrics — which is the file
+   nobody can read and everybody edits. Those rules now live beside the desktop sheet that declares
+   the classes they override:
+   
+     src/components/admin/settings/SettingsForm.mobile.css      filters, tables, modals
+     src/components/admin/settings/ConfigLayout.mobile.css      the tab ribbon
+     src/components/admin/operations/OperationsShared.mobile.css  metric strip, toolbar
+     src/components/admin/application/ApplicationReview.mobile.css  counters, service chips
+   
+   THE RULE: a mobile rule belongs in the `.mobile.css` beside the `.css` that declares the class.
+   This file is for the shell, whose classes come from `admin-dashboard.css` and have no component
+   of their own.
+   
+   ── WHAT WAS WRONG ──
+   
+   `admin-dashboard.css` declares `.sidebar { position: fixed; width: 256px }` and
+   `.main-content { margin-left: 256px }` with no media query anywhere. On a 470px screen the
+   sidebar took 55% of the width and the page was left about 150px after `main.p-4` and
+   `.card-body` padding — which is why "Monthly Trends" broke into "Monthl / y Trends". The pages
+   were not at fault; they were handed 150px.
+   
+   ── THE TWO RULES THAT MATTER ──
+   
+   Below 1025px the sidebar slides out of the viewport and `.main-content` loses its 256px margin.
+   Those two changes return the full width to EVERY screen in the system, which is why most pages
+   need nothing of their own.
+   
+   Every layout rule here sits inside a `max-width` query, so nothing is evaluated at 1025px and
+   above and the approved desktop shell cannot be reached from this file. The only rules outside a
+   query are the two elements mobile ADDS — the drawer toggle and the scrim — and both are
+   `display: none` by default. They must be declared unconditionally: a `min-width` query is the
+   one thing that would fire on desktop, and those are forbidden.
+   `tests/sql/responsive.test.js` enforces all of it.
+   ============================================================================ */
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   THE TWO ADDED ELEMENTS, HIDDEN BY DEFAULT
+   
+   Declared first so the media queries below can turn them on. Otherwise last-wins would hide them
+   again.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* The drawer toggle in the topbar. The only markup this feature adds to the desktop path, and it
+   renders nothing there. */
+.adm-burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0.25rem;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.adm-burger:hover {
+  color: #1e40af;
+}
+
+/* A Bootstrap Icon, served from this application's own `/assets/vendor/bootstrap-icons/`. Not a
+   Material Symbol: those are ligature icons loaded from Google, and until the font arrives the
+   fallback renders the word — `menu` in this case. The toggle is new markup, so it does not have to
+   inherit that problem. */
+.adm-burger .bi {
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* The scrim behind an open drawer. A button rather than a div: tapping outside a drawer to close it
+   is an action, so it should be reachable from the keyboard and announced.
+   
+   Hidden here as well as unrendered, so an open state left behind by a resize to desktop cannot put
+   an invisible layer over the page. */
+.adm-scrim {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1040;
+  background: rgba(15, 23, 42, .45);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  appearance: none;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   TABLET AND PHONE — up to 1024px
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+
+  /* ── The sidebar becomes a drawer ──
+     
+     `transform`, not `left` or `display`. A transform is composited, so it slides at 60fps on a
+     phone, and the nav inside keeps both its scroll position and the open/closed state of every
+     expanded group — `display: none` would drop them on every close.
+     
+     The width is NOT changed. It is the same 256px rail, just off-canvas; a second width would be a
+     second number for the navigation inside it to fit. */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform .22s ease;
+    /* Above `.header`, which is `position: sticky; z-index: 1000`. The desktop value of 30 is
+       correct there, where the sidebar sits BESIDE the header rather than over it. Still below
+       `.atl-modal-overlay` (9999), so a dialog covers the drawer. */
+    z-index: 1050;
+    box-shadow: none;
+  }
+
+  .sidebar.is-open {
+    transform: translateX(0);
+    box-shadow: 0 0 40px rgba(0, 0, 0, .28);
+  }
+
+  .adm-scrim {
+    display: block;
+  }
+
+  /* The single line that gives every page its width back. */
+  .main-content {
+    margin-left: 0;
+  }
+
+  .adm-burger {
+    display: inline-flex;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   PHONE — up to 640px
+   
+   640 is not a new number: `SettingsForm.css`, `PartnerApplicationModal.css` and
+   `AssetInstallWizard.css` already break there.
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+
+  /* ── Page padding, not page type ──
+     
+     96px of the width was going to padding: 24px from `main.p-4` and 24px from `.card-body`, on both
+     sides. On a 375px phone that is a quarter of the screen. Type sizes are NOT touched — the token
+     table applies at every width, and shrinking 13px to 11px on a phone is how one design becomes
+     two.
+     
+     `main.p-4` carries a class AND an element in the selector, so it outranks Bootstrap's `.p-4`
+     without `!important`. */
+  main.p-4 {
+    padding: 12px;
+  }
+
+  .admin-page-card > .card-body {
+    padding: 16px;
+  }
+
+  /* A 12px radius earns its keep on a card inset from a grey surface. At full width with 12px of
+     margin it reads as a rounding error, so it comes down rather than off — off would make the card
+     indistinguishable from the page. */
+  .admin-page-card {
+    border-radius: 10px;
+  }
+
+  /* ── Topbar ──
+     
+     48px holding a welcome line, a separator, the date, the notification bell, an apps button, a
+     help button and the user button. That does not fit 375px, and the row is `display: flex` with no
+     wrap, so it overflowed instead of reflowing.
+     
+     What goes: the welcome text, the date, and the two buttons that lead nowhere yet.
+     What stays: the drawer toggle, the bell, and who you are signed in as. */
+  .topbar-container {
+    padding-left: 12px;
+    padding-right: 12px;
+    gap: 8px;
+  }
+
+  .welcome-text,
+  .topbar-separator,
+  .current-date,
+  .topbar-grid-btn,
+  .topbar-help-btn {
+    display: none;
+  }
+
+  /* The avatar carries the identity; the name spelled out beside it is the first thing to go. */
+  .topbar-user-btn > span {
+    display: none;
+  }
+
+  .topbar-user-btn {
+    gap: 0;
+    padding: 0.25rem;
+  }
+
+  .topbar-right {
+    gap: 0.25rem;
+  }
+
+  /* ── Breadcrumb ──
+     
+     A 32px bar, `display: flex`, no wrap, holding the trail AND the weather reading. */
+  .breadcrumb-container {
+    padding-left: 12px;
+    padding-right: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .breadcrumb-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .breadcrumb-nav {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  .breadcrumb-separator {
+    margin: 0 4px;
+  }
+
+  /* ── The trail becomes just the page name ──
+     
+     `Home > Application > Procurement` costs about 260px to say what `Procurement` says.
+     
+     No markup change and no branch in the component: `getBreadcrumbs` always pushes the current
+     page LAST, with `active: true`, so the last span is always the page name. Hiding the Home
+     button, every earlier span, and the separator on the survivor leaves exactly that.
+     
+     Nothing becomes unreachable — every level above the current page is in the drawer, one tap
+     away. */
+  .breadcrumb-nav > *:not(:last-child) {
+    display: none;
+  }
+
+  .breadcrumb-nav > *:last-child .breadcrumb-separator {
+    display: none;
+  }
+
+  /* ── The weather reading ──
+     
+     It STAYS, and the room for it comes from the shortened trail above. It was hidden here in the
+     first pass, which was the wrong call: it is the one thing on this bar somebody actually reads on
+     a phone. `WeatherWidget` opens it on a tap, because hover cannot be the only way in on a touch
+     screen.
+     
+     The description text goes; the icon and the temperature carry it, and the full reading is one
+     tap away. */
+  .weather-widget__desc {
+    display: none;
+  }
+
+  /* The panel is 320px wide and anchored to the widget's right edge, which fits a 375px screen with
+     55px to spare and nothing to spare on a 320px one. Capped to the viewport with a 12px gutter
+     either side, and short enough to leave the bar it belongs to visible above it. */
+  .weather-widget__popup {
+    width: min(320px, calc(100vw - 24px));
+    max-height: calc(100vh - 120px);
+  }
+}

@@ -1,0 +1,71 @@
+# ============================================================================
+# production-web — what the production server pulls.
+#
+# This repository is the DEPLOYMENT, not the source. It deliberately carries
+# things a normal repository would never commit, and deliberately withholds two
+# things a normal deployment folder does contain. Both are explained here so the
+# next person does not "tidy" either one.
+# ============================================================================
+
+
+# ── node_modules IS COMMITTED. Do not add it here. ──
+#
+# `package.json` in this folder says never to run `npm install` on the server,
+# and that is the whole design: the Next standalone build already traced exactly
+# the packages this application needs, plus socket.io forced in by
+# `outputFileTracingIncludes`. Running an install over it would reinstall
+# hundreds of packages and can remove what the build traced.
+#
+# So the ~67 MB of `node_modules` is part of the deployment. That is why the
+# server needs no build step and no network access to boot.
+
+
+# ── SECRETS: never in git, and this repository is PUBLIC ──
+#
+# `.env.production` holds DB_PASSWORD and a 64-character ENCRYPTION_KEY. Those
+# are live production credentials. They are created ONCE on the server, by hand,
+# and never travel through git. `.env.production.example` beside this file lists
+# the keys that must exist, with no values.
+#
+# `git pull` does not touch an ignored file, so the server's copy survives every
+# deployment.
+.env
+.env.*
+!.env.production.example
+
+
+# ── RUNTIME DATA: written by the application, owned by the server ──
+#
+# `public/uploads/` and `public/downloads/` are written at runtime by the upload
+# endpoints — claims receipts, payroll payment proofs, certificates, applicant
+# documents, helpdesk attachments, news images, branding. They are personal and
+# business records, and on a public repository they would be world-readable.
+#
+# They are also not build output: the development machine's copies are a
+# developer's own test data, and production accumulates its own. Committing them
+# would push one machine's files at the other.
+#
+# The DIRECTORIES are kept, because only two of the upload endpoints call
+# `mkdirSync`. The rest write straight into an existing folder and fail if it is
+# missing, so each one keeps a `.gitkeep`.
+public/uploads/*
+!public/uploads/*/
+public/uploads/*/*
+!public/uploads/*/.gitkeep
+
+public/downloads/*
+!public/downloads/.gitkeep
+
+
+# ── Build cache: 4.7 GB, and never needed to run ──
+#
+# The assembly step excludes it with `robocopy /XD cache`, so it should never
+# appear here. This is the second line of defence.
+.next/cache/
+
+
+# ── Local noise ──
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
