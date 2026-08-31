@@ -1,4 +1,16 @@
-"use strict";(()=>{var a={};a.id=3559,a.ids=[3559],a.modules={3498:a=>{a.exports=require("mysql2/promise")},3557:(a,b,c)=>{c.d(b,{$3:()=>g,J9:()=>j,O4:()=>l,OC:()=>f,OD:()=>h,QU:()=>m,Sj:()=>k,ah:()=>n,oS:()=>i});var d=c(88251),e=c(63415);async function f(a,b){let c=await (0,e.iT)(a);return c||(b.status(401).json({success:!1,error:"Your session is invalid or has expired. Please sign in again."}),null)}function g(a,b,c){return(0,e.$3)(a,b,c)}function h(a,b,c,d){return!!g(a,c,d)||(b.status(403).json({success:!1,error:`You do not have permission for this: ${c}_${d}`}),!1)}function i(a,b){let c=[],d=[];for(let[e,f]of Object.entries(b))e in a&&(c.push(`\`${e}\` = ?`),d.push(function(a,b){if(void 0===b)return null;if("bool"===a)return+(!0===b||1===b||"1"===b||"true"===b);if("number"===a){if(null===b||""===b)return null;let a=Number(b);return Number.isFinite(a)?a:null}if("json"===a){if(null===b||""===b)return null;if("string"==typeof b)return b;try{return JSON.stringify(b)}catch{return null}}if(null===b)return null;let c=String(b);return""===c?null:c}(f,a[e])));return 0===c.length?null:{clause:c.join(", "),values:d}}function j(a){let b=a.body;if(!b)return{};if("string"==typeof b)try{return JSON.parse(b)}catch{return{}}return"object"==typeof b?b:{}}async function k(){let a=await (0,d.P)("SELECT * FROM system_settings WHERE id = 1");return a.length>0?a[0]:(await (0,d.P)("INSERT INTO system_settings (id) VALUES (1)"),(await (0,d.P)("SELECT * FROM system_settings WHERE id = 1"))[0]||{})}async function l(){let a=await (0,d.P)("SELECT * FROM integrations WHERE id = 1");return a.length>0?a[0]:(await (0,d.P)("INSERT INTO integrations (id) VALUES (1)"),(await (0,d.P)("SELECT * FROM integrations WHERE id = 1"))[0]||{})}function m(a,b){let c={...a};for(let a of b){let b=c[a];c[`${a}_set`]="string"==typeof b&&b.length>0,c[a]=""}return c}function n(a,b){let c={...a};for(let a of b)a in c&&(""===c[a]||null===c[a]||void 0===c[a])&&delete c[a];return c}},45487:(a,b,c)=>{c.r(b),c.d(b,{config:()=>s,default:()=>r,handler:()=>u});var d={};c.r(d),c.d(d,{default:()=>o});var e=c(29046),f=c(8667),g=c(33480),h=c(86435),i=c(88251),j=c(3557),k=c(96543),l=c(95514);let m={internal:"assets_internal",external:"assets_external"},n="Management figures. Depreciation is straight-line over the useful life recorded on each asset and is not the audited fixed-asset register.";async function o(a,b){let c=await (0,j.OC)(a,b);if(!c)return;if(b.setHeader("Cache-Control","no-store"),"GET"!==a.method)return b.setHeader("Allow","GET"),b.status(405).json({success:!1,error:"Method not allowed"});let d=String(a.query.holder||"").trim();if(!l.F7.includes(d))return b.status(400).json({success:!1,error:"A register must be named: holder=internal or holder=external."});let e=m[d];if(!(0,j.OD)(c,b,e,"view")||"1"===String(a.query.export||"")&&!(0,j.OD)(c,b,e,"export"))return;let f=String(a.query.report||"").trim(),g=(0,k._$)(a.query.from)||"2000-01-01",h=(0,k._$)(a.query.to)||"2100-01-01";try{if("internal"===d&&"holdings"===f){let a=await (0,i.P)(`SELECT e.id AS employee_id, e.employee_id AS employee_code, e.full_name,
+"use strict";(()=>{var a={};a.id=3559,a.ids=[3559],a.modules={3498:a=>{a.exports=require("mysql2/promise")},3557:(a,b,c)=>{c.d(b,{$3:()=>g,J9:()=>j,O4:()=>l,OC:()=>f,OD:()=>h,QU:()=>m,Sj:()=>k,ah:()=>n,oS:()=>i});var d=c(88251),e=c(63415);async function f(a,b){let c=await (0,e.iT)(a);return c||(b.status(401).json({success:!1,error:"Your session is invalid or has expired. Please sign in again."}),null)}function g(a,b,c){return(0,e.$3)(a,b,c)}function h(a,b,c,d){return!!g(a,c,d)||(b.status(403).json({success:!1,error:`You do not have permission for this: ${c}_${d}`}),!1)}function i(a,b){let c=[],d=[];for(let[e,f]of Object.entries(b))e in a&&(c.push(`\`${e}\` = ?`),d.push(function(a,b){if(void 0===b)return null;if("bool"===a)return+(!0===b||1===b||"1"===b||"true"===b);if("number"===a){if(null===b||""===b)return null;let a=Number(b);return Number.isFinite(a)?a:null}if("json"===a){if(null===b||""===b)return null;if("string"==typeof b)return b;try{return JSON.stringify(b)}catch{return null}}if(null===b)return null;let c=String(b);return""===c?null:c}(f,a[e])));return 0===c.length?null:{clause:c.join(", "),values:d}}function j(a){let b=a.body;if(!b)return{};if("string"==typeof b)try{return JSON.parse(b)}catch{return{}}return"object"==typeof b?b:{}}async function k(){let a=await (0,d.P)("SELECT * FROM system_settings WHERE id = 1");return a.length>0?a[0]:(await (0,d.P)("INSERT INTO system_settings (id) VALUES (1)"),(await (0,d.P)("SELECT * FROM system_settings WHERE id = 1"))[0]||{})}async function l(){let a=await (0,d.P)("SELECT * FROM integrations WHERE id = 1");return a.length>0?a[0]:(await (0,d.P)("INSERT INTO integrations (id) VALUES (1)"),(await (0,d.P)("SELECT * FROM integrations WHERE id = 1"))[0]||{})}function m(a,b){let c={...a};for(let a of b){let b=c[a];c[`${a}_set`]="string"==typeof b&&b.length>0,c[a]=""}return c}function n(a,b){let c={...a};for(let a of b)a in c&&(""===c[a]||null===c[a]||void 0===c[a])&&delete c[a];return c}},21674:(a,b,c)=>{c.d(b,{k:()=>e});let d=`
+  SELECT o.asset_id, o.ends_on
+    FROM asset_obligations o
+  UNION ALL
+  SELECT ai.id AS asset_id,
+         DATE_ADD(ti.handover_date, INTERVAL ti.dlp_months MONTH) AS ends_on
+    FROM assets ai
+    JOIN tenders ti ON ti.id = ai.tender_id
+   WHERE ti.handover_date IS NOT NULL
+     AND ti.dlp_months IS NOT NULL
+     AND NOT EXISTS (SELECT 1 FROM asset_obligations od
+                      WHERE od.asset_id = ai.id AND od.kind = 'dlp')`;function e(a,b){return`(SELECT MAX(${b}.ends_on) FROM (${d}) ${b}
+            WHERE ${b}.asset_id = ${a}.id)`}},45487:(a,b,c)=>{c.r(b),c.d(b,{config:()=>t,default:()=>s,handler:()=>v});var d={};c.r(d),c.d(d,{default:()=>p});var e=c(29046),f=c(8667),g=c(33480),h=c(86435),i=c(88251),j=c(3557),k=c(96543),l=c(21674),m=c(95514);let n={internal:"assets_internal",external:"assets_external"},o="Management figures. Depreciation is straight-line over the useful life recorded on each asset and is not the audited fixed-asset register.";async function p(a,b){let c=await (0,j.OC)(a,b);if(!c)return;if(b.setHeader("Cache-Control","no-store"),"GET"!==a.method)return b.setHeader("Allow","GET"),b.status(405).json({success:!1,error:"Method not allowed"});let d=String(a.query.holder||"").trim();if(!m.F7.includes(d))return b.status(400).json({success:!1,error:"A register must be named: holder=internal or holder=external."});let e=n[d];if(!(0,j.OD)(c,b,e,"view")||"1"===String(a.query.export||"")&&!(0,j.OD)(c,b,e,"export"))return;let f=String(a.query.report||"").trim(),g=(0,k._$)(a.query.from)||"2000-01-01",h=(0,k._$)(a.query.to)||"2100-01-01";try{if("internal"===d&&"holdings"===f){let a=await (0,i.P)(`SELECT e.id AS employee_id, e.employee_id AS employee_code, e.full_name,
                 d.name AS department_name,
                 COUNT(a.id)                                    AS assigned_count,
                 COALESCE(SUM(a.purchase_cost), 0)              AS assigned_cost,
@@ -33,7 +45,7 @@
           WHERE a.holder = ?
             AND a.ownership = 'ansar'
             AND a.status NOT IN ('disposed', 'lost')
-          ORDER BY a.purchase_date ASC, a.asset_no ASC`,[d]);return b.status(200).json({success:!0,report:f,data:a,note:"external"===d?`${n} Client-owned equipment is excluded: it is not ANSAR property, so depreciating it would report a book value for something ANSAR does not own.`:n})}if("service"===f){if("internal"===d){let a=await (0,i.P)(`SELECT m.id, m.asset_id, a.asset_no, a.name AS asset_name, a.category,
+          ORDER BY a.purchase_date ASC, a.asset_no ASC`,[d]);return b.status(200).json({success:!0,report:f,data:a,note:"external"===d?`${o} Client-owned equipment is excluded: it is not ANSAR property, so depreciating it would report a book value for something ANSAR does not own.`:o})}if("service"===f){if("internal"===d){let a=await (0,i.P)(`SELECT m.id, m.asset_id, a.asset_no, a.name AS asset_name, a.category,
                   m.kind, m.performed_by, v.name AS vendor_name, m.cost,
                   DATE_FORMAT(m.service_date, '%Y-%m-%d') AS service_date,
                   m.summary
@@ -49,34 +61,15 @@
                 m.kind, m.performed_by, v.name AS vendor_name, m.cost,
                 DATE_FORMAT(m.service_date, '%Y-%m-%d') AS service_date,
                 m.summary,
-                DATE_FORMAT((
-                  SELECT MAX(x.ends_on) FROM (
-                    SELECT o.ends_on FROM asset_obligations o WHERE o.asset_id = a.id
-                    UNION ALL
-                    SELECT DATE_ADD(t2.handover_date, INTERVAL t2.dlp_months MONTH)
-                      FROM tenders t2
-                     WHERE t2.id = a.tender_id
-                       AND t2.handover_date IS NOT NULL AND t2.dlp_months IS NOT NULL
-                       AND NOT EXISTS (
-                         SELECT 1 FROM asset_obligations o2
-                          WHERE o2.asset_id = a.id AND o2.kind = 'dlp')
-                  ) x
-                ), '%Y-%m-%d') AS cover_until,
+                DATE_FORMAT(${(0,l.k)("a","cu")}, '%Y-%m-%d') AS cover_until,
                 -- 1 when cover was still running on the day of the visit. This is the split that
                 -- decides whether a support contract is priced correctly.
-                CASE WHEN (
-                  SELECT MAX(x.ends_on) FROM (
-                    SELECT o.ends_on FROM asset_obligations o WHERE o.asset_id = a.id
-                    UNION ALL
-                    SELECT DATE_ADD(t2.handover_date, INTERVAL t2.dlp_months MONTH)
-                      FROM tenders t2
-                     WHERE t2.id = a.tender_id
-                       AND t2.handover_date IS NOT NULL AND t2.dlp_months IS NOT NULL
-                       AND NOT EXISTS (
-                         SELECT 1 FROM asset_obligations o2
-                          WHERE o2.asset_id = a.id AND o2.kind = 'dlp')
-                  ) x
-                ) >= m.service_date THEN 1 ELSE 0 END AS was_covered
+                --
+                -- NOT wrapped in DATE_FORMAT, unlike the column above: this one is COMPARED
+                -- against m.service_date as a date and never leaves SQL. A second tag, because
+                -- two derived tables named the same thing in one SELECT is a duplicate alias.
+                CASE WHEN ${(0,l.k)("a","cv")} >= m.service_date
+                     THEN 1 ELSE 0 END AS was_covered
            FROM asset_maintenance m
            JOIN assets a           ON a.id = m.asset_id
            LEFT JOIN vendors v      ON v.id = m.vendor_id
@@ -98,19 +91,7 @@
                 COALESCE(st.name, a.site_name) AS site,
                 t.ref_no AS tender_ref,
                 DATE_FORMAT(a.installed_on, '%Y-%m-%d') AS installed_on,
-                DATE_FORMAT((
-                  SELECT MAX(x.ends_on) FROM (
-                    SELECT o.ends_on FROM asset_obligations o WHERE o.asset_id = a.id
-                    UNION ALL
-                    SELECT DATE_ADD(t2.handover_date, INTERVAL t2.dlp_months MONTH)
-                      FROM tenders t2
-                     WHERE t2.id = a.tender_id
-                       AND t2.handover_date IS NOT NULL AND t2.dlp_months IS NOT NULL
-                       AND NOT EXISTS (
-                         SELECT 1 FROM asset_obligations o2
-                          WHERE o2.asset_id = a.id AND o2.kind = 'dlp')
-                  ) x
-                ), '%Y-%m-%d') AS cover_until,
+                DATE_FORMAT(${(0,l.k)("a","cu")}, '%Y-%m-%d') AS cover_until,
                 (SELECT COUNT(*) FROM helpdesk_tickets tk WHERE tk.asset_id = a.id) AS ticket_count
            FROM assets a
            LEFT JOIN client_users c ON c.id = a.client_id
@@ -136,7 +117,7 @@
           WHERE a.holder = 'external'
             AND a.status NOT IN ('disposed', 'lost')
           GROUP BY t.id, t.ref_no, t.title, p.id, p.title, c.company_name
-          ORDER BY asset_count DESC, t.ref_no ASC`);return b.status(200).json({success:!0,report:f,data:a,note:"Cost covers ANSAR-owned equipment only. Client-owned units are counted but carry no value on ANSAR's books."})}return b.status(400).json({success:!1,error:"internal"===d?"Unknown report. Use report=holdings, depreciation, service or movements.":"Unknown report. Use report=installed, deployment, depreciation or service."})}catch(a){return console.error("Asset reports error:",a),b.status(500).json({success:!1,error:a instanceof Error?a.message:"Failed to build the report"})}}var p=c(58112),q=c(18766);let r=(0,h.M)(d,"default"),s=(0,h.M)(d,"config"),t=new g.PagesAPIRouteModule({definition:{kind:f.A.PAGES_API,page:"/api/admin/operations/assets/reports",pathname:"/api/admin/operations/assets/reports",bundlePath:"",filename:""},userland:d,distDir:".next",relativeProjectDir:""});async function u(a,b,c){let d=await t.prepare(a,b,{srcPage:"/api/admin/operations/assets/reports"});if(!d){b.statusCode=400,b.end("Bad Request"),null==c.waitUntil||c.waitUntil.call(c,Promise.resolve());return}let{query:f,params:g,prerenderManifest:h,routerServerContext:i}=d;try{let c=a.method||"GET",d=(0,p.getTracer)(),e=d.getActiveScopeSpan(),j=t.instrumentationOnRequestError.bind(t),k=async e=>t.render(a,b,{query:{...f,...g},params:g,allowedRevalidateHeaderKeys:[],multiZoneDraftMode:!1,trustHostHeader:!1,previewProps:h.preview,propagateError:!1,dev:t.isDev,page:"/api/admin/operations/assets/reports",internalRevalidate:null==i?void 0:i.revalidate,onError:(...b)=>j(a,...b)}).finally(()=>{if(!e)return;e.setAttributes({"http.status_code":b.statusCode,"next.rsc":!1});let f=d.getRootSpanAttributes();if(!f)return;if(f.get("next.span_type")!==q.BaseServerSpan.handleRequest)return void console.warn(`Unexpected root span type '${f.get("next.span_type")}'. Please report this Next.js issue https://github.com/vercel/next.js`);let g=f.get("next.route");if(g){let a=`${c} ${g}`;e.setAttributes({"next.route":g,"http.route":g,"next.span_name":a}),e.updateName(a)}else e.updateName(`${c} ${a.url}`)});e?await k(e):await d.withPropagatedContext(a.headers,()=>d.trace(q.BaseServerSpan.handleRequest,{spanName:`${c} ${a.url}`,kind:p.SpanKind.SERVER,attributes:{"http.method":c,"http.target":a.url}},k))}catch(a){if(t.isDev)throw a;(0,e.sendError)(b,500,"Internal Server Error")}finally{null==c.waitUntil||c.waitUntil.call(c,Promise.resolve())}}},63415:(a,b,c)=>{c.d(b,{$3:()=>g,PS:()=>h,T1:()=>e,iT:()=>f});var d=c(88251);function e(a){let b=a.headers["x-forwarded-for"];return"string"==typeof b&&b?b.split(",")[0].trim():Array.isArray(b)&&b.length?b[0].split(",")[0].trim():a.socket?.remoteAddress||"unknown"}async function f(a){let b=function(a){let b=a.query.hash;if("string"==typeof b&&b)return b;let c=a.headers.authorization;if(c&&c.startsWith("Bearer ")){let a=c.slice(7).trim();if(a)return a}return null}(a);if(!b)return null;let c=await (0,d.P)("SELECT username, expires_at FROM admin_sessions WHERE hash = ? LIMIT 1",[b]);if(!c||0===c.length||new Date(c[0].expires_at)<=new Date)return null;let f=c[0].username,g=await (0,d.P)("SELECT id, user_type, status FROM admins WHERE username = ? LIMIT 1",[f]);if(!g||0===g.length||"active"!==g[0].status)return null;let h=g[0].id,i=await (0,d.P)(`SELECT DISTINCT p.module, p.action, r.name AS role_name
+          ORDER BY asset_count DESC, t.ref_no ASC`);return b.status(200).json({success:!0,report:f,data:a,note:"Cost covers ANSAR-owned equipment only. Client-owned units are counted but carry no value on ANSAR's books."})}return b.status(400).json({success:!1,error:"internal"===d?"Unknown report. Use report=holdings, depreciation, service or movements.":"Unknown report. Use report=installed, deployment, depreciation or service."})}catch(a){return console.error("Asset reports error:",a),b.status(500).json({success:!1,error:a instanceof Error?a.message:"Failed to build the report"})}}var q=c(58112),r=c(18766);let s=(0,h.M)(d,"default"),t=(0,h.M)(d,"config"),u=new g.PagesAPIRouteModule({definition:{kind:f.A.PAGES_API,page:"/api/admin/operations/assets/reports",pathname:"/api/admin/operations/assets/reports",bundlePath:"",filename:""},userland:d,distDir:".next",relativeProjectDir:""});async function v(a,b,c){let d=await u.prepare(a,b,{srcPage:"/api/admin/operations/assets/reports"});if(!d){b.statusCode=400,b.end("Bad Request"),null==c.waitUntil||c.waitUntil.call(c,Promise.resolve());return}let{query:f,params:g,prerenderManifest:h,routerServerContext:i}=d;try{let c=a.method||"GET",d=(0,q.getTracer)(),e=d.getActiveScopeSpan(),j=u.instrumentationOnRequestError.bind(u),k=async e=>u.render(a,b,{query:{...f,...g},params:g,allowedRevalidateHeaderKeys:[],multiZoneDraftMode:!1,trustHostHeader:!1,previewProps:h.preview,propagateError:!1,dev:u.isDev,page:"/api/admin/operations/assets/reports",internalRevalidate:null==i?void 0:i.revalidate,onError:(...b)=>j(a,...b)}).finally(()=>{if(!e)return;e.setAttributes({"http.status_code":b.statusCode,"next.rsc":!1});let f=d.getRootSpanAttributes();if(!f)return;if(f.get("next.span_type")!==r.BaseServerSpan.handleRequest)return void console.warn(`Unexpected root span type '${f.get("next.span_type")}'. Please report this Next.js issue https://github.com/vercel/next.js`);let g=f.get("next.route");if(g){let a=`${c} ${g}`;e.setAttributes({"next.route":g,"http.route":g,"next.span_name":a}),e.updateName(a)}else e.updateName(`${c} ${a.url}`)});e?await k(e):await d.withPropagatedContext(a.headers,()=>d.trace(r.BaseServerSpan.handleRequest,{spanName:`${c} ${a.url}`,kind:q.SpanKind.SERVER,attributes:{"http.method":c,"http.target":a.url}},k))}catch(a){if(u.isDev)throw a;(0,e.sendError)(b,500,"Internal Server Error")}finally{null==c.waitUntil||c.waitUntil.call(c,Promise.resolve())}}},63415:(a,b,c)=>{c.d(b,{$3:()=>g,PS:()=>h,T1:()=>e,iT:()=>f});var d=c(88251);function e(a){let b=a.headers["x-forwarded-for"];return"string"==typeof b&&b?b.split(",")[0].trim():Array.isArray(b)&&b.length?b[0].split(",")[0].trim():a.socket?.remoteAddress||"unknown"}async function f(a){let b=function(a){let b=a.query.hash;if("string"==typeof b&&b)return b;let c=a.headers.authorization;if(c&&c.startsWith("Bearer ")){let a=c.slice(7).trim();if(a)return a}return null}(a);if(!b)return null;let c=await (0,d.P)("SELECT username, expires_at FROM admin_sessions WHERE hash = ? LIMIT 1",[b]);if(!c||0===c.length||new Date(c[0].expires_at)<=new Date)return null;let f=c[0].username,g=await (0,d.P)("SELECT id, user_type, status FROM admins WHERE username = ? LIMIT 1",[f]);if(!g||0===g.length||"active"!==g[0].status)return null;let h=g[0].id,i=await (0,d.P)(`SELECT DISTINCT p.module, p.action, r.name AS role_name
        FROM admin_roles ar
        INNER JOIN roles r            ON r.id = ar.role_id
        INNER JOIN role_permissions rp ON rp.role_id = ar.role_id
