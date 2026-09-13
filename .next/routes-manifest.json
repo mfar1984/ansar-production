@@ -396,6 +396,14 @@
       "namedRegex": "^/api/admin/payroll/records/(?<nxtPid>[^/]+?)(?:/)?$"
     },
     {
+      "page": "/api/admin/petty-cash/[id]",
+      "regex": "^/api/admin/petty\\-cash/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/petty\\-cash/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/api/admin/procurement/[id]",
       "regex": "^/api/admin/procurement/([^/]+?)(?:/)?$",
       "routeKeys": {

@@ -24,20 +24,4 @@
        VALUES (?, ?, ?, ?, ?, ?, NULL)`,[k,b+1,c.account_id,(0,f.sp)(c.debit),(0,f.sp)(c.credit),c.description])}return{journalId:k,journalNo:i,error:null}}},40113:(a,b,c)=>{c.d(b,{H:()=>e});var d=c(88251);async function e(a,b){return(await (0,d.P)(`SELECT id, journal_no, DATE_FORMAT(entry_date, '%Y-%m-%d') AS entry_date
        FROM journal_entries
       WHERE source_table = ? AND source_id = ? AND status = 'posted' AND reverses_id IS NULL
-      ORDER BY id DESC LIMIT 1`,[a,b]))[0]||null}},73698:(a,b,c)=>{c.d(b,{A5:()=>i,M9:()=>n,UU:()=>k,UY:()=>h,Wu:()=>f,_T:()=>j,d$:()=>l,hj:()=>m,kM:()=>o,pr:()=>g,uw:()=>p});var d=c(88251),e=c(35830);let f={module:"GENERAL LEDGER",type:"Journal Entry"},g={module:"GENERAL LEDGER",type:"Opening Balance"},h={module:"GENERAL LEDGER",type:"Year End Close"};async function i(a,b){return j(a,b)}async function j(a,b=f){let[c]=await a.query(`SELECT id, prefix, padding, next_number, last_number_used
-       FROM accounting_document_numbers
-      WHERE module = ? AND type = ?
-      LIMIT 1
-      FOR UPDATE`,[b.module,b.type]),d=c[0];if(!d)throw Error(`There is no document numbering row for ${b.module} / ${b.type}, so a reference cannot be issued. Run: node scripts/run-sql.js database/journal_entries.sql and database/opening_balances.sql`);let g=(0,e.ct)(d.next_number),h=(0,e._P)(d.prefix,g,d.padding),i=(0,e._P)(d.prefix,g+1,d.padding);return await a.query(`UPDATE accounting_document_numbers
-        SET last_number_used = ?, next_number = ?
-      WHERE id = ?`,[h,i,d.id]),h}async function k(){let a=await (0,d.P)("SELECT DATE_FORMAT(lock_date, '%Y-%m-%d') AS d FROM accounting_preferences WHERE id = 1");return a[0]?.d||null}async function l(a,b){let[c]=await a.query(`UPDATE accounting_preferences
-        SET lock_date = ?
-      WHERE id = 1 AND (lock_date IS NULL OR lock_date < ?)`,[b,b]);return c.affectedRows>0}async function m(){return await (0,d.P)(`SELECT id, code, name, account_type, is_locked
-       FROM chart_of_accounts
-      WHERE status = 'active' AND is_locked = 0
-      ORDER BY code ASC`)}async function n(a){let b=(await (0,d.P)("SELECT code, name, status, is_locked FROM chart_of_accounts WHERE id = ? LIMIT 1",[a]))[0];return b?"active"!==b.status?`${b.code} "${b.name}" is inactive, so nothing may be posted to it. Somebody retired it on purpose.`:1===b.is_locked?`${b.code} "${b.name}" is a control account and cannot be posted to by hand. A whole ledger sums into it, and a manual entry would leave the Balance Sheet showing a figure that the underlying ledger does not add up to.`:null:"That account does not exist. Pick one from the list."}async function o(a,b=!1){let c=[...new Set(a.map(a=>Number(a.account_id)))];if(0===c.length)return null;let e=new Map((await (0,d.P)(`SELECT id, code, name, status, is_locked FROM chart_of_accounts
-      WHERE id IN (${c.map(()=>"?").join(",")})`,c)).map(a=>[Number(a.id),a]));for(let a of c){let c=e.get(a);if(!c)return`An account on this journal no longer exists (id ${a}).`;if("active"!==c.status)return`${c.code} "${c.name}" has been set inactive since this journal was prepared, so nothing may be posted to it.`;if(1===c.is_locked&&!b)return`${c.code} "${c.name}" is a control account and cannot be posted to by hand. A whole ledger sums into it, and a manual entry would leave the Balance Sheet showing a figure the underlying ledger does not add up to.`}return null}async function p(a){let b=await (0,d.P)(`SELECT COUNT(*) AS n
-       FROM journal_lines l
-       JOIN journal_entries e ON e.id = l.journal_id
-      WHERE l.account_id = ? AND e.status IN ('posted', 'reversed')
-      LIMIT 1`,[a]);return Number(b[0]?.n||0)>0}}};
+      ORDER BY id DESC LIMIT 1`,[a,b]))[0]||null}}};

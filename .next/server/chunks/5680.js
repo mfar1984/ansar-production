@@ -15,4 +15,4 @@
       WHERE employee_id = ? AND leave_type_id = ? AND year = ?`,[a.days,a.employeeId,a.leaveTypeId,a.year])}async function s(a){a.days<=0||await (0,d.P)(`UPDATE leave_balances
         SET pending_days = GREATEST(pending_days - ?, 0),
             used_days = used_days + ?
-      WHERE employee_id = ? AND leave_type_id = ? AND year = ?`,[a.days,a.days,a.employeeId,a.leaveTypeId,a.year])}}};
+      WHERE employee_id = ? AND leave_type_id = ? AND year = ?`,[a.days,a.days,a.employeeId,a.leaveTypeId,a.year])}},88251:(a,b,c)=>{c.d(b,{Ay:()=>i,G$:()=>h,P:()=>f,rN:()=>g});var d=c(3498);let e=c.n(d)().createPool({host:process.env.DB_HOST||"localhost",user:process.env.DB_USER||"root",password:process.env.DB_PASSWORD||"root",database:process.env.DB_NAME||"ansar",waitForConnections:!0,connectionLimit:10,queueLimit:0});async function f(a,b){let[c]=b&&b.length>0?await e.query(a,b):await e.query(a);return c}async function g(){try{return(await e.getConnection()).release(),!0}catch(a){return console.error("Database connection test failed:",a),!1}}function h(){return{totalConnections:10,activeConnections:0,idleConnections:0,queuedRequests:0}}let i=e}};
