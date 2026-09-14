@@ -14,7 +14,7 @@
               WHERE is_active = 1 ORDER BY sort_order ASC, name ASC`),(0,i.P)(`SELECT id, employee_id, full_name, department_id FROM employees
               WHERE status = 'active' ORDER BY full_name ASC`),(0,i.P)("SELECT id, name FROM departments ORDER BY name ASC"),(0,i.P)(`SELECT id, company_name, contact_person FROM client_users
               WHERE status = 'active' ORDER BY company_name ASC`),(0,i.P)(`SELECT id, title, client, year FROM projects
-              ORDER BY year DESC, title ASC LIMIT 300`),(0,i.P)(`SELECT id, vendor_no, name FROM vendors
+              ORDER BY year DESC, title ASC LIMIT 300`),(0,i.P)(`SELECT id, vendor_no, name, kind, platform FROM vendors
               WHERE status = 'active' ORDER BY name ASC`),(0,i.P)(`SELECT id, ref_no, title, contract_no,
                     DATE_FORMAT(handover_date, '%Y-%m-%d') AS handover_date, dlp_months
                FROM tenders
@@ -60,6 +60,10 @@
                 c.company_name AS client_company,
                 p.title       AS project_title,
                 v.name        AS vendor_name,
+                -- The platform travels with the name, because a marketplace seller's name alone
+                -- does not say where the purchase was made.
+                v.kind        AS vendor_kind,
+                v.platform    AS vendor_platform,
                 (SELECT COUNT(*) FROM asset_maintenance m WHERE m.asset_id = a.id) AS service_count,
                 (SELECT DATE_FORMAT(MIN(m.next_due), '%Y-%m-%d') FROM asset_maintenance m
                   WHERE m.asset_id = a.id AND m.next_due IS NOT NULL
