@@ -14,7 +14,23 @@ see more here https://nextjs.org/docs/messages/app-static-to-dynamic-error`),"__
   <table role="presentation" width="600" cellpadding="0" cellspacing="0"
     style="width:600px;max-width:100%;background:#ffffff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;
       font-family:'Segoe UI',Arial,Helvetica,sans-serif;color:#1f2937;">
-    <tr><td style="background:#1f2937;padding:18px 24px;">
+    <!--
+      ── THE MASTHEAD IS BLUE, AND NOT THE APP'S PRIMARY BLUE ──
+
+      It was #1f2937, a near-black slate. Blue reads as corporate rather than as a system
+      notification, which is what was asked for.
+
+      #1d4ed8 (blue-700), NOT the design system's #3b82f6. Measured, white on each:
+
+        #3b82f6   3.68:1   FAILS WCAG AA
+        #1d4ed8   6.70:1   passes
+
+      The masthead is 15px at weight 600. WCAG counts text as "large" -- and so allows 3:1 --
+      only from 18.66px bold or 24px regular, so this line needs the full 4.5:1. The primary
+      token is correct for blue TEXT on white; inverted it is not, and an email cannot be
+      re-themed after it is sent.
+    -->
+    <tr><td style="background:#1d4ed8;padding:18px 24px;">
       <div style="color:#ffffff;font-size:15px;font-weight:600;letter-spacing:.2px;">${b}</div>
     </td></tr>
     <tr><td style="padding:24px;">
