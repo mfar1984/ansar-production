@@ -41,5 +41,11 @@
     "files": [
       "static/chunks/900.a5928c22810f220f.js"
     ]
+  },
+  "components\\admin\\operations\\AssetScanBox.tsx -> jsqr": {
+    "id": 82122,
+    "files": [
+      "static/chunks/d0f5a89a.af7b72e16913fa3e.js"
+    ]
   }
 }

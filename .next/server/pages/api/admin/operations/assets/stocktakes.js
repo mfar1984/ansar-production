@@ -1,6 +1,14 @@
-"use strict";(()=>{var a={};a.id=9227,a.ids=[9227],a.modules={1726:(a,b,c)=>{c.r(b),c.d(b,{config:()=>u,default:()=>t,handler:()=>w});var d={};c.r(d),c.d(d,{default:()=>q});var e=c(29046),f=c(8667),g=c(33480),h=c(86435),i=c(88251),j=c(3557),k=c(19275),l=c(96543),m=c(92102),n=c(95514);let o="assets_internal";async function p(a){return(await (0,i.P)(`SELECT id, ref_no, scope_location, state,
-            DATE_FORMAT(opened_on, '%Y-%m-%d') AS opened_on
-       FROM asset_stocktakes WHERE id = ? LIMIT 1`,[a]))[0]||null}async function q(a,b){let c=await (0,j.OC)(a,b);if(c){b.setHeader("Cache-Control","no-store");try{if("GET"===a.method){if(!(0,j.OD)(c,b,o,"view"))return;let d=Number(a.query.id);if(Number.isInteger(d)&&d>0){let a=await p(d);if(!a)return b.status(404).json({success:!1,error:"Stock take not found."});let c=await (0,i.P)(`SELECT l.id, l.asset_id, l.expected_location, l.expected_status, l.counted_state,
+"use strict";(()=>{var a={};a.id=9227,a.ids=[9227],a.modules={1726:(a,b,c)=>{c.r(b),c.d(b,{config:()=>u,default:()=>t,handler:()=>w});var d={};c.r(d),c.d(d,{default:()=>q});var e=c(29046),f=c(8667),g=c(33480),h=c(86435),i=c(88251),j=c(3557),k=c(19275),l=c(96543),m=c(92102),n=c(95514);let o="assets_internal";async function p(a){return(await (0,i.P)(`SELECT s.id, s.ref_no, s.title, s.scope_location, s.assigned_to, s.state,
+            DATE_FORMAT(s.opened_on, '%Y-%m-%d') AS opened_on,
+            DATE_FORMAT(s.closed_on, '%Y-%m-%d') AS closed_on,
+            DATE_FORMAT(s.starts_on, '%Y-%m-%d') AS starts_on,
+            DATE_FORMAT(s.due_on, '%Y-%m-%d')    AS due_on,
+            s.opened_by, s.closed_by, s.notes,
+            e.full_name   AS assignee_name,
+            e.employee_id AS assignee_code
+       FROM asset_stocktakes s
+       LEFT JOIN employees e ON e.id = s.assigned_to
+      WHERE s.id = ? LIMIT 1`,[a]))[0]||null}async function q(a,b){let c=await (0,j.OC)(a,b);if(c){b.setHeader("Cache-Control","no-store");try{if("GET"===a.method){if(!(0,j.OD)(c,b,o,"view"))return;let d=Number(a.query.id);if(Number.isInteger(d)&&d>0){let a=await p(d);if(!a)return b.status(404).json({success:!1,error:"Stock take not found."});let c=await (0,i.P)(`SELECT l.id, l.asset_id, l.expected_location, l.expected_status, l.counted_state,
                   l.actual_location, l.note, l.counted_by,
                   DATE_FORMAT(l.counted_at, '%Y-%m-%d %H:%i') AS counted_at,
                   a.asset_no, a.name AS asset_name, a.serial_no, a.tag_no, a.category,
@@ -10,9 +18,16 @@
              FROM asset_stocktake_lines l
              JOIN assets a ON a.id = l.asset_id
             WHERE l.stocktake_id = ?
-            ORDER BY a.asset_no ASC`,[d]);return b.status(200).json({success:!0,session:a,lines:c})}let e=await (0,i.P)(`SELECT s.id, s.ref_no, s.scope_location, s.state,
+            ORDER BY a.asset_no ASC`,[d]);return b.status(200).json({success:!0,session:a,lines:c})}let e=await (0,i.P)(`SELECT s.id, s.ref_no, s.title, s.scope_location, s.state,
                 DATE_FORMAT(s.opened_on, '%Y-%m-%d') AS opened_on,
                 DATE_FORMAT(s.closed_on, '%Y-%m-%d') AS closed_on,
+                DATE_FORMAT(s.starts_on, '%Y-%m-%d') AS starts_on,
+                DATE_FORMAT(s.due_on, '%Y-%m-%d')    AS due_on,
+                s.assigned_to,
+                e.full_name   AS assignee_name,
+                e.employee_id AS assignee_code,
+                (s.due_on IS NOT NULL AND s.state <> 'closed'
+                  AND s.due_on < CURDATE())                             AS is_overdue,
                 s.opened_by, s.closed_by, s.notes,
                 (SELECT COUNT(*) FROM asset_stocktake_lines l
                   WHERE l.stocktake_id = s.id)                          AS expected_count,
@@ -22,19 +37,26 @@
                   WHERE l.stocktake_id = s.id
                     AND l.counted_state IN ('not_found', 'found_elsewhere'))    AS discrepancy_count
            FROM asset_stocktakes s
+           LEFT JOIN employees e ON e.id = s.assigned_to
           ORDER BY s.state = 'closed' ASC, s.id DESC`),f=await (0,i.P)(`SELECT DISTINCT location FROM assets
           WHERE holder = 'internal' AND location IS NOT NULL AND location <> ''
-          ORDER BY location ASC`);return b.status(200).json({success:!0,data:e,locations:f})}if("POST"===a.method){if(!(0,j.OD)(c,b,o,"edit"))return;let d=(0,j.J9)(a),e=(0,l.gx)(d.scope_location,200),f=await (0,i.P)(`SELECT id, ref_no, state FROM asset_stocktakes
+          ORDER BY location ASC`),g=await (0,i.P)(`SELECT id, full_name, employee_id
+           FROM employees
+          WHERE status = 'active'
+          ORDER BY full_name ASC`);return b.status(200).json({success:!0,data:e,locations:f,employees:g})}if("POST"===a.method){if(!(0,j.OD)(c,b,o,"edit"))return;let d=(0,j.J9)(a),e=(0,l.gx)(d.scope_location,200),f=(0,l.gx)(d.title,200),g=(0,l._$)(d.starts_on),h=(0,l._$)(d.due_on),p=(0,l.fk)(d.assigned_to);if(g&&h&&h<g)return b.status(400).json({success:!1,error:`The window ends before it starts: ${g} to ${h}. Check which way round the two dates go.`});if(p){let a=await (0,i.P)("SELECT id, full_name, status FROM employees WHERE id = ? LIMIT 1",[p]);if(0===a.length)return b.status(400).json({success:!1,error:"That employee no longer exists. Reload and choose again."});if("active"!==a[0].status)return b.status(409).json({success:!1,error:`${a[0].full_name} is no longer active, so a count cannot be assigned to them.`})}let q=await (0,i.P)(`SELECT id, ref_no, state FROM asset_stocktakes
           WHERE state <> 'closed' AND scope_location <=> ?
-          LIMIT 1`,[e]);if(f.length>0)return b.status(409).json({success:!1,error:`${f[0].ref_no} is still ${f[0].state} for ${e?`"${e}"`:"the whole register"}. Close it before opening another, or two counts of the same equipment will produce two answers.`});let g=(0,n.r9)(),h=await i.Ay.getConnection(),p=async(a,b)=>{let[c]=await h.query(a,b);return c};try{await h.beginTransaction();let f="",i=0;for(let a=0;a<5;a++){f=await (0,m.fp)("asset_stocktakes","ref_no","STK",p);try{let[a]=await h.query(`INSERT INTO asset_stocktakes
-                 (ref_no, scope_location, state, opened_on, opened_by, notes)
-               VALUES (?, ?, 'open', ?, ?, ?)`,[f,e,g,c.username,(0,l.gx)(d.notes,500)]);i=a.insertId;break}catch(a){if("ER_DUP_ENTRY"===a.code)continue;throw a}}if(!i)return await h.rollback(),b.status(503).json({success:!1,error:"Could not allocate a stock take reference. Please try again."});let j=n.jS.map(()=>"?").join(", "),o=[i,...n.jS],q="";e&&(q=" AND a.location = ?",o.push(e)),await h.query(`INSERT INTO asset_stocktake_lines
+          LIMIT 1`,[e]);if(q.length>0)return b.status(409).json({success:!1,error:`${q[0].ref_no} is still ${q[0].state} for ${e?`"${e}"`:"the whole register"}. Close it before opening another, or two counts of the same equipment will produce two answers.`});let r=(0,n.r9)(),s=await i.Ay.getConnection(),t=async(a,b)=>{let[c]=await s.query(a,b);return c};try{await s.beginTransaction();let i="",j=0;for(let a=0;a<5;a++){i=await (0,m.fp)("asset_stocktakes","ref_no","STK",t);try{let[a]=await s.query(`INSERT INTO asset_stocktakes
+                 (ref_no, title, scope_location, assigned_to, state, opened_on,
+                  starts_on, due_on, opened_by, notes)
+               VALUES (?, ?, ?, ?, 'open', ?, ?, ?, ?, ?)`,[i,f||null,e,p,r,g,h,c.username,(0,l.gx)(d.notes,500)]);j=a.insertId;break}catch(a){if("ER_DUP_ENTRY"===a.code)continue;throw a}}if(!j)return await s.rollback(),b.status(503).json({success:!1,error:"Could not allocate a stock take reference. Please try again."});let o=n.jS.map(()=>"?").join(", "),q=[j,...n.jS],u="";e&&(u=" AND a.location = ?",q.push(e)),await s.query(`INSERT INTO asset_stocktake_lines
              (stocktake_id, asset_id, expected_location, expected_status)
            SELECT ?, a.id, a.location, a.status
              FROM assets a
             WHERE a.holder = 'internal'
-              AND a.status NOT IN (${j})
-              ${q}`,o);let[r]=await h.query("SELECT COUNT(*) AS n FROM asset_stocktake_lines WHERE stocktake_id = ?",[i]),s=Number(r[0]?.n||0);return await h.commit(),await (0,k.At)(a,{action:"CREATE",module:"Assets: Internal",target:`Stock take: ${f}`,description:`Stock take ${f} opened over ${e||"the whole internal register"} with ${s} expected item(s)`,after:{ref_no:f,scope_location:e,expected:s}}),b.status(201).json({success:!0,id:i,ref_no:f,message:0===s?`${f} opened, but no internal equipment matches that scope — there is nothing to count.`:`${f} opened with ${s} item(s) to count.`})}catch(a){throw await h.rollback(),a}finally{h.release()}}if("PUT"===a.method){let d=Number(a.query.id);if(!Number.isInteger(d)||d<1)return b.status(400).json({success:!1,error:"Invalid id."});let e=await p(d);if(!e)return b.status(404).json({success:!1,error:"Stock take not found."});let f=(0,j.J9)(a),g=(0,l.yL)(f.state,n.N4,e.state);if(g===e.state){if(!(0,j.OD)(c,b,o,"edit"))return;if("closed"===e.state)return b.status(409).json({success:!1,error:`${e.ref_no} is closed. A closed count is history and cannot be edited.`});return await (0,i.P)("UPDATE asset_stocktakes SET notes = ? WHERE id = ?",[(0,l.gx)(f.notes,500),d]),b.status(200).json({success:!0,message:"Saved."})}if(!(0,n.HN)(e.state,g))return b.status(409).json({success:!1,error:`A stock take moves forward one step at a time: ${n.N4.join(" → ")}. ${e.ref_no} is ${e.state}, so it cannot go to ${g}. Reconciling writes "lost" onto real assets, which is why it cannot be reversed.`});if("reconciled"===g){if(!(0,j.OD)(c,b,o,"stocktake"))return;let f=await (0,i.P)(`SELECT COUNT(*) AS n FROM asset_stocktake_lines
+              AND a.status NOT IN (${o})
+              ${u}`,q);let[v]=await s.query("SELECT COUNT(*) AS n FROM asset_stocktake_lines WHERE stocktake_id = ?",[j]),w=Number(v[0]?.n||0);return await s.commit(),await (0,k.At)(a,{action:"CREATE",module:"Assets: Internal",target:`Stock take: ${i}`,description:`Stock take ${i} opened over ${e||"the whole internal register"} with ${w} expected item(s)`+(f?`, titled "${f}"`:""),after:{ref_no:i,title:f||null,scope_location:e,expected:w,assigned_to:p,starts_on:g,due_on:h}}),b.status(201).json({success:!0,id:j,ref_no:i,message:0===w?`${i} opened, but no internal equipment matches that scope — there is nothing to count.`:`${i} opened with ${w} item(s) to count.`})}catch(a){throw await s.rollback(),a}finally{s.release()}}if("PUT"===a.method){let d=Number(a.query.id);if(!Number.isInteger(d)||d<1)return b.status(400).json({success:!1,error:"Invalid id."});let e=await p(d);if(!e)return b.status(404).json({success:!1,error:"Stock take not found."});let f=(0,j.J9)(a),g=(0,l.yL)(f.state,n.N4,e.state);if(g===e.state){if(!(0,j.OD)(c,b,o,"edit"))return;if("closed"===e.state)return b.status(409).json({success:!1,error:`${e.ref_no} is closed. A closed count is history and cannot be edited.`});let g=(0,l.gx)(f.title,200),h=(0,l._$)(f.starts_on),m=(0,l._$)(f.due_on),n=(0,l.fk)(f.assigned_to);if(h&&m&&m<h)return b.status(400).json({success:!1,error:`The window ends before it starts: ${h} to ${m}. Check which way round the two dates go.`});if(n){let a=await (0,i.P)("SELECT id, full_name, status FROM employees WHERE id = ? LIMIT 1",[n]);if(0===a.length)return b.status(400).json({success:!1,error:"That employee no longer exists. Reload and choose again."});if("active"!==a[0].status)return b.status(409).json({success:!1,error:`${a[0].full_name} is no longer active, so a count cannot be assigned to them.`})}return await (0,i.P)(`UPDATE asset_stocktakes
+              SET title = ?, assigned_to = ?, starts_on = ?, due_on = ?, notes = ?
+            WHERE id = ?`,[g||null,n,h,m,(0,l.gx)(f.notes,500),d]),await (0,k.At)(a,{action:"UPDATE",module:"Assets: Internal",target:`Stock take: ${e.ref_no}`,description:`${e.ref_no} plan updated`,before:{title:e.title,assigned_to:e.assigned_to,starts_on:e.starts_on,due_on:e.due_on},after:{title:g||null,assigned_to:n,starts_on:h,due_on:m}}),b.status(200).json({success:!0,message:"Saved."})}if(!(0,n.HN)(e.state,g))return b.status(409).json({success:!1,error:`A stock take moves forward one step at a time: ${n.N4.join(" → ")}. ${e.ref_no} is ${e.state}, so it cannot go to ${g}. Reconciling writes "lost" onto real assets, which is why it cannot be reversed.`});if("reconciled"===g){if(!(0,j.OD)(c,b,o,"stocktake"))return;let f=await (0,i.P)(`SELECT COUNT(*) AS n FROM asset_stocktake_lines
             WHERE stocktake_id = ? AND counted_state IS NULL`,[d]);if(Number(f[0]?.n||0)>0)return b.status(409).json({success:!1,error:`${f[0].n} item(s) have not been counted. Reconciling now would write "lost" against equipment nobody has looked for yet.`});let g=await (0,i.P)(`SELECT l.asset_id, a.asset_no, l.expected_location
              FROM asset_stocktake_lines l
              JOIN assets a ON a.id = l.asset_id
