@@ -66,6 +66,11 @@
                 DATE_FORMAT(${(0,n.k)("a","cu")}, '%Y-%m-%d')              AS cover_until,
                 (SELECT COUNT(*) FROM asset_obligations o WHERE o.asset_id = a.id) AS obligation_count,
                 a.asset_class,
+                -- On the LIST because the BULK EDIT grid pre-fills every cell from the list row.
+                -- A column the grid renders but cannot pre-fill would show blank, and blank means
+                -- "clear it" in that payload -- so saving would wipe the invoice number on every
+                -- row in the selection. Reading it here is what makes the cell safe.
+                a.invoice_no,
                 a.location, a.location_id, a.site_name, a.site_id, a.tender_id,
                 -- The SITE the unit is installed at, as master data. The site_name column above
                 -- is the old free-text field and stays for the room or rack within a site.
