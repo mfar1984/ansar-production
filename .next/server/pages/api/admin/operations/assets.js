@@ -65,6 +65,22 @@
                 -- "2026-08-09T16:00:00.000Z" for a date of 2026-08-10.
                 DATE_FORMAT(${(0,n.k)("a","cu")}, '%Y-%m-%d')              AS cover_until,
                 (SELECT COUNT(*) FROM asset_obligations o WHERE o.asset_id = a.id) AS obligation_count,
+                -- The MANUFACTURER WARRANTY end date on its own, which cover_until above is NOT:
+                -- that one is MAX across every kind, so a unit on a service contract to December
+                -- reports December there. The BULK EDIT grid pre-fills a Warranty Until cell from
+                -- this, and pre-filling it from cover_until would show a service contract date in a
+                -- warranty field and then save it back as the warranty.
+                --
+                -- MAX here too, because nothing stops a unit holding two warranty rows and the
+                -- cover resolver takes the longer of them. This has to agree with what it shows.
+                --
+                -- NO BACKTICKS ANYWHERE IN THIS COMMENT. The whole statement is a template literal,
+                -- because assetCoverUntil is interpolated into it a few lines up. A backtick used to
+                -- quote a column name in prose CLOSES the template, and tsc then reports three
+                -- unrelated "',' expected" errors on the following lines.
+                DATE_FORMAT((SELECT MAX(w.ends_on) FROM asset_obligations w
+                              WHERE w.asset_id = a.id AND w.kind = 'warranty'),
+                            '%Y-%m-%d')                                        AS warranty_until,
                 a.asset_class,
                 -- On the LIST because the BULK EDIT grid pre-fills every cell from the list row.
                 -- A column the grid renders but cannot pre-fill would show blank, and blank means
