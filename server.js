@@ -275,6 +275,26 @@ app.prepare().then(() => {
     process.exit(1);
   });
 
+  /*
+   * ── THE REQUEST WINDOW HAS TO BE BIG ENOUGH FOR THE UPLOAD THE APP OFFERS ──
+   *
+   * Node's `requestTimeout` default is 300 000 ms. A service round accepts 500 MB in one request
+   * (`MAX_SERVICE_UPLOAD_BYTES`), and 500 MB inside 300 s needs 14 Mbps of SUSTAINED upstream. Below
+   * that the server destroys the request part-way through and formidable raises code 1002, which the
+   * screen reported as "the upload was cut off — usually a file over 10 MB or a selection over 500 MB".
+   * Two numbers that contradicted each other, blamed on the user.
+   *
+   * 30 minutes puts the floor at about 2.3 Mbps for a full 500 MB request. Kept identical to
+   * `ansarlatest/server.js`, because a limit that differs between development and production is a bug
+   * that only appears on the server.
+   *
+   * THE PROXY IN FRONT OF THIS IS A SEPARATE CEILING. nginx `client_max_body_size` defaults to 1 MB and
+   * Passenger has its own read timeout; neither can be set from here. A large upload that fails on the
+   * server with a 413, or with a truncated body rather than a clean message, is that layer and not this
+   * one.
+   */
+  server.requestTimeout = 30 * 60 * 1000;
+
   server.listen(port, () => {
     console.log(`Ready on http://${hostname}:${port}`);
     console.log(`Socket.IO on ws://${hostname}:${port}/socket.io/`);

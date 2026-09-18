@@ -30,8 +30,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/_not-found": {
-      "initialStatus": 404,
+    "/career": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -44,8 +43,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/_not-found",
-      "dataRoute": "/_not-found.rsc",
+      "srcRoute": "/career",
+      "dataRoute": "/career.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -70,30 +69,6 @@
       "initialRevalidateSeconds": false,
       "srcRoute": "/client/verify",
       "dataRoute": "/client/verify.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/career": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/career",
-      "dataRoute": "/career.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -199,6 +174,30 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/resources/projects": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/resources/projects",
+      "dataRoute": "/resources/projects.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/admin/login": {
       "experimentalBypassFor": [
         {
@@ -223,7 +222,8 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/resources/projects": {
+    "/_not-found": {
+      "initialStatus": 404,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -236,8 +236,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/resources/projects",
-      "dataRoute": "/resources/projects.rsc",
+      "srcRoute": "/_not-found",
+      "dataRoute": "/_not-found.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -251,8 +251,8 @@
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "6da67f9c0cf2ba57a88a33e86f0aa620",
-    "previewModeSigningKey": "d828879ba8d3781159f4829dee8b7e49db7d60807b053ea08e88fb140d264af3",
-    "previewModeEncryptionKey": "92615ae64a2812f55d77a3ce242492ba9af9713ae6b27aafe60d0974df46adc7"
+    "previewModeId": "8b5a53ec2250c8743e484149decced07",
+    "previewModeSigningKey": "ddeba340ef02186078121da75688df1bb7f1294797f6eda050b47f0966b6a930",
+    "previewModeEncryptionKey": "5ef45bb4296cb565741a12bcabe6ae81601acfd28ba031564aa825d7205421df"
   }
 }
