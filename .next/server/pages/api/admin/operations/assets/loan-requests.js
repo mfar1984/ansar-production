@@ -21,7 +21,26 @@
                 r.decided_by, r.checkout_id,
                 p.ref_no AS parent_ref,
                 a.asset_no, a.name AS asset_name, a.category, a.location,
+                -- The THUMBNAIL, and the fields the queue's view panel reads.
+                --
+                -- NO BACKTICKS IN THIS COMMENT. The statement is a template literal, because the
+                -- WHERE clause and the LIMIT are interpolated below, so a backtick used to quote a
+                -- column name in prose CLOSES the template and tsc reports four unrelated
+                -- "',' expected" errors on the following lines.
+                --
+                -- photo_path is PUBLIC and is used raw as an img src: assets/photo.ts stores it under
+                -- public/uploads/assets, which is why the register does the same and why no session
+                -- hash is appended. The private root is for asset documents, not for this.
+                --
+                -- The rest is what tells one identical laptop from another when an approver is
+                -- deciding whether it may leave the building: a serial, a tag, the condition it was
+                -- last recorded in. The queue used to carry only the number, the name and the
+                -- category, so the approver had to open the register in another tab to see anything.
+                a.photo_path, a.brand, a.model, a.serial_no, a.tag_no,
+                a.status AS asset_status, a.condition_note,
                 e.employee_id AS employee_code, e.full_name AS employee_name,
+                e.email AS employee_email, e.position AS employee_position,
+                e.phone AS employee_phone,
                 d.name AS department,
                 DATE_FORMAT(ck.issued_on, '%Y-%m-%d')   AS issued_on,
                 DATE_FORMAT(ck.due_on, '%Y-%m-%d')      AS due_on,
