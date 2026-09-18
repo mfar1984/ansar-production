@@ -532,6 +532,14 @@
       "namedRegex": "^/auth/(?<nxtPhash>[^/]+?)/print/asset\\-labels(?:/)?$"
     },
     {
+      "page": "/auth/[hash]/print/asset-stocktake",
+      "regex": "^/auth/([^/]+?)/print/asset\\-stocktake(?:/)?$",
+      "routeKeys": {
+        "nxtPhash": "nxtPhash"
+      },
+      "namedRegex": "^/auth/(?<nxtPhash>[^/]+?)/print/asset\\-stocktake(?:/)?$"
+    },
+    {
       "page": "/auth/[hash]/print/[type]/[id]",
       "regex": "^/auth/([^/]+?)/print/([^/]+?)/([^/]+?)(?:/)?$",
       "routeKeys": {
