@@ -19,13 +19,19 @@
               WHERE status = 'active' ORDER BY full_name ASC`),(0,i.P)(`SELECT a.id, a.asset_no, a.name, a.category, a.location
                FROM assets a
               WHERE ${o}
-              ORDER BY a.asset_no ASC`)]);return b.status(200).json({success:!0,employees:a,available:c})}if("1"===String(a.query.available||"")){let c=(0,l.gx)(a.query.q,120),d=[],e="";if(c){e+=" AND (a.asset_no LIKE ? OR a.name LIKE ? OR a.category LIKE ? OR a.location LIKE ?)";let a=`%${c}%`;d.push(a,a,a,a)}"1"===String(a.query.loanable||"")&&(e+=" AND a.is_loanable = 1");let f=Math.min(20,Math.max(1,Number(a.query.limit)||20)),[g,h]=await Promise.all([(0,i.P)(`SELECT a.id, a.asset_no, a.name, a.category, a.location, a.status, a.is_loanable,
+              -- By NAME. asset_no is a 12-character random ID now, and this feeds a dropdown whose
+              -- option label reads "id - name"; sorting a dropdown by the random half of its own label
+              -- is sorting it by nothing. NO BACKTICKS: this is inside a template literal.
+              ORDER BY a.name ASC, a.id ASC`)]);return b.status(200).json({success:!0,employees:a,available:c})}if("1"===String(a.query.available||"")){let c=(0,l.gx)(a.query.q,120),d=[],e="";if(c){e+=" AND (a.asset_no LIKE ? OR a.name LIKE ? OR a.category LIKE ? OR a.location LIKE ?)";let a=`%${c}%`;d.push(a,a,a,a)}"1"===String(a.query.loanable||"")&&(e+=" AND a.is_loanable = 1");let f=Math.min(20,Math.max(1,Number(a.query.limit)||20)),[g,h]=await Promise.all([(0,i.P)(`SELECT a.id, a.asset_no, a.name, a.category, a.location, a.status, a.is_loanable,
                     a.photo_path,
                     e.full_name AS assigned_to
                FROM assets a
                LEFT JOIN employees e ON e.id = a.employee_id
               WHERE ${o}${e}
-              ORDER BY a.asset_no ASC
+              -- By NAME, for the reason above. This panel is CAPPED, so the order decides WHICH rows
+              -- are shown as well as their sequence: a random sort would show an arbitrary 20 of the
+              -- available units and call them the first 20.
+              ORDER BY a.name ASC, a.id ASC
               LIMIT ${f}`,d),(0,i.P)(`SELECT COUNT(*) AS total FROM assets a WHERE ${o}${e}`,d)]);return b.status(200).json({success:!0,data:g,total:Number(h[0]?.total||0),limit:f})}let d=[],e=[],f=String(a.query.state||"").trim();"out"===f&&d.push("ck.returned_on IS NULL"),"overdue"===f&&d.push("ck.returned_on IS NULL AND ck.due_on < CURDATE()"),"returned"===f&&d.push("ck.returned_on IS NOT NULL");let g=Number(a.query.employee_id);Number.isInteger(g)&&g>0&&(d.push("ck.employee_id = ?"),e.push(g));let h=(0,l.gx)(a.query.q,120);if(h){d.push("(a.asset_no LIKE ? OR a.name LIKE ? OR e.full_name LIKE ? OR ck.holder_name LIKE ?)");let a=`%${h}%`;e.push(a,a,a,a)}let k=d.length>0?`WHERE ${d.join(" AND ")}`:"",m=Math.max(1,Number(a.query.page)||1),p=Math.min(100,Math.max(1,Number(a.query.per_page)||100)),q=(m-1)*p,r=await (0,i.P)(`SELECT ck.id, ck.asset_id, ck.employee_id, ck.holder_name,
                 -- DATE_FORMAT on every date. mysql2 returns a Date and serialising it converts to
                 -- UTC, which at UTC+8 reports the previous day — a loan due today would read as

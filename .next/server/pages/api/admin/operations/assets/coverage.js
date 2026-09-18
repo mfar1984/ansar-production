@@ -50,7 +50,10 @@
                                                     AS asset_cover_until
        ${u}
        ${o}
-       ORDER BY ob.ends_on ASC, a.asset_no ASC
+       -- a.id as the tiebreaker, not a.asset_no: the identifier is a 12-character random ID now, so it
+       -- sorts as noise. The date is the sort that matters here and it is unchanged.
+       -- NO BACKTICKS: this statement is a template literal.
+       ORDER BY ob.ends_on ASC, a.id ASC
        LIMIT ${q} OFFSET ${t}`,[...l.jS,...l.jS,...f]),w=await (0,i.P)(`SELECT COUNT(*) AS n ${u} ${o}`,f),x=await (0,i.P)(`SELECT
          SUM(ob.ends_on < CURDATE())                                         AS expired,
          SUM(ob.ends_on >= CURDATE()

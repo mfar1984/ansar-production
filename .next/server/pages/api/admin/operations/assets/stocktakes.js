@@ -21,7 +21,16 @@
              FROM asset_stocktake_lines l
              JOIN assets a ON a.id = l.asset_id
             WHERE l.stocktake_id = ?
-            ORDER BY a.asset_no ASC`,[d]);if("1"===a.query.print){let[a,f]=await Promise.all([(0,o.rC)(),(0,o.P6)()]),g=await (0,i.P)(`SELECT COUNT(*)                                                       AS expected_count,
+            -- ── BY NAME, NOT BY asset_no ──
+            --
+            -- The identifier is a 12-character random ID now. This is the order a count sheet is WALKED
+            -- in and the order the printed Count Record groups from, so a random sequence would send
+            -- somebody up and down the same aisle. A name puts the four identical laptops together,
+            -- which is what the reader is checking off.
+            --
+            -- NO BACKTICKS ANYWHERE IN THIS COMMENT: the statement is a template literal, and one would
+            -- close the string.
+            ORDER BY a.name ASC, a.id ASC`,[d]);if("1"===a.query.print){let[a,f]=await Promise.all([(0,o.rC)(),(0,o.P6)()]),g=await (0,i.P)(`SELECT COUNT(*)                                                       AS expected_count,
                     COUNT(counted_state)                                           AS counted_count,
                     SUM(counted_state IN ('not_found', 'found_elsewhere'))          AS discrepancy_count,
                     SUM(counted_state = 'found')                                    AS found_count,

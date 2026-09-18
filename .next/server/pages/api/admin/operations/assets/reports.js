@@ -45,7 +45,10 @@
           WHERE a.holder = ?
             AND a.ownership = 'ansar'
             AND a.status NOT IN ('disposed', 'lost')
-          ORDER BY a.purchase_date ASC, a.asset_no ASC`,[d]);return b.status(200).json({success:!0,report:f,data:a,note:"external"===d?`${o} Client-owned equipment is excluded: it is not ANSAR property, so depreciating it would report a book value for something ANSAR does not own.`:o})}if("service"===f){if("internal"===d){let a=await (0,i.P)(`SELECT m.id, m.asset_id, a.asset_no, a.name AS asset_name, a.category,
+          -- a.id as the tiebreaker, not a.asset_no: a 12-character random ID sorts as noise. Purchase
+          -- date is the sort that matters on a depreciation schedule and it is unchanged.
+          -- NO BACKTICKS: this statement is a template literal.
+          ORDER BY a.purchase_date ASC, a.id ASC`,[d]);return b.status(200).json({success:!0,report:f,data:a,note:"external"===d?`${o} Client-owned equipment is excluded: it is not ANSAR property, so depreciating it would report a book value for something ANSAR does not own.`:o})}if("service"===f){if("internal"===d){let a=await (0,i.P)(`SELECT m.id, m.asset_id, a.asset_no, a.name AS asset_name, a.category,
                   m.kind, m.performed_by, v.name AS vendor_name, m.cost,
                   DATE_FORMAT(m.service_date, '%Y-%m-%d') AS service_date,
                   m.summary
@@ -104,7 +107,10 @@
            LEFT JOIN tenders t      ON t.id = a.tender_id
           WHERE a.holder = 'external'
             AND a.status NOT IN ('disposed', 'lost')
-          ORDER BY c.company_name ASC, site ASC, a.asset_no ASC`);return b.status(200).json({success:!0,report:f,data:a,note:"Ownership is shown per unit. Client-owned equipment is still ANSAR's responsibility while an obligation runs, which is what the cover date says."})}if("external"===d&&"deployment"===f){let a=await (0,i.P)(`SELECT t.id AS tender_id, t.ref_no AS tender_ref, t.title AS tender_title,
+          -- a.name then a.id in place of a.asset_no, which is a 12-character random ID now. Client and
+          -- site are the grouping this report is read by; within one site a reader wants the equipment
+          -- listed by what it is. NO BACKTICKS: this statement is a template literal.
+          ORDER BY c.company_name ASC, site ASC, a.name ASC, a.id ASC`);return b.status(200).json({success:!0,report:f,data:a,note:"Ownership is shown per unit. Client-owned equipment is still ANSAR's responsibility while an obligation runs, which is what the cover date says."})}if("external"===d&&"deployment"===f){let a=await (0,i.P)(`SELECT t.id AS tender_id, t.ref_no AS tender_ref, t.title AS tender_title,
                 p.id AS project_id, p.title AS project_title,
                 c.company_name AS client_company,
                 COUNT(a.id) AS asset_count,

@@ -25,7 +25,10 @@
                  AND r.kind = 'loan'
                  AND r.status IN ('pending', 'approved', 'issued')
             )
-          ORDER BY a.name ASC, a.asset_no ASC`),d=await (0,i.P)(`SELECT r.id, r.ref_no, r.status, r.current_level, r.purpose, r.remarks,
+          -- a.id, not a.asset_no. The identifier is a 12-character random ID now, so ordering by it is
+          -- ordering by noise. As a TIEBREAKER behind the name, creation order is at least stable and
+          -- repeatable between requests. NO BACKTICKS: this is inside a template literal.
+          ORDER BY a.name ASC, a.id ASC`),d=await (0,i.P)(`SELECT r.id, r.ref_no, r.status, r.current_level, r.purpose, r.remarks,
                 DATE_FORMAT(r.wanted_from, '%Y-%m-%d')       AS wanted_from,
                 DATE_FORMAT(r.wanted_to, '%Y-%m-%d')         AS wanted_to,
                 DATE_FORMAT(r.created_at, '%Y-%m-%d %H:%i')  AS created_at,

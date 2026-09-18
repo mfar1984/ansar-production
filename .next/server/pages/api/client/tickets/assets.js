@@ -27,7 +27,11 @@
          LEFT JOIN asset_sites st ON st.id = a.site_id
          LEFT JOIN tenders     t  ON t.id = a.tender_id
         WHERE ${g.join(" AND ")}
-        ORDER BY a.asset_no ASC`,h),l=await (0,i.P)(`SELECT DISTINCT t.id, t.ref_no, t.title
+        -- By NAME, not by asset_no. The identifier is a 12-character random ID now, so alphabetical
+        -- order over it is meaningless; a client picking their own equipment out of a list reads the
+        -- name. a.id behind it keeps the order stable when two units share a name.
+        -- NO BACKTICKS ANYWHERE IN THIS COMMENT: the statement is a template literal.
+        ORDER BY a.name ASC, a.id ASC`,h),l=await (0,i.P)(`SELECT DISTINCT t.id, t.ref_no, t.title
          FROM tenders t
          JOIN assets a ON a.tender_id = t.id
         WHERE a.client_id = ? AND a.holder = 'external'

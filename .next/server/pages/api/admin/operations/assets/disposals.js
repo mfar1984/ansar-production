@@ -27,7 +27,10 @@
                 a.useful_life_years
            FROM assets a
           WHERE ${o}
-          ORDER BY a.asset_no ASC`,[d]);return b.status(200).json({success:!0,assets:a})}let f=["a.holder = ?"],g=[d],h=(0,l.gx)(a.query.kind,20);if(h){if(!m.mh.includes(h))return b.status(400).json({success:!1,error:"Unknown disposal kind."});f.push("d.disposal_kind = ?"),g.push(h)}let p=(0,l.gx)(a.query.from,10);p&&(f.push("d.disposed_on >= ?"),g.push(p));let q=(0,l.gx)(a.query.to,10);q&&(f.push("d.disposed_on <= ?"),g.push(q));let r=(0,l.gx)(a.query.q,120);if(r){f.push("(a.asset_no LIKE ? OR a.name LIKE ? OR d.reason LIKE ? OR d.recipient LIKE ? OR d.approved_by LIKE ?)");let a=`%${r}%`;g.push(a,a,a,a,a)}let s=`WHERE ${f.join(" AND ")}`,t=Math.max(1,Number(a.query.page)||1),u=Math.min(100,Math.max(1,Number(a.query.per_page)||100)),v=(t-1)*u,w=await (0,i.P)(`SELECT d.id, d.asset_id, d.disposal_kind,
+          -- By NAME. asset_no is a 12-character random ID now, so alphabetical order over it is noise,
+          -- and somebody choosing what to write off is reading names.
+          -- NO BACKTICKS: this statement is a template literal.
+          ORDER BY a.name ASC, a.id ASC`,[d]);return b.status(200).json({success:!0,assets:a})}let f=["a.holder = ?"],g=[d],h=(0,l.gx)(a.query.kind,20);if(h){if(!m.mh.includes(h))return b.status(400).json({success:!1,error:"Unknown disposal kind."});f.push("d.disposal_kind = ?"),g.push(h)}let p=(0,l.gx)(a.query.from,10);p&&(f.push("d.disposed_on >= ?"),g.push(p));let q=(0,l.gx)(a.query.to,10);q&&(f.push("d.disposed_on <= ?"),g.push(q));let r=(0,l.gx)(a.query.q,120);if(r){f.push("(a.asset_no LIKE ? OR a.name LIKE ? OR d.reason LIKE ? OR d.recipient LIKE ? OR d.approved_by LIKE ?)");let a=`%${r}%`;g.push(a,a,a,a,a)}let s=`WHERE ${f.join(" AND ")}`,t=Math.max(1,Number(a.query.page)||1),u=Math.min(100,Math.max(1,Number(a.query.per_page)||100)),v=(t-1)*u,w=await (0,i.P)(`SELECT d.id, d.asset_id, d.disposal_kind,
               DATE_FORMAT(d.disposed_on, '%Y-%m-%d') AS disposed_on,
               d.reason, d.proceeds, d.book_value_at_disposal,
               d.approved_by, d.approval_ref, d.recipient, d.previous_status,
