@@ -74,7 +74,42 @@ CREATE TABLE IF NOT EXISTS `asset_repair_categories` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_repair_cat_name` (`name`),
   KEY `idx_repair_cat_active` (`is_active`, `sort_order`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+-- `ROW_FORMAT=DYNAMIC` is DECLARED, not left to the server. `sql-portability.test.js` asserts every
+-- table states it, and the reason is a dump: `mysqldump` writes only what the table DECLARES, so a
+-- table that inherited the format from `innodb_default_row_format` exports WITHOUT it and takes the
+-- importing server's default instead.
+--
+-- This clause was missing from the first version of this file, and the suite named the table. Fixed
+-- here rather than left to `set_row_format_dynamic.sql`, because that script is a repair for tables
+-- created before the rule existed — a new one has no excuse.
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC
+
+-- >>>
+-- ── The row format, for a table an earlier run already created ──
+--
+-- `CREATE TABLE IF NOT EXISTS` is SKIPPED where the table exists, so the clause above never reaches
+-- a database that ran the first version of this file. Guarded on `CREATE_OPTIONS`, which records the
+-- DECLARATION — the `ROW_FORMAT` column reports `Dynamic` either way and would say the work was
+-- already done. Same pattern as `petty_cash.sql`, for the same reason.
+SET @rf_declared := (
+  SELECT COUNT(*) FROM information_schema.TABLES
+   WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'asset_repair_categories'
+     AND CREATE_OPTIONS LIKE '%row_format%'
+)
+
+-- >>>
+SET @rf_sql := IF(@rf_declared = 0,
+  'ALTER TABLE `asset_repair_categories` ROW_FORMAT=DYNAMIC',
+  'SELECT ''asset_repair_categories already declares its row format'' AS note')
+
+-- >>>
+PREPARE rf_stmt FROM @rf_sql
+
+-- >>>
+EXECUTE rf_stmt
+
+-- >>>
+DEALLOCATE PREPARE rf_stmt
 
 -- >>>
 -- The five that already exist, in the order they were declared in the ENUM, so the dropdown reads
@@ -152,6 +187,45 @@ UPDATE `asset_maintenance` SET `kind` = 'Calibration' WHERE `kind` = 'calibratio
 UPDATE `asset_maintenance` SET `kind` = 'Upgrade'     WHERE `kind` = 'upgrade'
 
 -- >>>
+-- ── An index for the ROUNDS view ──
+--
+-- Maintenance & Repairs no longer lists one row per service. It lists one row per ROUND —
+-- `(kind, service_date, client_id)` — because a year of preventive maintenance is one engineer, one
+-- visit, one date and a hundred units, and a hundred identical rows cannot answer "which round was
+-- this". So the screen's main query is now `GROUP BY m.kind, m.service_date, a.client_id`.
+--
+-- MEASURED before this: `asset_maintenance` carried `PRIMARY(id)`, `idx_amaint_asset(asset_id,
+-- service_date)`, `idx_amaint_due(next_due)`, `idx_amaint_ticket(ticket_id)` and
+-- `fk_amaint_vendor(vendor_id)`. Nothing leads with `kind` and nothing leads with `service_date`
+-- alone, so both the grouping and the ordinal that numbers the rounds had to sort the whole table.
+--
+-- `(kind, service_date)` and not `(service_date, kind)`: the ordinal partitions by kind and orders by
+-- date within it, which is the exact prefix order this index gives. `client_id` cannot join it — it
+-- lives on `assets`.
+--
+-- Guarded on the index NAME. `CREATE INDEX IF NOT EXISTS` is MariaDB-only; MySQL 8 rejects it, and
+-- an unguarded CREATE INDEX fails on the second run with ER_DUP_KEYNAME.
+SET @ix_kind := (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+   WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'asset_maintenance'
+     AND INDEX_NAME = 'idx_amaint_kind_date'
+)
+
+-- >>>
+SET @ix_sql := IF(@ix_kind = 0,
+  'ALTER TABLE `asset_maintenance` ADD KEY `idx_amaint_kind_date` (`kind`, `service_date`)',
+  'SELECT ''idx_amaint_kind_date already exists'' AS note')
+
+-- >>>
+PREPARE ix_stmt FROM @ix_sql
+
+-- >>>
+EXECUTE ix_stmt
+
+-- >>>
+DEALLOCATE PREPARE ix_stmt
+
+-- >>>
 -- ── The permissions ──
 -- Its own module, for the same reason `asset_categories` is: a role can maintain the register without
 -- redefining the vocabulary every service record is classified by.
@@ -175,7 +249,8 @@ SELECT r.`id`, p.`id`
 
 -- >>>
 -- ── Verification ──
--- `kind_is_varchar` must read 1, `categories` 5 or more, `unmatched_rows` 0, and `permissions` 4.
+-- `kind_is_varchar` must read 1, `categories` 5 or more, `row_format_declared` 1, `rounds_index` 1,
+-- `unmatched_rows` 0, and `permissions` 4.
 -- `unmatched_rows` is the one that matters most: a record still holding a lowercase word would show on
 -- the Maintenance screen as a kind no category matches, and its filter would never find it.
 SELECT
@@ -183,6 +258,12 @@ SELECT
   (SELECT COUNT(*) FROM information_schema.COLUMNS
     WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'asset_maintenance'
       AND COLUMN_NAME = 'kind' AND DATA_TYPE = 'varchar')                       AS kind_is_varchar,
+  (SELECT COUNT(*) FROM information_schema.TABLES
+    WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'asset_repair_categories'
+      AND CREATE_OPTIONS LIKE '%row_format%')                                   AS row_format_declared,
+  (SELECT COUNT(DISTINCT INDEX_NAME) FROM information_schema.STATISTICS
+    WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'asset_maintenance'
+      AND INDEX_NAME = 'idx_amaint_kind_date')                                  AS rounds_index,
   -- `unmatched_rows` is the figure that matters, and it replaces a case-comparison expression that
   -- used `||` for concatenation. In MySQL `||` is OR unless PIPES_AS_CONCAT is set, so that check
   -- would have compared a string against a boolean and reported nonsense. This asks the question
