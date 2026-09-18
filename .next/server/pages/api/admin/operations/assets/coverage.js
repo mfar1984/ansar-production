@@ -28,6 +28,13 @@
               ob.rate, ob.rate_period, ob.reference,
               a.asset_no, a.name AS asset_name, a.serial_no, a.status, a.ownership,
               a.site_name, a.client_id,
+              -- The cover photograph. One asset can carry several obligations, so the same thumbnail
+              -- repeats down the list exactly as the asset number does: the row is an obligation, and
+              -- the photograph says which unit it is an obligation ON.
+              --
+              -- No backticks in this comment. The whole statement is a TEMPLATE LITERAL, so one would
+              -- close the string and the error lands on this line reading "',' expected".
+              a.photo_path,
               c.company_name AS client_company,
               t.ref_no AS tender_ref,
               -- The asset's OVERALL cover end: the latest of everything on it, so a row that has

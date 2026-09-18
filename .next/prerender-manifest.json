@@ -30,7 +30,8 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/career": {
+    "/_not-found": {
+      "initialStatus": 404,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -43,8 +44,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/career",
-      "dataRoute": "/career.rsc",
+      "srcRoute": "/_not-found",
+      "dataRoute": "/_not-found.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -78,7 +79,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/resources/certificates": {
+    "/career": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -91,56 +92,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/resources/certificates",
-      "dataRoute": "/resources/certificates.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/resources/download": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/resources/download",
-      "dataRoute": "/resources/download.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/resources/projects": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/resources/projects",
-      "dataRoute": "/resources/projects.rsc",
+      "srcRoute": "/career",
+      "dataRoute": "/career.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -198,6 +151,54 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/resources/certificates": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/resources/certificates",
+      "dataRoute": "/resources/certificates.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/resources/download": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/resources/download",
+      "dataRoute": "/resources/download.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/admin/login": {
       "experimentalBypassFor": [
         {
@@ -222,8 +223,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/_not-found": {
-      "initialStatus": 404,
+    "/resources/projects": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -236,8 +236,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/_not-found",
-      "dataRoute": "/_not-found.rsc",
+      "srcRoute": "/resources/projects",
+      "dataRoute": "/resources/projects.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -251,8 +251,8 @@
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "672f7ea217a34c89e88d461084d17914",
-    "previewModeSigningKey": "8e0d4bd3d22206a53784fd94df893bb61b252ce628deae372e98070e88f0f7f1",
-    "previewModeEncryptionKey": "57b705d56c912fa1bec02de1a69217c523117476eeefccb96446d973e8a3d5e1"
+    "previewModeId": "6da67f9c0cf2ba57a88a33e86f0aa620",
+    "previewModeSigningKey": "d828879ba8d3781159f4829dee8b7e49db7d60807b053ea08e88fb140d264af3",
+    "previewModeEncryptionKey": "92615ae64a2812f55d77a3ce242492ba9af9713ae6b27aafe60d0974df46adc7"
   }
 }

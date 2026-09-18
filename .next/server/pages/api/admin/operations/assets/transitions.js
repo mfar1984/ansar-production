@@ -7,6 +7,9 @@
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,[b.action,b.module,c?.username||"system",c?.userId??null,c?.role??null,c?.ip??null,b.target,b.description,i(b.before),i(b.after)]),await g(null,{level:["DELETE","REJECT","SUSPEND"].includes(b.action)?"WARN":"INFO",category:b.module,message:b.description,details:b.target,actor:c||void 0})}catch{}}},56690:(a,b,c)=>{c.r(b),c.d(b,{config:()=>t,default:()=>s,handler:()=>v});var d={};c.r(d),c.d(d,{default:()=>p});var e=c(29046),f=c(8667),g=c(33480),h=c(86435),i=c(88251),j=c(3557),k=c(19275),l=c(95514);let m="assets_external",n="assets_internal",o=["30","60","90","overdue"];async function p(a,b){let c=await (0,j.OC)(a,b);if(c){b.setHeader("Cache-Control","no-store");try{if("GET"===a.method){if(!(0,j.OD)(c,b,m,"view"))return;let d=String(a.query.window||"90");if(!o.includes(d))return b.status(400).json({success:!1,error:"Unknown window."});let e=l.Xn.filter(a=>l.iC.includes((0,l.QY)(a))),f=l.jS.map(()=>"?").join(", "),g="overdue"===d?"DATEDIFF(o.ends_on, CURDATE()) < 0":"DATEDIFF(o.ends_on, CURDATE()) BETWEEN 0 AND ?",h=[...e,...l.jS,..."overdue"===d?[]:[Number(d)]],k=await (0,i.P)(`SELECT o.id                                     AS obligation_id,
                 a.id                                     AS asset_id,
                 a.asset_no, a.name, o.kind,
+                -- The cover photograph. A handover or a recovery is somebody going to a client site
+                -- to collect a specific unit, and the photograph is what they match it against.
+                a.photo_path,
                 DATE_FORMAT(o.ends_on, '%Y-%m-%d')       AS ends_on,
                 DATEDIFF(o.ends_on, CURDATE())           AS days_left,
                 a.ownership, a.status, a.client_id,

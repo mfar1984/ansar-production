@@ -12,6 +12,9 @@
                   l.actual_location, l.note, l.counted_by,
                   DATE_FORMAT(l.counted_at, '%Y-%m-%d %H:%i') AS counted_at,
                   a.asset_no, a.name AS asset_name, a.serial_no, a.tag_no, a.category,
+                  -- The cover photograph. A count sheet is walked with the unit in hand, and telling
+                  -- one of four identical laptops from another is the whole job.
+                  a.photo_path,
                   -- The LIVE values, alongside the snapshot. Showing both is the point: the
                   -- difference between them is what a reader is looking for.
                   a.location AS current_location, a.status AS current_status

@@ -48,6 +48,17 @@
                 COUNT(DISTINCT a.site_id)                     AS sites,
                 MIN(a.site_name)                              AS site_name,
                 MIN(a.asset_no)                               AS first_asset_no,
+                -- ── ONLY MEANINGFUL WHEN THE assets COUNT IS 1 ──
+                --
+                -- A round of one unit is the ordinary shape of a REPAIR, and for that row the
+                -- photograph is the unit's, exactly as on every other screen. Across several units
+                -- these two are MIN() over a set and can even come from DIFFERENT rows, so the screen
+                -- reads them only when that count is 1. Do not use them otherwise.
+                --
+                -- No backticks anywhere in this comment: the whole statement is a TEMPLATE LITERAL, so
+                -- one closes the string and tsc reports "',' expected" on this line.
+                MIN(a.id)                                     AS first_asset_id,
+                MIN(a.photo_path)                             AS first_photo_path,
                 COUNT(DISTINCT m.performed_by)                AS engineers,
                 MIN(m.performed_by)                           AS performed_by,
                 COUNT(DISTINCT m.vendor_id)                   AS vendor_count,
@@ -87,6 +98,10 @@
               DATE_FORMAT(m.next_due, '%Y-%m-%d')     AS next_due,
               m.performed_by, m.vendor_id, m.cost, m.ticket_id, m.summary, m.recorded_by,
               a.asset_no, a.name AS asset_name, a.category, a.status AS asset_status,
+              -- The cover photograph. One record is one service on one unit, so this is well defined
+              -- here in a way it is not on the ROUNDS list above: that one groups by batch and takes
+              -- MIN(a.asset_no) across every unit in the round.
+              a.photo_path,
               a.location, a.site_name,
               v.name AS vendor_name,
               t.ticket_no

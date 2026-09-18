@@ -20,6 +20,7 @@
                FROM assets a
               WHERE ${o}
               ORDER BY a.asset_no ASC`)]);return b.status(200).json({success:!0,employees:a,available:c})}if("1"===String(a.query.available||"")){let c=(0,l.gx)(a.query.q,120),d=[],e="";if(c){e+=" AND (a.asset_no LIKE ? OR a.name LIKE ? OR a.category LIKE ? OR a.location LIKE ?)";let a=`%${c}%`;d.push(a,a,a,a)}"1"===String(a.query.loanable||"")&&(e+=" AND a.is_loanable = 1");let f=Math.min(20,Math.max(1,Number(a.query.limit)||20)),[g,h]=await Promise.all([(0,i.P)(`SELECT a.id, a.asset_no, a.name, a.category, a.location, a.status, a.is_loanable,
+                    a.photo_path,
                     e.full_name AS assigned_to
                FROM assets a
                LEFT JOIN employees e ON e.id = a.employee_id
@@ -35,6 +36,7 @@
                 ck.expected_site, ck.purpose, ck.return_condition,
                 ck.issued_by, ck.received_by,
                 a.asset_no, a.name AS asset_name, a.category, a.status AS asset_status,
+                a.photo_path,
                 e.full_name AS employee_name, e.employee_id AS employee_code
            FROM asset_checkouts ck
            JOIN assets a          ON a.id = ck.asset_id
