@@ -1,6 +1,6 @@
 {
-  "/_not-found/page": "/_not-found",
   "/sitemap.xml/route": "/sitemap.xml",
+  "/_not-found/page": "/_not-found",
   "/api/contact/route": "/api/contact",
   "/robots.txt/route": "/robots.txt",
   "/career/page": "/career",
@@ -16,11 +16,11 @@
   "/business/tenders/page": "/business/tenders",
   "/civil-engineering/page": "/civil-engineering",
   "/disclaimer/page": "/disclaimer",
-  "/ict-engineering/page": "/ict-engineering",
   "/contact/page": "/contact",
+  "/ict-engineering/page": "/ict-engineering",
   "/mechanical-electrical-engineering/page": "/mechanical-electrical-engineering",
-  "/privacy-policy/page": "/privacy-policy",
   "/organization/page": "/organization",
+  "/privacy-policy/page": "/privacy-policy",
   "/page": "/",
   "/project-management-consultancy/page": "/project-management-consultancy",
   "/resources/faq/page": "/resources/faq",
@@ -30,9 +30,9 @@
   "/terms-of-service/page": "/terms-of-service",
   "/shop/page": "/shop",
   "/sitemap/page": "/sitemap",
-  "/(auth)/auth/[hash]/print/asset-labels/page": "/auth/[hash]/print/asset-labels",
-  "/(auth)/auth/[hash]/print/asset-stocktake/page": "/auth/[hash]/print/asset-stocktake",
+  "/(auth)/admin/login/page": "/admin/login",
   "/(auth)/auth/[hash]/print/[type]/[id]/page": "/auth/[hash]/print/[type]/[id]",
+  "/(auth)/auth/[hash]/print/asset-stocktake/page": "/auth/[hash]/print/asset-stocktake",
   "/(auth)/auth/[hash]/page": "/auth/[hash]",
-  "/(auth)/admin/login/page": "/admin/login"
+  "/(auth)/auth/[hash]/print/asset-labels/page": "/auth/[hash]/print/asset-labels"
 }
