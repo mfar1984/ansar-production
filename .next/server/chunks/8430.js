@@ -1,4 +1,4 @@
-"use strict";exports.id=8430,exports.ids=[8430],exports.modules={38430:(a,b,c)=>{c.d(b,{DR:()=>o,J1:()=>p,O$:()=>n,Rb:()=>q,ZT:()=>k,ai:()=>m,iF:()=>l,kH:()=>j});var d=c(21572),e=c.n(d);let f=process.env.HELPDESK_MAIL_USER||"",g=process.env.HELPDESK_MAIL_PASS||"",h=!1,i={sendMail:a=>(function(){if(!f||!g)throw h||(console.error("HELPDESK_MAIL_USER / HELPDESK_MAIL_PASS are not set. Helpdesk email is disabled; tickets are still accepted but no mail will be sent."),h=!0),Error("Helpdesk mail is not configured.");return e().createTransport({service:"gmail",auth:{user:f,pass:g}})})().sendMail(a)};async function j(a,b,c,d){let e=`http://localhost:3000/client/verify?token=${c}`,f={from:'"Ansar Technologies Support" <support@ansartechnologies.my>',to:a,subject:"Verify Your Email - Ansar Technologies Support Portal",html:`
+"use strict";exports.id=8430,exports.ids=[8430],exports.modules={38430:(a,b,c)=>{c.d(b,{DR:()=>m,J1:()=>n,O$:()=>l,Rb:()=>o,ZT:()=>i,ai:()=>k,iF:()=>j,kH:()=>h});var d=c(2066);let e="support";function f(a){if(a)return"string"==typeof a?a:Array.isArray(a)?a.map(a=>"string"==typeof a?a:a.address).filter(Boolean):"address"in a?a.address:void 0}let g={async sendMail(a){let b=f(a.to);if(!b||Array.isArray(b)&&0===b.length)throw Error("No recipient for helpdesk mail.");let c=await (0,d.OT)(e,{to:b,subject:String(a.subject||""),html:String(a.html||""),text:"string"==typeof a.text?a.text:void 0,cc:f(a.cc),bcc:f(a.bcc)});if(!c.success)throw Error(c.error||`Email profile '${e}' could not send.`);return c}};async function h(a,b,c,d){let e=`http://localhost:3000/client/verify?token=${c}`,f={to:a,subject:"Verify Your Email - Ansar Technologies Support Portal",html:`
       <!DOCTYPE html>
       <html>
       <head>
@@ -55,7 +55,7 @@
         </div>
       </body>
       </html>
-    `};try{return await i.sendMail(f),{success:!0}}catch(a){throw console.error("Error sending verification email:",a),a}}async function k(a,b,c,d,e,f,g){let h={from:'"Ansar Technologies Support Portal" <support@ansartechnologies.my>',to:"support@ansartechnologies.my",subject:`[New Ticket] ${a} - ${e}`,html:`
+    `};try{return await g.sendMail(f),{success:!0}}catch(a){throw console.error("Error sending verification email:",a),a}}async function i(a,b,c,d,e,f,h){let i={to:"support@ansartechnologies.my",subject:`[New Ticket] ${a} - ${e}`,html:`
       <!DOCTYPE html>
       <html>
       <head>
@@ -83,7 +83,7 @@
             <p><strong>Email:</strong> ${d}</p>
             <p><strong>Subject:</strong> ${e}</p>
             <p><strong>Category:</strong> ${f}</p>
-            <p><strong>Priority:</strong> <span class="badge priority-${g.toLowerCase()}">${g}</span></p>
+            <p><strong>Priority:</strong> <span class="badge priority-${h.toLowerCase()}">${h}</span></p>
             
             <p style="margin-top: 30px;">
               <a href="http://localhost:3000/auth/login" 
@@ -99,7 +99,7 @@
         </div>
       </body>
       </html>
-    `};try{return await i.sendMail(h),{success:!0}}catch(a){throw console.error("Error sending admin notification:",a),a}}async function l(a,b,c,d,e){let f={from:'"Ansar Technologies Support" <support@ansartechnologies.my>',to:a,subject:`[Reply] ${c} - ${d}`,html:`
+    `};try{return await g.sendMail(i),{success:!0}}catch(a){throw console.error("Error sending admin notification:",a),a}}async function j(a,b,c,d,e){let f={to:a,subject:`[Reply] ${c} - ${d}`,html:`
       <!DOCTYPE html>
       <html>
       <head>
@@ -139,7 +139,7 @@
         </div>
       </body>
       </html>
-    `};try{return await i.sendMail(f),{success:!0}}catch(a){throw console.error("Error sending client reply notification:",a),a}}async function m(a,b,c,d,e){let f={from:'"Ansar Technologies Support Portal" <support@ansartechnologies.my>',to:(e?["support@ansartechnologies.my",e]:["support@ansartechnologies.my"]).join(", "),subject:`[Client Reply] ${a} - ${c}`,html:`
+    `};try{return await g.sendMail(f),{success:!0}}catch(a){throw console.error("Error sending client reply notification:",a),a}}async function k(a,b,c,d,e){let f={to:(e?["support@ansartechnologies.my",e]:["support@ansartechnologies.my"]).join(", "),subject:`[Client Reply] ${a} - ${c}`,html:`
       <!DOCTYPE html>
       <html>
       <head>
@@ -176,7 +176,7 @@
         </div>
       </body>
       </html>
-    `};try{return await i.sendMail(f),{success:!0}}catch(a){throw console.error("Error sending admin client reply notification:",a),a}}async function n(a,b,c,d,e,f){let g={from:'"Ansar Technologies Support Portal" <support@ansartechnologies.my>',to:a,subject:`[Assigned] ${c} - ${e}`,html:`
+    `};try{return await g.sendMail(f),{success:!0}}catch(a){throw console.error("Error sending admin client reply notification:",a),a}}async function l(a,b,c,d,e,f){let h={to:a,subject:`[Assigned] ${c} - ${e}`,html:`
       <!DOCTYPE html>
       <html>
       <head>
@@ -216,7 +216,7 @@
         </div>
       </body>
       </html>
-    `};try{return await i.sendMail(g),{success:!0}}catch(a){throw console.error("Error sending assignment notification:",a),a}}async function o(a,b,c,d,e){let f={open:"Your ticket is now open and being reviewed by our team.",in_progress:"Our team is actively working on your ticket.",waiting_client:"We are waiting for additional information from you.",resolved:"Your ticket has been resolved. Please login to view the solution.",closed:"Your ticket has been closed. If you need further assistance, please create a new ticket."}[e]||"Your ticket status has been updated.",g={from:'"Ansar Technologies Support" <support@ansartechnologies.my>',to:a,subject:`[Status Update] ${c} - ${e.replace("_"," ").toUpperCase()}`,html:`
+    `};try{return await g.sendMail(h),{success:!0}}catch(a){throw console.error("Error sending assignment notification:",a),a}}async function m(a,b,c,d,e){let f={open:"Your ticket is now open and being reviewed by our team.",in_progress:"Our team is actively working on your ticket.",waiting_client:"We are waiting for additional information from you.",resolved:"Your ticket has been resolved. Please login to view the solution.",closed:"Your ticket has been closed. If you need further assistance, please create a new ticket."}[e]||"Your ticket status has been updated.",h={to:a,subject:`[Status Update] ${c} - ${e.replace("_"," ").toUpperCase()}`,html:`
       <!DOCTYPE html>
       <html>
       <head>
@@ -258,7 +258,7 @@
         </div>
       </body>
       </html>
-    `};try{return await i.sendMail(g),{success:!0}}catch(a){throw console.error("Error sending status change notification:",a),a}}async function p(a,b,c){let d="http://localhost:3000/auth/login",e={from:'"Ansar Technologies Support" <support@ansartechnologies.my>',to:a,subject:"Your Password Has Been Reset - Ansar Technologies Support Portal",html:`
+    `};try{return await g.sendMail(h),{success:!0}}catch(a){throw console.error("Error sending status change notification:",a),a}}async function n(a,b,c){let d="http://localhost:3000/auth/login",e={to:a,subject:"Your Password Has Been Reset - Ansar Technologies Support Portal",html:`
       <!DOCTYPE html>
       <html>
       <head>
@@ -309,7 +309,7 @@
         </div>
       </body>
       </html>
-    `};try{return await i.sendMail(e),{success:!0}}catch(a){throw console.error("Error sending password reset email:",a),a}}async function q(a,b,c,d){let e=`http://localhost:3000/api/public/helpdesk/confirm-ticket?token=${encodeURIComponent(c)}`;await i.sendMail({from:'"Ansar Technologies Support" <support@ansartechnologies.my>',to:a,subject:`Confirm your support ticket ${d} - Ansar Technologies`,html:`
+    `};try{return await g.sendMail(e),{success:!0}}catch(a){throw console.error("Error sending password reset email:",a),a}}async function o(a,b,c,d){let e=`http://localhost:3000/api/public/helpdesk/confirm-ticket?token=${encodeURIComponent(c)}`;await g.sendMail({to:a,subject:`Confirm your support ticket ${d} - Ansar Technologies`,html:`
       <!DOCTYPE html>
       <html>
         <body style="font-family: Arial, Helvetica, sans-serif; color: #1f2937; margin: 0; padding: 24px; background: #f9fafb;">
