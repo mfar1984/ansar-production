@@ -558,6 +558,14 @@
       "namedRegex": "^/news/(?<nxtPslug>[^/]+?)(?:/)?$"
     },
     {
+      "page": "/shop/order/[token]",
+      "regex": "^/shop/order/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPtoken": "nxtPtoken"
+      },
+      "namedRegex": "^/shop/order/(?<nxtPtoken>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/shop/[slug]",
       "regex": "^/shop/([^/]+?)(?:/)?$",
       "routeKeys": {
