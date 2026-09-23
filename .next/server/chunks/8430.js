@@ -1,4 +1,6 @@
-"use strict";exports.id=8430,exports.ids=[8430],exports.modules={38430:(a,b,c)=>{c.d(b,{DR:()=>m,J1:()=>n,O$:()=>l,Rb:()=>o,ZT:()=>i,ai:()=>k,iF:()=>j,kH:()=>h});var d=c(2066);let e="support";function f(a){if(a)return"string"==typeof a?a:Array.isArray(a)?a.map(a=>"string"==typeof a?a:a.address).filter(Boolean):"address"in a?a.address:void 0}let g={async sendMail(a){let b=f(a.to);if(!b||Array.isArray(b)&&0===b.length)throw Error("No recipient for helpdesk mail.");let c=await (0,d.OT)(e,{to:b,subject:String(a.subject||""),html:String(a.html||""),text:"string"==typeof a.text?a.text:void 0,cc:f(a.cc),bcc:f(a.bcc)});if(!c.success)throw Error(c.error||`Email profile '${e}' could not send.`);return c}};async function h(a,b,c,d){let e=`http://localhost:3000/client/verify?token=${c}`,f={to:a,subject:"Verify Your Email - Ansar Technologies Support Portal",html:`
+"use strict";exports.id=8430,exports.ids=[8430],exports.modules={2922:(a,b,c)=>{c.d(b,{XG:()=>g,hG:()=>i,it:()=>h});var d=c(88251);let e=["leave","claim","overtime","expenses","payroll","kpi","partners","procurement","business_dev","applicants","asset_loan","petty_cash","market_place","asset_disposal","helpdesk"],f={email_profile:"hr",notify_employee:"1",notify_approver:"1",notify_every_level:"0",cc_email:"",rest_days:"0,6",holiday_state:"",email_subject_approved:"",email_body_approved:"",email_subject_rejected:"",email_body_rejected:""};function g(a){return"string"==typeof a&&e.includes(a)}async function h(a){let b={...f};try{for(let c of(await (0,d.P)("SELECT setting_key, value FROM hr_module_settings WHERE module = ?",[a])))c.setting_key in b&&(b[c.setting_key]=c.value??"")}catch{}return b}async function i(a,b,c){let e=[];for(let g of Object.keys(f)){if(!(g in b))continue;let f=b[g],h=null==f?"":String(f);await (0,d.P)(`INSERT INTO hr_module_settings (module, setting_key, value, updated_by)
+       VALUES (?, ?, ?, ?)
+       ON DUPLICATE KEY UPDATE value = VALUES(value), updated_by = VALUES(updated_by)`,[a,g,h,c]),e.push(g)}return e}},38430:(a,b,c)=>{c.d(b,{DR:()=>u,J1:()=>v,O$:()=>t,Rb:()=>w,ZT:()=>q,ai:()=>s,iF:()=>r,kH:()=>p});var d=c(2066),e=c(2922);let f="support",g="NEXT_PUBLIC_BASE_URL",h=/^(localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])$/i,i=!1;function j(a){let b=(process.env[g]||"").trim().replace(/\/+$/,""),c="";if(b)try{c=new URL(b).hostname}catch{}return!i&&(!b||!c||h.test(c))&&(i=!0,console.error(`${g} is ${b?`"${b}"`:"not set"}, so helpdesk email is about to send a link a recipient cannot open. Set it to the public address of this site.`)),`${b}${a}`}async function k(a){try{let b=await (0,d.Us)(a),c=b?.email_address?String(b.email_address).trim():"";return c?[c]:[]}catch{return[]}}async function l(){let a=await (0,e.it)("helpdesk");if("0"===a.notify_employee)return{to:[],skipped:"notify_employee is off"};let b=String(a.cc_email||"").split(/[,;]/).map(a=>a.trim()).filter(Boolean);return{to:b.length>0?b:await k(a.email_profile)}}function m(a){if(a)return"string"==typeof a?a:Array.isArray(a)?a.map(a=>"string"==typeof a?a:a.address).filter(Boolean):"address"in a?a.address:void 0}async function n(){try{return(await (0,e.it)("helpdesk")).email_profile||f}catch{return f}}let o={async sendMail(a){let b=m(a.to);if(!b||Array.isArray(b)&&0===b.length)throw Error("No recipient for helpdesk mail.");let c=await n(),e=await (0,d.OT)(c,{to:b,subject:String(a.subject||""),html:String(a.html||""),text:"string"==typeof a.text?a.text:void 0,cc:m(a.cc),bcc:m(a.bcc)});if(!e.success)throw Error(e.error||`Email profile '${c}' could not send.`);return e}};async function p(a,b,c,d){let e=`${j("/client/verify")}?token=${c}`,f={to:a,subject:"Verify Your Email - Ansar Technologies Support Portal",html:`
       <!DOCTYPE html>
       <html>
       <head>
@@ -29,7 +31,7 @@
             <div class="credentials">
               <h3 style="margin-top: 0; color: #1e3a8a;">📋 Your Login Credentials</h3>
               <p>After verification, you can login to track your tickets:</p>
-              <p style="margin: 8px 0;"><strong>Login URL:</strong> http://localhost:3000/auth/login</p>
+              <p style="margin: 8px 0;"><strong>Login URL:</strong> ${j("/auth/login")}</p>
               <p style="margin: 8px 0;"><strong>Username:</strong> ${a}</p>
               <p style="margin: 8px 0;"><strong>Password:</strong> (The password you set during registration)</p>
             </div>
@@ -55,7 +57,7 @@
         </div>
       </body>
       </html>
-    `};try{return await g.sendMail(f),{success:!0}}catch(a){throw console.error("Error sending verification email:",a),a}}async function i(a,b,c,d,e,f,h){let i={to:"support@ansartechnologies.my",subject:`[New Ticket] ${a} - ${e}`,html:`
+    `};try{return await o.sendMail(f),{success:!0}}catch(a){throw console.error("Error sending verification email:",a),a}}async function q(a,b,c,d,e,f,g){let h=await l();if(h.skipped)return{success:!0,skipped:h.skipped};let i=h.to;if(0===i.length)throw Error("No helpdesk notification recipient. Set one on Helpdesk > Settings > Notification, or check the chosen email profile has an address.");let k={to:i,subject:`[New Ticket] ${a} - ${e}`,html:`
       <!DOCTYPE html>
       <html>
       <head>
@@ -83,10 +85,10 @@
             <p><strong>Email:</strong> ${d}</p>
             <p><strong>Subject:</strong> ${e}</p>
             <p><strong>Category:</strong> ${f}</p>
-            <p><strong>Priority:</strong> <span class="badge priority-${h.toLowerCase()}">${h}</span></p>
+            <p><strong>Priority:</strong> <span class="badge priority-${g.toLowerCase()}">${g}</span></p>
             
             <p style="margin-top: 30px;">
-              <a href="http://localhost:3000/auth/login" 
+              <a href="${j("/auth/login")}" 
                  style="background: #3b82f6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
                 View in Admin Portal
               </a>
@@ -99,7 +101,7 @@
         </div>
       </body>
       </html>
-    `};try{return await g.sendMail(i),{success:!0}}catch(a){throw console.error("Error sending admin notification:",a),a}}async function j(a,b,c,d,e){let f={to:a,subject:`[Reply] ${c} - ${d}`,html:`
+    `};try{return await o.sendMail(k),{success:!0}}catch(a){throw console.error("Error sending admin notification:",a),a}}async function r(a,b,c,d,e){let f=j("/auth/login"),g={to:a,subject:`[Reply] ${c} - ${d}`,html:`
       <!DOCTYPE html>
       <html>
       <head>
@@ -128,7 +130,7 @@
 
             <p>Please login to your support portal to view the full conversation and reply:</p>
             <div style="text-align: center;">
-              <a href="http://localhost:3000/auth/login" class="button">View Ticket</a>
+              <a href="${f}" class="button">View Ticket</a>
             </div>
             
             <p style="font-size: 12px; color: #6b7280; margin-top: 20px;">
@@ -139,7 +141,7 @@
         </div>
       </body>
       </html>
-    `};try{return await g.sendMail(f),{success:!0}}catch(a){throw console.error("Error sending client reply notification:",a),a}}async function k(a,b,c,d,e){let f={to:(e?["support@ansartechnologies.my",e]:["support@ansartechnologies.my"]).join(", "),subject:`[Client Reply] ${a} - ${c}`,html:`
+    `};try{return await o.sendMail(g),{success:!0}}catch(a){throw console.error("Error sending client reply notification:",a),a}}async function s(a,b,c,d,e){let f=await l();if(f.skipped)return{success:!0,skipped:f.skipped};let g=e?[e.trim()].filter(Boolean):[],h=[...new Set([...f.to,...g])];if(0===h.length)throw Error("No helpdesk notification recipient. Set one on Helpdesk > Settings > Notification, or check the chosen email profile has an address.");let i={to:h.join(", "),subject:`[Client Reply] ${a} - ${c}`,html:`
       <!DOCTYPE html>
       <html>
       <head>
@@ -167,7 +169,7 @@
             </div>
 
             <p style="margin-top: 20px;">
-              <a href="http://localhost:3000/auth/login" 
+              <a href="${j("/auth/login")}" 
                  style="background: #059669; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
                 View & Reply in Portal
               </a>
@@ -176,7 +178,7 @@
         </div>
       </body>
       </html>
-    `};try{return await g.sendMail(f),{success:!0}}catch(a){throw console.error("Error sending admin client reply notification:",a),a}}async function l(a,b,c,d,e,f){let h={to:a,subject:`[Assigned] ${c} - ${e}`,html:`
+    `};try{return await o.sendMail(i),{success:!0}}catch(a){throw console.error("Error sending admin client reply notification:",a),a}}async function t(a,b,c,d,e,f){let g={to:a,subject:`[Assigned] ${c} - ${e}`,html:`
       <!DOCTYPE html>
       <html>
       <head>
@@ -203,7 +205,7 @@
             <p><strong>Priority:</strong> <span class="badge" style="background: #fef3c7; color: #d97706;">${f}</span></p>
 
             <p style="margin-top: 20px;">
-              <a href="http://localhost:3000/auth/login" 
+              <a href="${j("/auth/login")}" 
                  style="background: #7c3aed; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
                 View Ticket Details
               </a>
@@ -216,7 +218,7 @@
         </div>
       </body>
       </html>
-    `};try{return await g.sendMail(h),{success:!0}}catch(a){throw console.error("Error sending assignment notification:",a),a}}async function m(a,b,c,d,e){let f={open:"Your ticket is now open and being reviewed by our team.",in_progress:"Our team is actively working on your ticket.",waiting_client:"We are waiting for additional information from you.",resolved:"Your ticket has been resolved. Please login to view the solution.",closed:"Your ticket has been closed. If you need further assistance, please create a new ticket."}[e]||"Your ticket status has been updated.",h={to:a,subject:`[Status Update] ${c} - ${e.replace("_"," ").toUpperCase()}`,html:`
+    `};try{return await o.sendMail(g),{success:!0}}catch(a){throw console.error("Error sending assignment notification:",a),a}}async function u(a,b,c,d,e){let f={open:"Your ticket is now open and being reviewed by our team.",in_progress:"Our team is actively working on your ticket.",waiting_client:"We are waiting for additional information from you.",resolved:"Your ticket has been resolved. Please login to view the solution.",closed:"Your ticket has been closed. If you need further assistance, please create a new ticket."}[e]||"Your ticket status has been updated.",g={to:a,subject:`[Status Update] ${c} - ${e.replace("_"," ").toUpperCase()}`,html:`
       <!DOCTYPE html>
       <html>
       <head>
@@ -244,7 +246,7 @@
             <p>${f}</p>
 
             <p style="margin-top: 20px;">
-              <a href="http://localhost:3000/auth/login" 
+              <a href="${j("/auth/login")}" 
                  style="background: #0891b2; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
                 View Ticket Details
               </a>
@@ -258,7 +260,7 @@
         </div>
       </body>
       </html>
-    `};try{return await g.sendMail(h),{success:!0}}catch(a){throw console.error("Error sending status change notification:",a),a}}async function n(a,b,c){let d="http://localhost:3000/auth/login",e={to:a,subject:"Your Password Has Been Reset - Ansar Technologies Support Portal",html:`
+    `};try{return await o.sendMail(g),{success:!0}}catch(a){throw console.error("Error sending status change notification:",a),a}}async function v(a,b,c){let d=j("/auth/login"),e={to:a,subject:"Your Password Has Been Reset - Ansar Technologies Support Portal",html:`
       <!DOCTYPE html>
       <html>
       <head>
@@ -309,7 +311,7 @@
         </div>
       </body>
       </html>
-    `};try{return await g.sendMail(e),{success:!0}}catch(a){throw console.error("Error sending password reset email:",a),a}}async function o(a,b,c,d){let e=`http://localhost:3000/api/public/helpdesk/confirm-ticket?token=${encodeURIComponent(c)}`;await g.sendMail({to:a,subject:`Confirm your support ticket ${d} - Ansar Technologies`,html:`
+    `};try{return await o.sendMail(e),{success:!0}}catch(a){throw console.error("Error sending password reset email:",a),a}}async function w(a,b,c,d){let e=`${j("/api/public/helpdesk/confirm-ticket")}?token=${encodeURIComponent(c)}`;await o.sendMail({to:a,subject:`Confirm your support ticket ${d} - Ansar Technologies`,html:`
       <!DOCTYPE html>
       <html>
         <body style="font-family: Arial, Helvetica, sans-serif; color: #1f2937; margin: 0; padding: 24px; background: #f9fafb;">
