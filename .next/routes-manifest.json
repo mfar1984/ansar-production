@@ -340,6 +340,46 @@
       "namedRegex": "^/api/admin/operations/leads/(?<nxtPid>[^/]+?)(?:/)?$"
     },
     {
+      "page": "/api/admin/operations/projects/[id]",
+      "regex": "^/api/admin/operations/projects/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/projects/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/admin/operations/projects/[id]/messages",
+      "regex": "^/api/admin/operations/projects/([^/]+?)/messages(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/projects/(?<nxtPid>[^/]+?)/messages(?:/)?$"
+    },
+    {
+      "page": "/api/admin/operations/projects/[id]/messages/read",
+      "regex": "^/api/admin/operations/projects/([^/]+?)/messages/read(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/projects/(?<nxtPid>[^/]+?)/messages/read(?:/)?$"
+    },
+    {
+      "page": "/api/admin/operations/projects/[id]/participants",
+      "regex": "^/api/admin/operations/projects/([^/]+?)/participants(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/projects/(?<nxtPid>[^/]+?)/participants(?:/)?$"
+    },
+    {
+      "page": "/api/admin/operations/projects/[id]/phase",
+      "regex": "^/api/admin/operations/projects/([^/]+?)/phase(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/projects/(?<nxtPid>[^/]+?)/phase(?:/)?$"
+    },
+    {
       "page": "/api/admin/operations/proposals/[id]",
       "regex": "^/api/admin/operations/proposals/([^/]+?)(?:/)?$",
       "routeKeys": {
@@ -466,6 +506,30 @@
         "nxtPid": "nxtPid"
       },
       "namedRegex": "^/api/admin/webhooks/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/client/projects/[id]",
+      "regex": "^/api/client/projects/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/client/projects/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/client/projects/[id]/messages",
+      "regex": "^/api/client/projects/([^/]+?)/messages(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/client/projects/(?<nxtPid>[^/]+?)/messages(?:/)?$"
+    },
+    {
+      "page": "/api/client/projects/[id]/messages/read",
+      "regex": "^/api/client/projects/([^/]+?)/messages/read(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/client/projects/(?<nxtPid>[^/]+?)/messages/read(?:/)?$"
     },
     {
       "page": "/api/client/tickets/[id]",

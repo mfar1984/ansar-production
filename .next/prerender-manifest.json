@@ -1,7 +1,8 @@
 {
   "version": 4,
   "routes": {
-    "/career": {
+    "/_not-found": {
+      "initialStatus": 404,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -14,8 +15,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/career",
-      "dataRoute": "/career.rsc",
+      "srcRoute": "/_not-found",
+      "dataRoute": "/_not-found.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -73,7 +74,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/resources/achievement": {
+    "/career": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -86,8 +87,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/resources/achievement",
-      "dataRoute": "/resources/achievement.rsc",
+      "srcRoute": "/career",
+      "dataRoute": "/career.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -121,7 +122,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/resources/download": {
+    "/resources/achievement": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -134,8 +135,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/resources/download",
-      "dataRoute": "/resources/download.rsc",
+      "srcRoute": "/resources/achievement",
+      "dataRoute": "/resources/achievement.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -193,8 +194,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/_not-found": {
-      "initialStatus": 404,
+    "/resources/download": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -207,8 +207,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/_not-found",
-      "dataRoute": "/_not-found.rsc",
+      "srcRoute": "/resources/download",
+      "dataRoute": "/resources/download.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",

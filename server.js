@@ -76,7 +76,7 @@ const handle = app.getRequestHandler();
  * interface, which the cPanel host refuses because Passenger binds the app to a Unix socket rather than to TCP
  * `port`. The whole argument, and the log line that proves it, is in `session-verify.js`.
  */
-const { verifySessionHash } = require('./session-verify');
+const { verifySessionHash, projectRoomAccess } = require('./session-verify');
 
 /**
  * ── 3. WHAT IS MISSING, SAID AT BOOT ──
@@ -144,6 +144,27 @@ app.prepare().then(() => {
     transports: ['websocket', 'polling'],
   });
 
+  /*
+   * ── THE BRIDGE FROM AN API ROUTE TO THIS `io` ──
+   *
+   * `src/lib/project-broadcast.ts` reads this and nothing else. It exists because a project message is
+   * broadcast BY THE SERVER, after an authenticated HTTP POST has authorised it and written it — the browser
+   * never emits message content.
+   *
+   * A global is the right shape here and both alternatives are known to be wrong in this codebase:
+   *
+   *   - a module export cannot work. The API routes are bundled into `.next/server`, and this file is outside
+   *     that graph, so a `require` from a route would load a SECOND copy with no `io` in it.
+   *   - an HTTP or socket client call back into this process is the ECONNREFUSED trap recorded in
+   *     `session-verify.js`: Passenger intercepts `listen()` and binds the app to a Unix socket of its own,
+   *     so nothing answers on TCP `port` for the life of the process.
+   *
+   * Set AFTER `io` exists, so a route either finds a working server or finds nothing.
+   * `project-broadcast.ts` treats nothing as a MISSED broadcast rather than an error: the message is already
+   * in the database, so the next fetch shows it. A delayed message, not a lost one.
+   */
+  globalThis.__ansarSocketIo = io;
+
   const connectedUsers = new Map();
 
   io.on('connection', (socket) => {
@@ -183,6 +204,53 @@ app.prepare().then(() => {
         console.error('join validation error:', e);
         socket.emit('joined', { success: false, reason: 'server_error' });
       }
+    });
+
+    /*
+     * ── JOIN ONE PROJECT'S CONVERSATION ──
+     *
+     * The browser sends a session hash and a project ID. It does NOT send a room name and it does not send an
+     * identity: `projectRoomAccess` derives both from `admin_sessions` and `project_participants`, and returns
+     * the room only when `can_message = 1`.
+     *
+     * That is the difference between this listener and `new_reply` below, which reads `data.clientId` straight
+     * off the payload. With message content flowing through it, that pattern would be text injection into an
+     * arbitrary client's thread — so nothing here is taken from the payload except the id being asked about.
+     *
+     * The decision lives in `session-verify.js` so both server entry points share ONE implementation.
+     * `tests/sql/socket-session.test.js` exists because a rule asserted against one of these two files
+     * survived being broken in the other.
+     *
+     * `project_joined` is a NEW event name. The existing `notification` event still carries the bell, so there
+     * is no second bell mechanism and `NotificationBell` is untouched.
+     */
+    socket.on('join_project', async ({ sessionHash, projectId }) => {
+      try {
+        if (!sessionHash) {
+          socket.emit('project_joined', { success: false, projectId, reason: 'missing_hash' });
+          return;
+        }
+        const access = await projectRoomAccess(sessionHash, projectId);
+        if (!access.ok) {
+          socket.emit('project_joined', { success: false, projectId, reason: access.reason });
+          return;
+        }
+        socket.join(access.room);
+        socket.emit('project_joined', { success: true, projectId });
+      } catch (e) {
+        console.error('join_project validation error:', e);
+        socket.emit('project_joined', { success: false, projectId, reason: 'server_error' });
+      }
+    });
+
+    /*
+     * Leaving needs no authorisation: a socket can only leave a room it is in, and `socket.leave` on a room it
+     * never joined is a no-op. Without it, opening four projects in one session leaves the socket in four rooms
+     * and every message from any of them arrives.
+     */
+    socket.on('leave_project', ({ projectId }) => {
+      const id = Number(projectId);
+      if (Number.isInteger(id) && id > 0) socket.leave(`project_${id}`);
     });
 
     socket.on('task_submitted', (data) => {

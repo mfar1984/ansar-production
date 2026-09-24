@@ -102,6 +102,94 @@ async function verifySessionHash(hash) {
   };
 }
 
+/**
+ * May this session join the socket room for one project?
+ *
+ * @param {string} hash session hash sent by the browser
+ * @param {number} projectId the project the browser asked to join
+ * @returns {Promise<{ok: true, room: string, party: 'employee'|'client'|'admin', username: string}
+ *                   | {ok: false, reason: string}>}
+ *
+ * ══════════════════════════════════════════════════════════════════════════════
+ * WHY THE ROOM DECISION LIVES HERE AND NOT IN THE TWO SERVER FILES
+ * ══════════════════════════════════════════════════════════════════════════════
+ *
+ * `server.js` and `deploy/server.production.js` are two entry points, and `tests/sql/socket-session.test.js`
+ * exists because a rule asserted against one of them survived being broken in the other for months. A
+ * participation query written twice is a second place for a mistake to live, so both servers call this and
+ * hold none of the SQL.
+ *
+ * It also makes the decision TESTABLE against a real database, which is the whole reason
+ * `verifySessionHash` was moved out of the server files in the first place.
+ *
+ * ══════════════════════════════════════════════════════════════════════════════
+ * THE ROOM NAME IS BUILT HERE, FROM A VERIFIED SESSION
+ * ══════════════════════════════════════════════════════════════════════════════
+ *
+ * The browser sends a project ID and nothing else that matters. It never sends a room name, and it never
+ * sends an identity — `verifySessionHash` produces that from `admin_sessions`.
+ *
+ * That is deliberate, and it is the difference between this listener and every other one on those two
+ * servers. `new_reply` reads `data.clientId` straight off the payload with no check at all: today that
+ * costs a false notification, and with message CONTENT flowing through it, it would be text injection into
+ * an arbitrary client's conversation. So the room this returns is derived, never accepted.
+ *
+ * ══════════════════════════════════════════════════════════════════════════════
+ * `can_message`, AND WHY AN ADMIN DOES NOT NEED A ROW
+ * ══════════════════════════════════════════════════════════════════════════════
+ *
+ * A client or an employee must hold a `project_participants` row for this project with `can_message = 1`.
+ * That column is separate from merely being listed, because an engineer can be named on a project for
+ * resource reporting without being authorised to write to the client, and a client representative can be
+ * held out of the conversation during a dispute.
+ *
+ * An admin session holds no `employees.id` — `admin_sessions` has no admin id column at all, which is why
+ * `verifySessionHash` returns no `adminId` — so it cannot have a participant row. Admins are authorised by
+ * PERMISSION instead, and the HTTP endpoints check `project_chat_view` before they will return or accept a
+ * message. Reading the room is therefore allowed for a verified admin session; posting is not, and posting
+ * is the part that goes through HTTP.
+ *
+ * `party_type` is in the WHERE clause, and it is LOAD-BEARING. `database/project_management_chat.sql`
+ * records why: MySQL refused both a CHECK constraint and a STORED generated column over `client_user_id`,
+ * because that column carries a CASCADE foreign key. So nothing in the schema stops a row setting both
+ * ids, and this filter is what keeps the match unambiguous.
+ */
+async function projectRoomAccess(hash, projectId) {
+  const id = Number(projectId);
+  if (!Number.isInteger(id) || id < 1) return { ok: false, reason: 'bad_project' };
+
+  const session = await verifySessionHash(hash);
+  if (!session) return { ok: false, reason: 'invalid_hash' };
+
+  const db = sessionPool();
+
+  /* The project has to exist. Joining a room for a deleted project is a socket that will never receive
+     anything, retried for ever by a client that has no way to know why. */
+  const [projects] = await db.query('SELECT id FROM projects WHERE id = ? LIMIT 1', [id]);
+  if (!projects.length) return { ok: false, reason: 'no_project' };
+
+  if (session.userType === 'admin') {
+    return { ok: true, room: `project_${id}`, party: 'admin', username: session.username };
+  }
+
+  const [rows] = await db.query(
+    `SELECT id FROM project_participants
+      WHERE project_id = ? AND can_message = 1
+        AND ((party_type = 'client'   AND client_user_id = ?)
+          OR (party_type = 'employee' AND employee_id    = ?))
+      LIMIT 1`,
+    [id, session.clientId, session.employeeId],
+  );
+  if (!rows.length) return { ok: false, reason: 'not_a_participant' };
+
+  return {
+    ok: true,
+    room: `project_${id}`,
+    party: session.userType,
+    username: session.username,
+  };
+}
+
 /** Only the test calls this. The server holds the pool open for the life of the process, which is correct there. */
 async function closeSessionPool() {
   if (poolInstance) {
@@ -110,4 +198,4 @@ async function closeSessionPool() {
   }
 }
 
-module.exports = { verifySessionHash, closeSessionPool };
+module.exports = { verifySessionHash, projectRoomAccess, closeSessionPool };
