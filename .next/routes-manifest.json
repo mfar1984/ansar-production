@@ -684,6 +684,12 @@
       "namedRegex": "^/project\\-management\\-consultancy(?:/)?$"
     },
     {
+      "page": "/refund-policy",
+      "regex": "^/refund\\-policy(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/refund\\-policy(?:/)?$"
+    },
+    {
       "page": "/resources/achievement",
       "regex": "^/resources/achievement(?:/)?$",
       "routeKeys": {},
@@ -718,6 +724,12 @@
       "regex": "^/resources/projects(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/resources/projects(?:/)?$"
+    },
+    {
+      "page": "/return-policy",
+      "regex": "^/return\\-policy(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/return\\-policy(?:/)?$"
     },
     {
       "page": "/robots.txt",
