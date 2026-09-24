@@ -45,6 +45,54 @@ function loadEnv() {
   return { env, from: null };
 }
 
+/**
+ * Print the rows a statement returned, as a plain aligned table.
+ *
+ * ── WHY NOT `console.table` ──
+ *
+ * `console.table` draws its frame with box-drawing characters, and `tests/sql/ui-language.test.js`
+ * fails on it by name — the whole tooling is ASCII because this output is read through a pipe more
+ * often than not, and PowerShell decodes those bytes with `[Console]::OutputEncoding`, which on this
+ * machine is IBM437. A box frame arrives as mojibake. The same trap the em dash in this file's own
+ * header comment records.
+ *
+ * ── WHAT IS SKIPPED, AND WHY ──
+ *
+ * An INSERT, UPDATE or ALTER returns an OkPacket, not an array. Printing `affectedRows` after every
+ * ALTER would bury the one thing worth seeing. Only a row SET is printed, which is exactly the
+ * verification SELECT each migration ends with.
+ *
+ * Twenty rows, then a count. A migration's verification returns a handful; a SELECT somebody pasted
+ * in to check something could return thousands, and a wall of output is the same as no output.
+ */
+function printRows(result) {
+  if (!Array.isArray(result) || result.length === 0) return;
+
+  const columns = Object.keys(result[0]);
+  if (columns.length === 0) return;
+
+  const shown = result.slice(0, 20);
+  /* Null printed as the word, so an empty string and a NULL are distinguishable — which is the exact
+     difference `project_management_contract.sql` exists to verify on `projects.location`. */
+  const cell = v => (v === null ? 'NULL' : String(v));
+  const width = c => Math.min(
+    44,
+    Math.max(c.length, ...shown.map(r => cell(r[c]).length)),
+  );
+  const widths = columns.map(width);
+  const pad = (s, n) => (s.length > n ? `${s.slice(0, n - 1)}~` : s.padEnd(n));
+
+  console.log(`  ${columns.map((c, i) => pad(c, widths[i])).join('  ')}`);
+  console.log(`  ${widths.map(w => '-'.repeat(w)).join('  ')}`);
+  for (const row of shown) {
+    console.log(`  ${columns.map((c, i) => pad(cell(row[c]), widths[i])).join('  ')}`);
+  }
+  if (result.length > shown.length) {
+    console.log(`  ... ${result.length - shown.length} more row(s)`);
+  }
+  console.log('');
+}
+
 function splitStatements(sql) {
   return sql
     .split(/^[ \t]*--[ \t]*>>>[ \t]*$/m)
@@ -114,8 +162,20 @@ function splitStatements(sql) {
     for (let i = 0; i < statements.length; i++) {
       const stmt = statements[i];
       try {
-        await conn.query(stmt);
+        const [result] = await conn.query(stmt);
         ok++;
+        /*
+         * ── THE VERIFICATION QUERY IS PRINTED, AND IT USED TO BE THROWN AWAY ──
+         *
+         * This was `await conn.query(stmt)` with the result discarded. Every migration in
+         * `database/` ends with a SELECT against `information_schema` whose whole purpose is to show
+         * the reader the shape that resulted — "expected: eleven new columns, and `location` now has
+         * a default". Not one of them was ever visible. The operator saw `gagal: 0` and had to trust
+         * it.
+         *
+         * A verification nobody reads is not a verification. Thirty-six migrations ship with one.
+         */
+        printRows(result);
       } catch (err) {
         failures.push({ index: i + 1, code: err.code, message: err.message, preview: stmt.slice(0, 110).replace(/\s+/g, ' ') });
       }
