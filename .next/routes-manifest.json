@@ -388,6 +388,30 @@
       "namedRegex": "^/api/admin/operations/projects/(?<nxtPid>[^/]+?)/phase(?:/)?$"
     },
     {
+      "page": "/api/admin/operations/projects/[id]/schedule",
+      "regex": "^/api/admin/operations/projects/([^/]+?)/schedule(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/projects/(?<nxtPid>[^/]+?)/schedule(?:/)?$"
+    },
+    {
+      "page": "/api/admin/operations/projects/[id]/task-deps",
+      "regex": "^/api/admin/operations/projects/([^/]+?)/task\\-deps(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/projects/(?<nxtPid>[^/]+?)/task\\-deps(?:/)?$"
+    },
+    {
+      "page": "/api/admin/operations/projects/[id]/tasks",
+      "regex": "^/api/admin/operations/projects/([^/]+?)/tasks(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/projects/(?<nxtPid>[^/]+?)/tasks(?:/)?$"
+    },
+    {
       "page": "/api/admin/operations/proposals/[id]",
       "regex": "^/api/admin/operations/proposals/([^/]+?)(?:/)?$",
       "routeKeys": {

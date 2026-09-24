@@ -1,0 +1,67 @@
+"use strict";(()=>{var a={};a.id=9489,a.ids=[9489],a.modules={3498:a=>{a.exports=require("mysql2/promise")},3557:(a,b,c)=>{c.d(b,{$3:()=>g,J9:()=>j,O4:()=>l,OC:()=>f,OD:()=>h,QU:()=>m,Sj:()=>k,ah:()=>n,oS:()=>i});var d=c(88251),e=c(63415);async function f(a,b){let c=await (0,e.iT)(a);return c||(b.status(401).json({success:!1,error:"Your session is invalid or has expired. Please sign in again."}),null)}function g(a,b,c){return(0,e.$3)(a,b,c)}function h(a,b,c,d){return!!g(a,c,d)||(b.status(403).json({success:!1,error:`You do not have permission for this: ${c}_${d}`}),!1)}function i(a,b){let c=[],d=[];for(let[e,f]of Object.entries(b))e in a&&(c.push(`\`${e}\` = ?`),d.push(function(a,b){if(void 0===b)return null;if("bool"===a)return+(!0===b||1===b||"1"===b||"true"===b);if("number"===a){if(null===b||""===b)return null;let a=Number(b);return Number.isFinite(a)?a:null}if("json"===a){if(null===b||""===b)return null;if("string"==typeof b)return b;try{return JSON.stringify(b)}catch{return null}}if(null===b)return null;let c=String(b);return""===c?null:c}(f,a[e])));return 0===c.length?null:{clause:c.join(", "),values:d}}function j(a){let b=a.body;if(!b)return{};if("string"==typeof b)try{return JSON.parse(b)}catch{return{}}return"object"==typeof b?b:{}}async function k(){let a=await (0,d.P)("SELECT * FROM system_settings WHERE id = 1");return a.length>0?a[0]:(await (0,d.P)("INSERT INTO system_settings (id) VALUES (1)"),(await (0,d.P)("SELECT * FROM system_settings WHERE id = 1"))[0]||{})}async function l(){let a=await (0,d.P)("SELECT * FROM integrations WHERE id = 1");return a.length>0?a[0]:(await (0,d.P)("INSERT INTO integrations (id) VALUES (1)"),(await (0,d.P)("SELECT * FROM integrations WHERE id = 1"))[0]||{})}function m(a,b){let c={...a};for(let a of b){let b=c[a];c[`${a}_set`]="string"==typeof b&&b.length>0,c[a]=""}return c}function n(a,b){let c={...a};for(let a of b)a in c&&(""===c[a]||null===c[a]||void 0===c[a])&&delete c[a];return c}},16483:(a,b,c)=>{c.r(b),c.d(b,{config:()=>p,default:()=>o,handler:()=>r});var d={};c.r(d),c.d(d,{default:()=>l});var e=c(29046),f=c(8667),g=c(33480),h=c(86435),i=c(88251),j=c(3557);let k=["open","overdue","blocked","unassigned","done"];async function l(a,b){let c=await (0,j.OC)(a,b);if(c){if(b.setHeader("Cache-Control","no-store"),"GET"!==a.method)return b.setHeader("Allow","GET"),b.status(405).json({success:!1,error:"Method not allowed"});if((0,j.OD)(c,b,"project_tasks","view"))try{let c=String(a.query.view||"").trim().toLowerCase(),d=k.includes(c)?c:"open",e=String(a.query.assignee||"").trim().toLowerCase(),f=Number(a.query.assignee),g="unassigned"===e,h=!g&&Number.isInteger(f)&&f>0?f:null,j=Number(a.query.project),l=Number.isInteger(j)&&j>0?j:null,m=[],n=[];m.push("p.status <> 'completed'"),"done"===d?m.push("t.completed_on IS NOT NULL"):(m.push("t.completed_on IS NULL"),"overdue"===d&&m.push("t.due_date IS NOT NULL AND t.due_date < CURDATE()"),"blocked"===d&&m.push("t.status = 'blocked'"),"unassigned"===d&&m.push("t.assignee_employee_id IS NULL")),g?m.push("t.assignee_employee_id IS NULL"):null!==h&&(m.push("t.assignee_employee_id = ?"),n.push(h)),null!==l&&(m.push("t.project_id = ?"),n.push(l));let o=await (0,i.P)(`SELECT t.id, t.title, t.status, t.blocked_reason, t.assignee_employee_id, t.milestone_id,
+              DATE_FORMAT(t.start_date, '%Y-%m-%d')   AS start_date,
+              DATE_FORMAT(t.due_date, '%Y-%m-%d')     AS due_date,
+              DATE_FORMAT(t.completed_on, '%Y-%m-%d') AS completed_on,
+              CASE
+                WHEN t.completed_on IS NOT NULL THEN 'done'
+                WHEN t.due_date IS NOT NULL AND t.due_date < CURDATE() THEN 'overdue'
+                ELSE t.status
+              END AS derived_status,
+              CASE WHEN t.completed_on IS NULL AND t.due_date IS NOT NULL
+                   THEN DATEDIFF(t.due_date, CURDATE()) END AS days_left,
+              e.full_name AS assignee_name, e.employee_id AS assignee_no,
+              m.title AS milestone_title,
+              p.id AS project_id, p.project_no, p.title AS project_title, p.client, p.phase, p.health
+         FROM project_tasks t
+         JOIN projects p ON p.id = t.project_id
+         LEFT JOIN employees e ON e.id = t.assignee_employee_id
+         LEFT JOIN project_milestones m ON m.id = t.milestone_id
+        WHERE ${m.join(" AND ")}
+        ORDER BY ${"done"===d?"t.completed_on DESC, t.id DESC":"COALESCE(t.due_date, '9999-12-31') ASC, p.project_no ASC, t.sort_order ASC"}
+        LIMIT 300`,n),[p]=await (0,i.P)(`SELECT COUNT(*) AS total,
+              SUM(CASE WHEN t.completed_on IS NOT NULL THEN 1 ELSE 0 END) AS done,
+              SUM(CASE WHEN t.completed_on IS NULL THEN 1 ELSE 0 END) AS open,
+              SUM(CASE WHEN t.completed_on IS NULL AND t.due_date IS NOT NULL
+                        AND t.due_date < CURDATE() THEN 1 ELSE 0 END) AS overdue,
+              SUM(CASE WHEN t.completed_on IS NULL AND t.status = 'blocked' THEN 1 ELSE 0 END)
+                AS blocked,
+              SUM(CASE WHEN t.completed_on IS NULL AND t.assignee_employee_id IS NULL THEN 1 ELSE 0 END)
+                AS unassigned,
+              SUM(CASE WHEN t.completed_on IS NULL
+                        AND (t.start_date IS NULL OR t.due_date IS NULL) THEN 1 ELSE 0 END)
+                AS unscheduled,
+              COUNT(DISTINCT t.project_id) AS projects
+         FROM project_tasks t
+         JOIN projects p ON p.id = t.project_id
+        WHERE p.status <> 'completed'`),q=await (0,i.P)(`SELECT t.assignee_employee_id, e.full_name AS assignee_name,
+              COUNT(*) AS open_count,
+              SUM(CASE WHEN t.due_date IS NOT NULL AND t.due_date < CURDATE() THEN 1 ELSE 0 END)
+                AS overdue_count,
+              SUM(CASE WHEN t.status = 'blocked' THEN 1 ELSE 0 END) AS blocked_count,
+              COUNT(DISTINCT t.project_id) AS project_count
+         FROM project_tasks t
+         JOIN projects p ON p.id = t.project_id
+         LEFT JOIN employees e ON e.id = t.assignee_employee_id
+        WHERE t.completed_on IS NULL AND p.status <> 'completed'
+        GROUP BY t.assignee_employee_id, e.full_name
+        ORDER BY overdue_count DESC, open_count DESC, e.full_name ASC
+        LIMIT 50`),r=await (0,i.P)(`SELECT p.id, p.project_no, p.title, p.client, p.phase, p.percent_complete,
+              DATE_FORMAT(p.end_date, '%Y-%m-%d') AS end_date
+         FROM projects p
+        WHERE p.status <> 'completed'
+          AND NOT EXISTS (SELECT 1 FROM project_tasks t WHERE t.project_id = p.id)
+        ORDER BY p.created_at DESC
+        LIMIT 50`),s=await (0,i.P)(`SELECT e.id, e.full_name, e.employee_id AS employee_no, e.status
+         FROM employees e
+        WHERE e.status = 'active'
+           OR EXISTS (SELECT 1 FROM project_tasks t
+                       WHERE t.assignee_employee_id = e.id AND t.completed_on IS NULL)
+        ORDER BY e.full_name ASC`),t=await (0,i.P)(`SELECT p.id, p.project_no, p.title
+         FROM projects p
+        WHERE p.status <> 'completed'
+        ORDER BY p.project_no ASC`);return b.status(200).json({success:!0,data:o,summary:p,by_assignee:q,no_tasks:r,employees:s,projects:t,view:d,filters:{assignee:g?"unassigned":h,project:l}})}catch(a){return console.error("Tasks board error:",a),b.status(500).json({success:!1,error:a instanceof Error?a.message:"Failed to load the tasks"})}}}var m=c(58112),n=c(18766);let o=(0,h.M)(d,"default"),p=(0,h.M)(d,"config"),q=new g.PagesAPIRouteModule({definition:{kind:f.A.PAGES_API,page:"/api/admin/operations/projects/tasks",pathname:"/api/admin/operations/projects/tasks",bundlePath:"",filename:""},userland:d,distDir:".next",relativeProjectDir:""});async function r(a,b,c){let d=await q.prepare(a,b,{srcPage:"/api/admin/operations/projects/tasks"});if(!d){b.statusCode=400,b.end("Bad Request"),null==c.waitUntil||c.waitUntil.call(c,Promise.resolve());return}let{query:f,params:g,prerenderManifest:h,routerServerContext:i}=d;try{let c=a.method||"GET",d=(0,m.getTracer)(),e=d.getActiveScopeSpan(),j=q.instrumentationOnRequestError.bind(q),k=async e=>q.render(a,b,{query:{...f,...g},params:g,allowedRevalidateHeaderKeys:[],multiZoneDraftMode:!1,trustHostHeader:!1,previewProps:h.preview,propagateError:!1,dev:q.isDev,page:"/api/admin/operations/projects/tasks",internalRevalidate:null==i?void 0:i.revalidate,onError:(...b)=>j(a,...b)}).finally(()=>{if(!e)return;e.setAttributes({"http.status_code":b.statusCode,"next.rsc":!1});let f=d.getRootSpanAttributes();if(!f)return;if(f.get("next.span_type")!==n.BaseServerSpan.handleRequest)return void console.warn(`Unexpected root span type '${f.get("next.span_type")}'. Please report this Next.js issue https://github.com/vercel/next.js`);let g=f.get("next.route");if(g){let a=`${c} ${g}`;e.setAttributes({"next.route":g,"http.route":g,"next.span_name":a}),e.updateName(a)}else e.updateName(`${c} ${a.url}`)});e?await k(e):await d.withPropagatedContext(a.headers,()=>d.trace(n.BaseServerSpan.handleRequest,{spanName:`${c} ${a.url}`,kind:m.SpanKind.SERVER,attributes:{"http.method":c,"http.target":a.url}},k))}catch(a){if(q.isDev)throw a;(0,e.sendError)(b,500,"Internal Server Error")}finally{null==c.waitUntil||c.waitUntil.call(c,Promise.resolve())}}},63415:(a,b,c)=>{c.d(b,{$3:()=>g,PS:()=>h,T1:()=>e,iT:()=>f});var d=c(88251);function e(a){let b=a.headers["x-forwarded-for"];return"string"==typeof b&&b?b.split(",")[0].trim():Array.isArray(b)&&b.length?b[0].split(",")[0].trim():a.socket?.remoteAddress||"unknown"}async function f(a){let b=function(a){let b=a.query.hash;if("string"==typeof b&&b)return b;let c=a.headers.authorization;if(c&&c.startsWith("Bearer ")){let a=c.slice(7).trim();if(a)return a}return null}(a);if(!b)return null;let c=await (0,d.P)("SELECT username, expires_at FROM admin_sessions WHERE hash = ? LIMIT 1",[b]);if(!c||0===c.length||new Date(c[0].expires_at)<=new Date)return null;let f=c[0].username,g=await (0,d.P)("SELECT id, user_type, status FROM admins WHERE username = ? LIMIT 1",[f]);if(!g||0===g.length||"active"!==g[0].status)return null;let h=g[0].id,i=await (0,d.P)(`SELECT DISTINCT p.module, p.action, r.name AS role_name
+       FROM admin_roles ar
+       INNER JOIN roles r            ON r.id = ar.role_id
+       INNER JOIN role_permissions rp ON rp.role_id = ar.role_id
+       INNER JOIN permissions p       ON p.id = rp.permission_id
+      WHERE ar.admin_id = ?`,[h]),j=Array.from(new Set(i.map(a=>`${a.module}_${a.action}`))),k=Array.from(new Set(i.map(a=>a.role_name)));return{adminId:h,username:f,userType:g[0].user_type,roleNames:k,permissions:j,isSuperAdmin:k.some(a=>"super admin"===a.trim().toLowerCase()),ip:e(a)}}function g(a,b,c){return!!a&&(!!a.isSuperAdmin||a.permissions.includes(`${b}_${c}`))}async function h(a,b,c,d){let e=await f(a);return e?g(e,c,d)?e:(b.status(403).json({success:!1,error:`You do not have permission for this: ${c}_${d}`}),null):(b.status(401).json({success:!1,error:"Your session is invalid or has expired. Please sign in again."}),null)}},75600:a=>{a.exports=require("next/dist/compiled/next-server/pages-api.runtime.prod.js")},88251:(a,b,c)=>{c.d(b,{Ay:()=>i,G$:()=>h,P:()=>f,rN:()=>g});var d=c(3498);let e=c.n(d)().createPool({host:process.env.DB_HOST||"localhost",user:process.env.DB_USER||"root",password:process.env.DB_PASSWORD||"root",database:process.env.DB_NAME||"ansar",waitForConnections:!0,connectionLimit:10,queueLimit:0});async function f(a,b){let[c]=b&&b.length>0?await e.query(a,b):await e.query(a);return c}async function g(){try{return(await e.getConnection()).release(),!0}catch(a){return console.error("Database connection test failed:",a),!1}}function h(){return{totalConnections:10,activeConnections:0,idleConnections:0,queuedRequests:0}}let i=e}};var b=require("../../../../../webpack-api-runtime.js");b.C(a);var c=b.X(0,[7169],()=>b(b.s=16483));module.exports=c})();
