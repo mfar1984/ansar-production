@@ -348,6 +348,14 @@
       "namedRegex": "^/api/admin/operations/projects/(?<nxtPid>[^/]+?)(?:/)?$"
     },
     {
+      "page": "/api/admin/operations/projects/[id]/documents",
+      "regex": "^/api/admin/operations/projects/([^/]+?)/documents(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/projects/(?<nxtPid>[^/]+?)/documents(?:/)?$"
+    },
+    {
       "page": "/api/admin/operations/projects/[id]/messages",
       "regex": "^/api/admin/operations/projects/([^/]+?)/messages(?:/)?$",
       "routeKeys": {
@@ -386,6 +394,22 @@
         "nxtPid": "nxtPid"
       },
       "namedRegex": "^/api/admin/operations/projects/(?<nxtPid>[^/]+?)/phase(?:/)?$"
+    },
+    {
+      "page": "/api/admin/operations/projects/[id]/resources",
+      "regex": "^/api/admin/operations/projects/([^/]+?)/resources(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/projects/(?<nxtPid>[^/]+?)/resources(?:/)?$"
+    },
+    {
+      "page": "/api/admin/operations/projects/[id]/risks",
+      "regex": "^/api/admin/operations/projects/([^/]+?)/risks(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/projects/(?<nxtPid>[^/]+?)/risks(?:/)?$"
     },
     {
       "page": "/api/admin/operations/projects/[id]/schedule",
@@ -546,6 +570,14 @@
         "nxtPid": "nxtPid"
       },
       "namedRegex": "^/api/client/projects/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/client/projects/[id]/documents",
+      "regex": "^/api/client/projects/([^/]+?)/documents(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/client/projects/(?<nxtPid>[^/]+?)/documents(?:/)?$"
     },
     {
       "page": "/api/client/projects/[id]/messages",
