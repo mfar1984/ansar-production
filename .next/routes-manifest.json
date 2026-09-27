@@ -596,6 +596,14 @@
       "namedRegex": "^/api/client/projects/(?<nxtPid>[^/]+?)/messages/read(?:/)?$"
     },
     {
+      "page": "/api/client/projects/[id]/reports",
+      "regex": "^/api/client/projects/([^/]+?)/reports(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/client/projects/(?<nxtPid>[^/]+?)/reports(?:/)?$"
+    },
+    {
       "page": "/api/client/tickets/[id]",
       "regex": "^/api/client/tickets/([^/]+?)(?:/)?$",
       "routeKeys": {

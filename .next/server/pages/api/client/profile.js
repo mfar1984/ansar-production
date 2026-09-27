@@ -1,7 +1,7 @@
 "use strict";(()=>{var a={};a.id=5068,a.ids=[5068],a.modules={3498:a=>{a.exports=require("mysql2/promise")},20347:(a,b,c)=>{c.d(b,{I$:()=>e,tE:()=>f});var d=c(88251);async function e(a){let b=function(a){let b=a.cookies?.session_token;if("string"==typeof b&&b)return b;let c=a.query?.hash;return"string"==typeof c&&c?c:""}(a);if(!b)return null;let c=await (0,d.P)(`SELECT s.client_id, c.*
        FROM admin_sessions s
        JOIN client_users c ON s.client_id = c.id
-      WHERE s.hash = ? AND s.user_type = 'client' AND s.expires_at > NOW()`,[b]);return c&&c.length>0?c[0]:null}async function f(a,b){if(!Number.isInteger(b)||b<1)return{ok:!1,status:404,error:"Project not found."};if("active"!==a.status||1!==Number(a.email_verified))return{ok:!1,status:403,error:"Your account is not active. Please contact us before using the project portal."};let c=await (0,d.P)(`SELECT pp.can_message
+      WHERE s.hash = ? AND s.user_type = 'client' AND s.expires_at > NOW()`,[b]),e=c&&c.length>0?c[0]:null;return e?"active"!==e.status||1!==Number(e.email_verified)?(await (0,d.P)("DELETE FROM admin_sessions WHERE hash = ?",[b]),null):e:null}async function f(a,b){if(!Number.isInteger(b)||b<1)return{ok:!1,status:404,error:"Project not found."};let c=await (0,d.P)(`SELECT pp.can_message
        FROM project_participants pp
        JOIN projects p ON p.id = pp.project_id
       WHERE pp.project_id = ?
