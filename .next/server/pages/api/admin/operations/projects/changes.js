@@ -64,7 +64,11 @@
        FROM project_changes c
        JOIN projects p ON p.id = c.project_id
       GROUP BY p.id, p.project_no, p.title, p.client, p.phase, p.status, p.value, p.end_date
-      ORDER BY pending_count DESC, ABS(approved_value) DESC, p.project_no ASC
+      /* The aggregate is INLINED here, not referenced by its alias. See the note above the query. */
+      ORDER BY pending_count DESC,
+               ABS(COALESCE(SUM(CASE WHEN c.status = 'approved'
+                                     THEN c.value_change ELSE 0 END), 0)) DESC,
+               p.project_no ASC
       LIMIT 100`),m=await (0,i.P)(`SELECT p.id, p.project_no, p.title, p.status, p.value,
             DATE_FORMAT(p.end_date, '%Y-%m-%d') AS end_date
        FROM projects p
