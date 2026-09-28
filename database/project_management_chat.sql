@@ -149,6 +149,24 @@ CREATE TABLE IF NOT EXISTS `project_participants` (
 -- `helpdesk_replies`. Satu mesej dalam perbualan yang client sudah baca bukan
 -- dokumen — menyuntingnya bermakna menulis semula rekod, dan `project_chat_delete`
 -- ialah kebenaran berasingan atas sebab itu.
+--
+-- ── SATU LAJUR `attachments JSON` DAHULUNYA DI SINI, DAN IA DIBUANG ──
+--
+-- Ia dicipta kerana bentuk table ini diambil daripada `helpdesk_replies`, yang
+-- MEMANG menyimpan lampirannya sebagai satu array JSON nama fail. Ia tidak pernah
+-- ditulis oleh apa-apa: DIUKUR pada 0 mesej dan 0 nilai, dipilih oleh kedua-dua
+-- endpoint dan dijatuhkan ke lantai pada setiap bacaan.
+--
+-- Lampiran chat kini hidup dalam `project_message_files`, dicipta oleh
+-- `database/project_management_chat_files.sql`, kerana fail projek adalah PERIBADI
+-- dan endpoint fail berpagar mesti menjumpai satu baris berindeks yang merujuk
+-- setiap laluan — sesuatu yang tiada array JSON boleh memberi. Hujah penuh ada
+-- dalam fail itu.
+--
+-- Lajur itu DIBUANG di sini supaya satu pemasangan BARU tidak pernah menciptanya.
+-- Untuk pemasangan yang sudah ada, `IF NOT EXISTS` di bawah ialah no-op, jadi
+-- `project_management_chat_files.sql` ialah yang MEMBUANGnya — dan verifikasi
+-- kedua-dua fail bersetuju pada `cols 8`.
 CREATE TABLE IF NOT EXISTS `project_messages` (
   `id`          INT NOT NULL AUTO_INCREMENT,
   `project_id`  INT NOT NULL,
@@ -158,7 +176,6 @@ CREATE TABLE IF NOT EXISTS `project_messages` (
   `sender_name` VARCHAR(255) NOT NULL
                 COMMENT 'dicache supaya thread kekal boleh dibaca selepas akaun dipadam',
   `message`     TEXT NOT NULL,
-  `attachments` JSON NULL DEFAULT NULL,
   `is_internal` TINYINT(1) NOT NULL DEFAULT 0
                 COMMENT 'client tidak pernah melihat baris ini. Ditapis DALAM SQL, bukan dalam browser',
   `created_at`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -261,7 +278,9 @@ CREATE TABLE IF NOT EXISTS `project_phase_log` (
 -- Jangkaan, satu baris per table:
 --   project_participants   cols 8   fks 2   uniques 2
 --   project_message_reads  cols 6   fks 1   uniques 1
---   project_messages       cols 9   fks 1   uniques 0
+--   project_messages       cols 8   fks 1   uniques 0
+--                          (9 sebelum project_management_chat_files.sql membuang
+--                           `attachments` — lihat nota atas CREATE TABLE di atas)
 --   project_phase_log      cols 7   fks 1   uniques 0
 --
 -- `uniques` tidak mengira PRIMARY: information_schema melabelkannya 'PRIMARY KEY'.

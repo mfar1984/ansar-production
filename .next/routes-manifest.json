@@ -348,6 +348,14 @@
       "namedRegex": "^/api/admin/operations/projects/(?<nxtPid>[^/]+?)(?:/)?$"
     },
     {
+      "page": "/api/admin/operations/projects/[id]/cost",
+      "regex": "^/api/admin/operations/projects/([^/]+?)/cost(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/projects/(?<nxtPid>[^/]+?)/cost(?:/)?$"
+    },
+    {
       "page": "/api/admin/operations/projects/[id]/documents",
       "regex": "^/api/admin/operations/projects/([^/]+?)/documents(?:/)?$",
       "routeKeys": {
