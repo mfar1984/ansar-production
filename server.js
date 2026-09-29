@@ -335,7 +335,41 @@ app.prepare().then(() => {
       }
     });
 
-    socket.on('disconnect', () => { connectedUsers.delete(socket.id); });
+    /*
+     * ── THIS SERVER USED TO LOG NOTHING AT ALL ABOUT A CONNECTION ──
+     *
+     * No line on connect, no line on disconnect, and the reason socket.io supplies was discarded. So a
+     * browser looping connect / join / disconnect left NO trace on the server, and the only evidence
+     * was a browser console that cannot tell the three causes apart:
+     *
+     *   ping timeout      no pong inside 20 s; engine.io pings every 25 s, so never sooner than that
+     *   transport close   something outside this process closed the connection - a reverse proxy that
+     *                     will not hold a WebSocket open, or this app restarting
+     *   transport error   the transport itself failed
+     *
+     * The transport is named because polling is the fragile case on this host: Passenger runs more than
+     * one application process, `.htaccess` sets no `PassengerStickySessions`, and no socket.io adapter
+     * is configured. A poll that lands on a second process finds a session id it has never issued and
+     * the connection is dropped - which looks exactly like this loop, with a new socket id each cycle
+     * and a join that succeeds every time.
+     *
+     * One line per connection each way. Connections are rare in normal use; when they are not, that is
+     * the fault being reported.
+     *
+     * `connectedUsers.delete` still runs here, because `ticket_assigned` resolves an admin through that
+     * map and a stale entry is a notification sent to a socket that is gone.
+     */
+    console.log(`connected ${socket.id} via ${socket.conn.transport.name}`);
+
+    socket.conn.once('upgrade', () => {
+      console.log(`upgraded ${socket.id} to ${socket.conn.transport.name}`);
+    });
+
+    socket.on('disconnect', (reason) => {
+      const via = socket.conn?.transport?.name || 'unknown';
+      console.log(`disconnected ${socket.id} - ${reason}, via ${via}`);
+      connectedUsers.delete(socket.id);
+    });
   });
 
   server.once('error', (err) => {
