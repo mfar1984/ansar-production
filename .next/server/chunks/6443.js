@@ -46,7 +46,7 @@
       ORDER BY p.payment_date ASC, p.payment_no ASC`,[a,b])).filter(a=>!c||null===a.journal_id).map(a=>({id:Number(a.id),reference:String(a.payment_no),date:String(a.payment_date),party:a.supplier_name?String(a.supplier_name):`Supplier ${a.supplier_id}`,status:String(a.status),total:String(a.amount),posted_journal_no:a.journal_no?String(a.journal_no):null,posted_journal_id:a.journal_id?Number(a.journal_id):null}))}async function u(a){let b=(await (0,d.P)(`SELECT s.id, s.code AS supplier_code, s.name AS supplier_name, s.control_account_id,
             s.payment_term_id, s.default_currency, s.is_inactive, s.is_suspended, s.suspended_reason,
             s.billing_address, s.phone_1, s.contact_name, s.print_on_cheque_as,
-            pt.description AS payment_term_description
+            pt.code AS payment_term_description
        FROM suppliers s
        LEFT JOIN accounting_payment_terms pt ON pt.id = s.payment_term_id
       WHERE s.id = ? LIMIT 1`,[a]))[0];if(!b)return null;let c=1===Number(b.is_inactive)?"inactive":1===Number(b.is_suspended)?"suspended":"active";return{id:Number(b.id),supplier_code:b.supplier_code,supplier_name:b.supplier_name,control_account_id:b.control_account_id?Number(b.control_account_id):null,payment_term_id:b.payment_term_id?Number(b.payment_term_id):null,payment_term_description:b.payment_term_description,default_currency:b.default_currency||"MYR",status:c,suspended_reason:b.suspended_reason,billing_address:b.billing_address,phone_1:b.phone_1,contact_name:b.contact_name,print_on_cheque_as:b.print_on_cheque_as}}async function v(a){let b=await (0,d.P)(`SELECT COALESCE(SUM(f.amount), 0) AS received,
