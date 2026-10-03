@@ -1,159 +1,33 @@
-"use strict";(()=>{var a={};a.id=937,a.ids=[937],a.modules={3498:a=>{a.exports=require("mysql2/promise")},75600:a=>{a.exports=require("next/dist/compiled/next-server/pages-api.runtime.prod.js")},83957:(a,b,c)=>{c.r(b),c.d(b,{config:()=>o,default:()=>n,handler:()=>q});var d={};c.r(d),c.d(d,{default:()=>k});var e=c(29046),f=c(8667),g=c(33480),h=c(86435),i=c(88251);async function j(a){if(!a)return null;let[b]=await i.Ay.query("SELECT username, expires_at FROM admin_sessions WHERE hash = ?",[a]);if(!b||0===b.length)return null;let c=b[0];return new Date(c.expires_at)<new Date?null:c}async function k(a,b){if("GET"!==a.method)return b.status(405).json({error:"Method not allowed"});let{hash:c,dateRange:d,startDate:e,endDate:f}=a.query;if(!await j(String(c||"")))return b.status(401).json({error:"Unauthorized"});if(e&&f){let a=new Date(e),b=new Date(f).getTime()-a.getTime(),c=new Date(a.getTime()-b),d=new Date(a.getTime()-1);c.toISOString().split("T")[0],d.toISOString().split("T")[0]}try{let[a]=await i.Ay.query("SELECT COUNT(*) as count FROM employees WHERE status = 'active'"),c=a[0],[d]=await i.Ay.query("SELECT COUNT(*) as count FROM leave_applications WHERE status = 'pending'"),e=d[0],[f]=await i.Ay.query("SELECT COUNT(*) as count FROM claims WHERE status = 'pending'"),g=f[0],[h]=await i.Ay.query("SELECT COUNT(*) as count FROM overtime_applications WHERE status = 'pending'"),j=h[0],[k]=await i.Ay.query("SELECT COUNT(*) as count FROM expenses WHERE status = 'pending'"),l=k[0],[m]=await i.Ay.query(`SELECT COUNT(*) as count FROM kpi_assignments a
-         JOIN kpi_periods p ON p.id = a.period_id
-        WHERE a.status <> 'completed' AND p.status = 'open'`),n=m[0],[o]=await i.Ay.query("SELECT COUNT(*) as count FROM procurement_applications WHERE status = 'pending'"),p=o[0],[q]=await i.Ay.query("SELECT COUNT(*) as count FROM career_applicants WHERE status = 'pending'"),r=q[0],[s]=await i.Ay.query("SELECT COUNT(*) as count FROM helpdesk_tickets WHERE status IN ('open', 'in_progress')"),t=s[0],[u]=await i.Ay.query("SELECT COUNT(*) as count FROM career_postings WHERE status = 'active'"),v=u[0],[w]=await i.Ay.query("SELECT COUNT(*) as count FROM departments"),x=w[0],[y]=await i.Ay.query("SELECT COUNT(*) as count FROM news WHERE status = 'published'"),z=y[0],[A]=await i.Ay.query("SELECT COUNT(*) as count FROM newsletter_subscribers WHERE is_active = 1"),B=A[0],C={leave:Number(e?.count||0),claims:Number(g?.count||0),overtime:Number(j?.count||0),expenses:Number(l?.count||0),kpi:Number(n?.count||0),procurement:Number(p?.count||0),applicants:Number(r?.count||0)},D=await i.Ay.query(`
-      SELECT
-        DATE_FORMAT(created_at, '%Y-%m') as month,
-        'Leave' as type,
-        COUNT(*) as count
-      FROM leave_applications
-      WHERE created_at >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-      GROUP BY DATE_FORMAT(created_at, '%Y-%m')
-
-      UNION ALL
-
-      SELECT
-        DATE_FORMAT(created_at, '%Y-%m') as month,
-        'Claims' as type,
-        COUNT(*) as count
-      FROM claims
-      WHERE created_at >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-      GROUP BY DATE_FORMAT(created_at, '%Y-%m')
-
-      UNION ALL
-
-      SELECT
-        DATE_FORMAT(created_at, '%Y-%m') as month,
-        'Overtime' as type,
-        COUNT(*) as count
-      FROM overtime_applications
-      WHERE created_at >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-      GROUP BY DATE_FORMAT(created_at, '%Y-%m')
-
-      UNION ALL
-
-      SELECT
-        DATE_FORMAT(applied_date, '%Y-%m') as month,
-        'Expenses' as type,
-        COUNT(*) as count
-      FROM expenses
-      WHERE applied_date >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-      GROUP BY DATE_FORMAT(applied_date, '%Y-%m')
-
-      ORDER BY month ASC
-    `),E=await i.Ay.query(`
-      SELECT 
-        d.name as department,
-        COUNT(e.id) as employee_count
-      FROM departments d
-      LEFT JOIN employees e ON d.id = e.department_id AND e.status = 'active'
-      GROUP BY d.id, d.name
-      ORDER BY employee_count DESC
-      LIMIT 10
-    `),[F]=await i.Ay.query(`
-      SELECT
-        DATE_FORMAT(created_at, '%Y-%m') as month,
-        'Claims' as type,
-        SUM(total_amount) as amount
-      FROM claims
-      WHERE created_at >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-      GROUP BY DATE_FORMAT(created_at, '%Y-%m')
-
-      UNION ALL
-
-      SELECT
-        DATE_FORMAT(applied_date, '%Y-%m') as month,
-        'Expenses' as type,
-        SUM(total_amount) as amount
-      FROM expenses
-      WHERE applied_date >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-      GROUP BY DATE_FORMAT(applied_date, '%Y-%m')
-
-      UNION ALL
-
-      SELECT
-        DATE_FORMAT(created_at, '%Y-%m') as month,
-        'Overtime' as type,
-        SUM(total_amount) as amount
-      FROM overtime_applications
-      WHERE created_at >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-      GROUP BY DATE_FORMAT(created_at, '%Y-%m')
-
-      ORDER BY month ASC
-    `),[G]=await i.Ay.query(`
-      SELECT
-        lt.name as leave_type,
-        COUNT(la.id) as count
-      FROM leave_applications la
-      JOIN leave_types lt ON la.leave_type_id = lt.id
-      WHERE la.created_at >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-      GROUP BY lt.id, lt.name
-      ORDER BY count DESC
-    `),[H]=await i.Ay.query(`
-      SELECT
-        status,
-        COUNT(*) as count
-      FROM helpdesk_tickets
-      WHERE created_at >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-      GROUP BY status
-      ORDER BY count DESC
-    `),[I]=await i.Ay.query(`
-      SELECT
-        ec.name as category,
-        COUNT(e.id) as count,
-        SUM(e.total_amount) as total_amount
-      FROM expenses e
-      JOIN expense_categories ec ON e.category_id = ec.id
-      WHERE e.applied_date >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-      GROUP BY ec.id, ec.name
-      ORDER BY total_amount DESC
-      LIMIT 5
-    `),[J]=await i.Ay.query("SELECT COUNT(*) as count FROM employees WHERE status = 'active' AND created_at < DATE_SUB(NOW(), INTERVAL 30 DAY)"),[K]=await i.Ay.query("SELECT COUNT(*) as count FROM leave_applications WHERE status = 'pending' AND created_at < DATE_SUB(NOW(), INTERVAL 30 DAY)"),[L]=await i.Ay.query("SELECT COUNT(*) as count FROM leave_applications WHERE status = 'pending' AND created_at < DATE_SUB(NOW(), INTERVAL 3 DAY)"),[M]=await i.Ay.query("SELECT COUNT(*) as count FROM claims WHERE status = 'pending' AND created_at < DATE_SUB(NOW(), INTERVAL 3 DAY)"),[N]=await i.Ay.query("SELECT COUNT(*) as count FROM expenses WHERE status = 'pending' AND applied_date < DATE_SUB(NOW(), INTERVAL 3 DAY)"),[O]=await i.Ay.query(`
-      (SELECT
-        'Leave' as module,
-        COALESCE(e.full_name, 'Unknown') as user_name,
-        CAST(la.status AS CHAR) as status,
-        la.created_at as timestamp
-      FROM leave_applications la
-      LEFT JOIN employees e ON la.employee_id = e.id
-      ORDER BY la.created_at DESC
-      LIMIT 3)
-
-      UNION ALL
-
-      (SELECT
-        'Claims' as module,
-        COALESCE(e.full_name, 'Unknown') as user_name,
-        CAST(c.status AS CHAR) as status,
-        c.created_at as timestamp
-      FROM claims c
-      LEFT JOIN employees e ON c.employee_id = e.id
-      ORDER BY c.created_at DESC
-      LIMIT 3)
-
-      UNION ALL
-
-      (SELECT
-        'Overtime' as module,
-        COALESCE(e.full_name, 'Unknown') as user_name,
-        CAST(oa.status AS CHAR) as status,
-        oa.created_at as timestamp
-      FROM overtime_applications oa
-      LEFT JOIN employees e ON oa.employee_id = e.id
-      ORDER BY oa.created_at DESC
-      LIMIT 2)
-
-      UNION ALL
-
-      (SELECT
-        'Expenses' as module,
-        COALESCE(e.full_name, 'Unknown') as user_name,
-        CAST(ex.status AS CHAR) as status,
-        ex.applied_date as timestamp
-      FROM expenses ex
-      LEFT JOIN employees e ON ex.employee_id = e.id
-      ORDER BY ex.applied_date DESC
-      LIMIT 2)
-
-      ORDER BY timestamp DESC
-      LIMIT 10
-    `),P=Number(c?.count||0),Q=Number(J[0]?.count||0),R=P-Q,S=Q>0?(R/Q*100).toFixed(1):"0",T=Object.values(C).reduce((a,b)=>a+b,0),U=Number(K[0]?.count||0),V=T-U,W=U>0?(V/U*100).toFixed(1):"0";return b.status(200).json({keyMetrics:{totalEmployees:P,pendingApprovals:T,openTickets:Number(t?.count||0),activeJobs:Number(v?.count||0)},comparisons:{employees:{current:P,previous:Q,change:R,changePercent:S,trend:R>=0?"up":"down"},approvals:{current:T,previous:U,change:V,changePercent:W,trend:V>=0?"up":"down"}},alerts:{oldPendingLeave:Number(L[0]?.count||0),oldPendingClaims:Number(M[0]?.count||0),oldPendingExpenses:Number(N[0]?.count||0)},pendingTasks:C,monthlyTrends:D[0],financialTrends:F,leaveTypes:G,ticketStats:H,expenseCategories:I,departmentStats:E[0],recentActivities:O,quickStats:{departments:Number(x?.count||0),publishedNews:Number(z?.count||0),subscribers:Number(B?.count||0),newHires:0},lastUpdated:new Date().toISOString()})}catch(a){return console.error("Dashboard stats error:",a),b.status(500).json({error:"Failed to fetch dashboard statistics"})}}var l=c(58112),m=c(18766);let n=(0,h.M)(d,"default"),o=(0,h.M)(d,"config"),p=new g.PagesAPIRouteModule({definition:{kind:f.A.PAGES_API,page:"/api/admin/dashboard/stats",pathname:"/api/admin/dashboard/stats",bundlePath:"",filename:""},userland:d,distDir:".next",relativeProjectDir:""});async function q(a,b,c){let d=await p.prepare(a,b,{srcPage:"/api/admin/dashboard/stats"});if(!d){b.statusCode=400,b.end("Bad Request"),null==c.waitUntil||c.waitUntil.call(c,Promise.resolve());return}let{query:f,params:g,prerenderManifest:h,routerServerContext:i}=d;try{let c=a.method||"GET",d=(0,l.getTracer)(),e=d.getActiveScopeSpan(),j=p.instrumentationOnRequestError.bind(p),k=async e=>p.render(a,b,{query:{...f,...g},params:g,allowedRevalidateHeaderKeys:[],multiZoneDraftMode:!1,trustHostHeader:!1,previewProps:h.preview,propagateError:!1,dev:p.isDev,page:"/api/admin/dashboard/stats",internalRevalidate:null==i?void 0:i.revalidate,onError:(...b)=>j(a,...b)}).finally(()=>{if(!e)return;e.setAttributes({"http.status_code":b.statusCode,"next.rsc":!1});let f=d.getRootSpanAttributes();if(!f)return;if(f.get("next.span_type")!==m.BaseServerSpan.handleRequest)return void console.warn(`Unexpected root span type '${f.get("next.span_type")}'. Please report this Next.js issue https://github.com/vercel/next.js`);let g=f.get("next.route");if(g){let a=`${c} ${g}`;e.setAttributes({"next.route":g,"http.route":g,"next.span_name":a}),e.updateName(a)}else e.updateName(`${c} ${a.url}`)});e?await k(e):await d.withPropagatedContext(a.headers,()=>d.trace(m.BaseServerSpan.handleRequest,{spanName:`${c} ${a.url}`,kind:l.SpanKind.SERVER,attributes:{"http.method":c,"http.target":a.url}},k))}catch(a){if(p.isDev)throw a;(0,e.sendError)(b,500,"Internal Server Error")}finally{null==c.waitUntil||c.waitUntil.call(c,Promise.resolve())}}},88251:(a,b,c)=>{c.d(b,{Ay:()=>i,G$:()=>h,P:()=>f,rN:()=>g});var d=c(3498);let e=c.n(d)().createPool({host:process.env.DB_HOST||"localhost",user:process.env.DB_USER||"root",password:process.env.DB_PASSWORD||"root",database:process.env.DB_NAME||"ansar",waitForConnections:!0,connectionLimit:10,queueLimit:0});async function f(a,b){let[c]=b&&b.length>0?await e.query(a,b):await e.query(a);return c}async function g(){try{return(await e.getConnection()).release(),!0}catch(a){return console.error("Database connection test failed:",a),!1}}function h(){return{totalConnections:10,activeConnections:0,idleConnections:0,queuedRequests:0}}let i=e}};var b=require("../../../../webpack-api-runtime.js");b.C(a);var c=b.X(0,[7169],()=>b(b.s=83957));module.exports=c})();
+"use strict";(()=>{var a={};a.id=937,a.ids=[937],a.modules={3498:a=>{a.exports=require("mysql2/promise")},3557:(a,b,c)=>{c.d(b,{$3:()=>g,J9:()=>j,O4:()=>l,OC:()=>f,OD:()=>h,QU:()=>m,Sj:()=>k,ah:()=>n,oS:()=>i});var d=c(88251),e=c(63415);async function f(a,b){let c=await (0,e.iT)(a);return c||(b.status(401).json({success:!1,error:"Your session is invalid or has expired. Please sign in again."}),null)}function g(a,b,c){return(0,e.$3)(a,b,c)}function h(a,b,c,d){return!!g(a,c,d)||(b.status(403).json({success:!1,error:`You do not have permission for this: ${c}_${d}`}),!1)}function i(a,b){let c=[],d=[];for(let[e,f]of Object.entries(b))e in a&&(c.push(`\`${e}\` = ?`),d.push(function(a,b){if(void 0===b)return null;if("bool"===a)return+(!0===b||1===b||"1"===b||"true"===b);if("number"===a){if(null===b||""===b)return null;let a=Number(b);return Number.isFinite(a)?a:null}if("json"===a){if(null===b||""===b)return null;if("string"==typeof b)return b;try{return JSON.stringify(b)}catch{return null}}if(null===b)return null;let c=String(b);return""===c?null:c}(f,a[e])));return 0===c.length?null:{clause:c.join(", "),values:d}}function j(a){let b=a.body;if(!b)return{};if("string"==typeof b)try{return JSON.parse(b)}catch{return{}}return"object"==typeof b?b:{}}async function k(){let a=await (0,d.P)("SELECT * FROM system_settings WHERE id = 1");return a.length>0?a[0]:(await (0,d.P)("INSERT INTO system_settings (id) VALUES (1)"),(await (0,d.P)("SELECT * FROM system_settings WHERE id = 1"))[0]||{})}async function l(){let a=await (0,d.P)("SELECT * FROM integrations WHERE id = 1");return a.length>0?a[0]:(await (0,d.P)("INSERT INTO integrations (id) VALUES (1)"),(await (0,d.P)("SELECT * FROM integrations WHERE id = 1"))[0]||{})}function m(a,b){let c={...a};for(let a of b){let b=c[a];c[`${a}_set`]="string"==typeof b&&b.length>0,c[a]=""}return c}function n(a,b){let c={...a};for(let a of b)a in c&&(""===c[a]||null===c[a]||void 0===c[a])&&delete c[a];return c}},14618:(a,b,c)=>{c.r(b),c.d(b,{config:()=>A,default:()=>z,handler:()=>C});var d={};c.r(d),c.d(d,{default:()=>w});var e=c(29046),f=c(8667),g=c(33480),h=c(86435),i=c(88251),j=c(3557),k=c(35830),l=c(20746);let m={employees:{module:"employees",label:"Employees"},departments:{module:"departments",label:"Departments"},leave:{module:"leave",label:"Leave"},claims:{module:"claims",label:"Claims"},overtime:{module:"overtime",label:"Overtime"},expenses:{module:"expenses",label:"Expenses"},kpi:{module:"kpi_assignments",label:"Appraisals"},procurement:{module:"procurement",label:"Procurement"},applicants:{module:"applicants",label:"Applicants"},helpdesk:{module:"helpdesk",label:"Tickets"},career:{module:"career",label:"Job postings"},news:{module:"news",label:"News"},subscribers:{module:"news_subscribers",label:"Subscribers"}},n=Object.keys(m),o=["leave","claims","overtime","expenses","kpi","procurement","applicants"],p=["leave","claims","overtime","expenses"],q=["claims","expenses","overtime"],r={leave:{pending:"SELECT COUNT(*) AS n FROM leave_applications WHERE status = 'pending'",overdue:"SELECT COUNT(*) AS n FROM leave_applications WHERE status = 'pending' AND created_at < DATE_SUB(NOW(), INTERVAL 3 DAY)"},claims:{pending:"SELECT COUNT(*) AS n FROM claims WHERE status = 'pending'",overdue:"SELECT COUNT(*) AS n FROM claims WHERE status = 'pending' AND created_at < DATE_SUB(NOW(), INTERVAL 3 DAY)"},overtime:{pending:"SELECT COUNT(*) AS n FROM overtime_applications WHERE status = 'pending'",overdue:"SELECT COUNT(*) AS n FROM overtime_applications WHERE status = 'pending' AND created_at < DATE_SUB(NOW(), INTERVAL 3 DAY)"},expenses:{pending:"SELECT COUNT(*) AS n FROM expenses WHERE status = 'pending'",overdue:"SELECT COUNT(*) AS n FROM expenses WHERE status = 'pending' AND applied_date < DATE_SUB(NOW(), INTERVAL 3 DAY)"},kpi:{pending:"SELECT COUNT(*) AS n FROM kpi_assignments a JOIN kpi_periods p ON p.id = a.period_id WHERE a.status <> 'completed' AND p.status = 'open'",overdue:null},procurement:{pending:"SELECT COUNT(*) AS n FROM procurement_applications WHERE status = 'pending'",overdue:"SELECT COUNT(*) AS n FROM procurement_applications WHERE status = 'pending' AND submitted_at < DATE_SUB(NOW(), INTERVAL 3 DAY)"},applicants:{pending:"SELECT COUNT(*) AS n FROM career_applicants WHERE status = 'pending'",overdue:"SELECT COUNT(*) AS n FROM career_applicants WHERE status = 'pending' AND submitted_at < DATE_SUB(NOW(), INTERVAL 3 DAY)"}},s={leave:{table:"leave_applications",dateColumn:"created_at"},claims:{table:"claims",dateColumn:"created_at"},overtime:{table:"overtime_applications",dateColumn:"created_at"},expenses:{table:"expenses",dateColumn:"applied_date"}},t={claims:{table:"claims",dateColumn:"created_at",amountColumn:"total_amount"},expenses:{table:"expenses",dateColumn:"applied_date",amountColumn:"total_amount"},overtime:{table:"overtime_applications",dateColumn:"created_at",amountColumn:"total_amount"}},u={leave:{table:"leave_applications",alias:"la",dateColumn:"created_at"},claims:{table:"claims",alias:"c",dateColumn:"created_at"},overtime:{table:"overtime_applications",alias:"oa",dateColumn:"created_at"},expenses:{table:"expenses",alias:"ex",dateColumn:"applied_date"}};async function v(a){let b=await (0,i.P)(a);return Number(b[0]?.n||0)}async function w(a,b){let c=await (0,j.OC)(a,b);if(c){if(b.setHeader("Cache-Control","no-store"),"GET"!==a.method)return b.setHeader("Allow","GET"),b.status(405).json({success:!1,error:"Method not allowed. This endpoint answers GET."});if((0,j.OD)(c,b,"dashboard","view"))try{var d;let a=(d=a=>(0,j.$3)(c,a,"view"),n.filter(a=>d(m[a].module))),e=b=>a.includes(b),f={},g=0,h=0;for(let a of o){if(!e(a))continue;let b=r[a],c=await v(b.pending),d=null===b.overdue?null:await v(b.overdue);f[a]={pending:c,overdue:d},g+=c,h+=d||0}let w={};e("employees")&&(w.employees=await v("SELECT COUNT(*) AS n FROM employees WHERE status = 'active'")),e("departments")&&(w.departments=await v("SELECT COUNT(*) AS n FROM departments")),e("helpdesk")&&(w.helpdesk=await v("SELECT COUNT(*) AS n FROM helpdesk_tickets WHERE status NOT IN ('resolved', 'closed')")),e("career")&&(w.career=await v("SELECT COUNT(*) AS n FROM career_postings WHERE status = 'active'")),e("news")&&(w.news=await v("SELECT COUNT(*) AS n FROM news WHERE status = 'published'")),e("subscribers")&&(w.subscribers=await v("SELECT COUNT(*) AS n FROM newsletter_subscribers WHERE is_active = 1"));let x=null;if(e("employees")){let a=await v("SELECT COUNT(*) AS n FROM employees WHERE status = 'active' AND created_at < DATE_SUB(NOW(), INTERVAL 30 DAY)"),b=await v("SELECT COUNT(*) AS n FROM employees WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)");x={now:w.employees,before:a,change:w.employees-a,new_hires:b}}let y=function(a=6,b=new Date){let c=[];for(let d=a-1;d>=0;d--){let a=new Date(b.getFullYear(),b.getMonth()-d,1);c.push(`${a.getFullYear()}-${String(a.getMonth()+1).padStart(2,"0")}`)}return c}(6),z=`${y[0]}-01`,A=()=>Object.fromEntries(y.map(a=>[a,0])),B={};for(let a of p){if(!e(a))continue;let b=s[a],c=await (0,i.P)(`SELECT DATE_FORMAT(\`${b.dateColumn}\`, '%Y-%m') AS ym, COUNT(*) AS n
+           FROM \`${b.table}\` WHERE \`${b.dateColumn}\` >= ? GROUP BY ym`,[z]),d=A();for(let a of c)a.ym in d&&(d[a.ym]=Number(a.n));B[a]=d}let C={};for(let a of q){if(!e(a))continue;let b=t[a],c=await (0,i.P)(`SELECT DATE_FORMAT(\`${b.dateColumn}\`, '%Y-%m') AS ym,
+                COALESCE(SUM(\`${b.amountColumn}\`), 0) AS total
+           FROM \`${b.table}\` WHERE \`${b.dateColumn}\` >= ? GROUP BY ym`,[z]),d=A();for(let a of c)a.ym in d&&(d[a.ym]=((0,l.Fd)(a.total)??0)/100);C[a]=d}let D=y.map(a=>({month:a,label:function(a){let[b,c]=a.split("-"),d=Number(c)-1;return`${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][d]||c} ${String(b).slice(2)}`}(a),counts:Object.fromEntries(Object.keys(B).map(b=>[b,B[b][a]])),amounts:Object.fromEntries(Object.keys(C).map(b=>[b,C[b][a]]))})),E=null;e("departments")&&e("employees")&&(E=(await (0,i.P)(`SELECT d.name AS name, COUNT(e.id) AS employees
+           FROM departments d
+           LEFT JOIN employees e ON e.department_id = d.id AND e.status = 'active'
+          GROUP BY d.id, d.name
+          ORDER BY employees DESC, d.name ASC
+          LIMIT 10`)).map(a=>({name:a.name,employees:Number(a.employees)})));let F=null;e("leave")&&(F=(await (0,i.P)(`SELECT lt.name AS name, COUNT(la.id) AS n
+           FROM leave_applications la
+           JOIN leave_types lt ON lt.id = la.leave_type_id
+          WHERE la.created_at >= ?
+          GROUP BY lt.id, lt.name
+          ORDER BY n DESC`,[z])).map(a=>({name:a.name,count:Number(a.n)})));let G=null;e("helpdesk")&&(G=(await (0,i.P)(`SELECT status, COUNT(*) AS n FROM helpdesk_tickets WHERE created_at >= ?
+          GROUP BY status ORDER BY n DESC`,[z])).map(a=>({status:a.status,count:Number(a.n)})));let H=null;e("expenses")&&(H=(await (0,i.P)(`SELECT ec.name AS name, COALESCE(SUM(e.total_amount), 0) AS total
+           FROM expenses e
+           JOIN expense_categories ec ON ec.id = e.category_id
+          WHERE e.applied_date >= ?
+          GROUP BY ec.id, ec.name
+          ORDER BY total DESC
+          LIMIT 5`,[z])).map(a=>{let b=(0,l.Fd)(a.total)??0;return{name:a.name,amount:(0,k.sp)(b),amount_n:b/100}}));let I=null,J=Object.keys(u).filter(e);if(J.length>0){let a=J.map(a=>{let b=u[a];return`(SELECT '${m[a].label}' AS module,
+                        COALESCE(e.full_name, 'Unknown') AS who,
+                        CAST(t.status AS CHAR) AS status,
+                        t.\`${b.dateColumn}\` AS at
+                   FROM \`${b.table}\` t
+                   LEFT JOIN employees e ON e.id = t.employee_id
+                  ORDER BY t.\`${b.dateColumn}\` DESC
+                  LIMIT 5)`});I=(await (0,i.P)(`${a.join(" UNION ALL ")} ORDER BY at DESC LIMIT 10`)).map(a=>({module:a.module,who:e("employees")?String(a.who):"—",status:String(a.status),at:null===a.at?"":String(a.at)}))}return b.status(200).json({success:!0,sources:a,counts:w,waiting:f,waiting_total:g,overdue_total:h,headcount:x,months:D,departments:E,leave_types:F,ticket_status:G,expense_categories:H,activity:I,generated_at:new Date().toISOString()})}catch(a){return console.error("Dashboard stats error:",a),b.status(500).json({success:!1,error:a instanceof Error?a.message:"Failed to read the dashboard"})}}}var x=c(58112),y=c(18766);let z=(0,h.M)(d,"default"),A=(0,h.M)(d,"config"),B=new g.PagesAPIRouteModule({definition:{kind:f.A.PAGES_API,page:"/api/admin/dashboard/stats",pathname:"/api/admin/dashboard/stats",bundlePath:"",filename:""},userland:d,distDir:".next",relativeProjectDir:""});async function C(a,b,c){let d=await B.prepare(a,b,{srcPage:"/api/admin/dashboard/stats"});if(!d){b.statusCode=400,b.end("Bad Request"),null==c.waitUntil||c.waitUntil.call(c,Promise.resolve());return}let{query:f,params:g,prerenderManifest:h,routerServerContext:i}=d;try{let c=a.method||"GET",d=(0,x.getTracer)(),e=d.getActiveScopeSpan(),j=B.instrumentationOnRequestError.bind(B),k=async e=>B.render(a,b,{query:{...f,...g},params:g,allowedRevalidateHeaderKeys:[],multiZoneDraftMode:!1,trustHostHeader:!1,previewProps:h.preview,propagateError:!1,dev:B.isDev,page:"/api/admin/dashboard/stats",internalRevalidate:null==i?void 0:i.revalidate,onError:(...b)=>j(a,...b)}).finally(()=>{if(!e)return;e.setAttributes({"http.status_code":b.statusCode,"next.rsc":!1});let f=d.getRootSpanAttributes();if(!f)return;if(f.get("next.span_type")!==y.BaseServerSpan.handleRequest)return void console.warn(`Unexpected root span type '${f.get("next.span_type")}'. Please report this Next.js issue https://github.com/vercel/next.js`);let g=f.get("next.route");if(g){let a=`${c} ${g}`;e.setAttributes({"next.route":g,"http.route":g,"next.span_name":a}),e.updateName(a)}else e.updateName(`${c} ${a.url}`)});e?await k(e):await d.withPropagatedContext(a.headers,()=>d.trace(y.BaseServerSpan.handleRequest,{spanName:`${c} ${a.url}`,kind:x.SpanKind.SERVER,attributes:{"http.method":c,"http.target":a.url}},k))}catch(a){if(B.isDev)throw a;(0,e.sendError)(b,500,"Internal Server Error")}finally{null==c.waitUntil||c.waitUntil.call(c,Promise.resolve())}}},20746:(a,b,c)=>{function d(a){if(null==a||""===a)return 0;let b=String(a).trim();if(!/^-?\d*(\.\d*)?$/.test(b))return 0;let c=b.startsWith("-"),[d,e=""]=b.replace("-","").split("."),f=100*Number(d||"0")+Number(`${e}00`.slice(0,2));return c?-f:f}function e(a){if(null==a||""===a)return 0;let b=String(a).trim();if(!/^-?\d*(\.\d*)?$/.test(b))return 0;let c=b.startsWith("-"),[d,e=""]=b.replace("-","").split("."),f=1e3*Number(d||"0")+Number(`${e}000`.slice(0,3));return c?-f:f}function f(a){let b=Math.abs(Math.trunc(a));return`${a<0?"-":""}${Math.trunc(b/100)}.${String(b%100).padStart(2,"0")}`}function g(a){let b=Math.abs(Math.trunc(a));return`${a<0?"-":""}${Math.trunc(b/1e3)}.${String(b%1e3).padStart(3,"0")}`}function h(a,b){let c=Math.abs(b),d=Math.floor((2*Math.abs(a)+c)/(2*c));return a<0!=b<0?-d:d}c.d(b,{$9:()=>j,Fd:()=>d,OD:()=>m,Ti:()=>l,Vr:()=>e,YR:()=>k,aY:()=>g,nA:()=>f});let i=["exclusive","inclusive"];function j(a){return"string"==typeof a&&i.includes(a)}function k(a,b){let c=h(a.quantityThousandths*a.unitPriceCents,1e3),d=h(c*a.discountPercentHundredths,1e4),e=Math.min(Math.max(0,d+Math.max(0,a.discountAmountCents)),Math.max(0,c)),f=c-e,g=Math.max(0,a.taxRateHundredths),i={percentDiscountCents:d,flatDiscountCents:e-d};if("inclusive"===b){let a=0===g?0:h(f*g,1e4+g);return{grossCents:c,discountCents:e,...i,netCents:f-a,taxCents:a,lineTotalCents:f}}let j=0===g?0:h(f*g,1e4);return{grossCents:c,discountCents:e,...i,netCents:f,taxCents:j,lineTotalCents:f+j}}function l(a){return a.reduce((a,b)=>({subtotalCents:a.subtotalCents+b.netCents,taxCents:a.taxCents+b.taxCents,totalCents:a.totalCents+b.lineTotalCents,discountCents:a.discountCents+b.discountCents}),{subtotalCents:0,taxCents:0,totalCents:0,discountCents:0})}function m(a,b){let c=[];return a.subtotalCents!==b.subtotalCents&&c.push(`subtotal ${f(a.subtotalCents)} but the lines sum to `+f(b.subtotalCents)),a.taxCents!==b.taxCents&&c.push(`tax ${f(a.taxCents)} but the lines sum to ${f(b.taxCents)}`),a.totalCents!==b.totalCents&&c.push(`total ${f(a.totalCents)} but the lines sum to ${f(b.totalCents)}`),0===c.length?null:`The header says ${c.join("; ")}.`}},63415:(a,b,c)=>{c.d(b,{$3:()=>g,PS:()=>h,T1:()=>e,iT:()=>f});var d=c(88251);function e(a){let b=a.headers["x-forwarded-for"];return"string"==typeof b&&b?b.split(",")[0].trim():Array.isArray(b)&&b.length?b[0].split(",")[0].trim():a.socket?.remoteAddress||"unknown"}async function f(a){let b=function(a){let b=a.query.hash;if("string"==typeof b&&b)return b;let c=a.headers.authorization;if(c&&c.startsWith("Bearer ")){let a=c.slice(7).trim();if(a)return a}return null}(a);if(!b)return null;let c=await (0,d.P)("SELECT username, expires_at FROM admin_sessions WHERE hash = ? LIMIT 1",[b]);if(!c||0===c.length||new Date(c[0].expires_at)<=new Date)return null;let f=c[0].username,g=await (0,d.P)("SELECT id, user_type, status FROM admins WHERE username = ? LIMIT 1",[f]);if(!g||0===g.length||"active"!==g[0].status)return null;let h=g[0].id,i=await (0,d.P)(`SELECT DISTINCT p.module, p.action, r.name AS role_name
+       FROM admin_roles ar
+       INNER JOIN roles r            ON r.id = ar.role_id
+       INNER JOIN role_permissions rp ON rp.role_id = ar.role_id
+       INNER JOIN permissions p       ON p.id = rp.permission_id
+      WHERE ar.admin_id = ?`,[h]),j=Array.from(new Set(i.map(a=>`${a.module}_${a.action}`))),k=Array.from(new Set(i.map(a=>a.role_name)));return{adminId:h,username:f,userType:g[0].user_type,roleNames:k,permissions:j,isSuperAdmin:k.some(a=>"super admin"===a.trim().toLowerCase()),ip:e(a)}}function g(a,b,c){return!!a&&(!!a.isSuperAdmin||a.permissions.includes(`${b}_${c}`))}async function h(a,b,c,d){let e=await f(a);return e?g(e,c,d)?e:(b.status(403).json({success:!1,error:`You do not have permission for this: ${c}_${d}`}),null):(b.status(401).json({success:!1,error:"Your session is invalid or has expired. Please sign in again."}),null)}},75600:a=>{a.exports=require("next/dist/compiled/next-server/pages-api.runtime.prod.js")}};var b=require("../../../../webpack-api-runtime.js");b.C(a);var c=b.X(0,[7169,4560],()=>b(b.s=14618));module.exports=c})();
