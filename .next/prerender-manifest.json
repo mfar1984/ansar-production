@@ -146,30 +146,6 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/resources/projects": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/resources/projects",
-      "dataRoute": "/resources/projects.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/resources/download": {
       "experimentalBypassFor": [
         {
@@ -185,6 +161,30 @@
       "initialRevalidateSeconds": false,
       "srcRoute": "/resources/download",
       "dataRoute": "/resources/download.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/resources/projects": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/resources/projects",
+      "dataRoute": "/resources/projects.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -222,8 +222,8 @@
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "4aa2d08a519e0f2dce2b0258ac803150",
-    "previewModeSigningKey": "e029cfc72d68f79d5c878fec1fc32190b7c28dec5410d70c7a5e7b7ecb0a4aaa",
-    "previewModeEncryptionKey": "2ca9b3f67528cdc529d4418463fd6b1ba69e2377ef71f3ab32fb9824a138e62b"
+    "previewModeId": "3e157cd30aaa0bca03b7e4be3a17c47f",
+    "previewModeSigningKey": "3fd447d1beadd800a8d91a93aeecdd48f7f347d427cf04c9ae4977c5e0264bce",
+    "previewModeEncryptionKey": "45ec5da49ba09f18064f90ccf0af9eb11effa90506b9192ff03ae9621f61f111"
   }
 }
