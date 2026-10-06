@@ -196,7 +196,73 @@ CREATE TABLE IF NOT EXISTS `mileage_claims` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC
   COMMENT='A mileage submission covering a period. The trips are in mileage_trips.'
 -- >>>
+-- 2b/5. A machine that already ran the FIRST version of this file has `mileage_trips` with the two
+--       columns GENERATED. Convert them, so every database ends up with one shape.
+--
+-- On production this guard is false and the branch is a no-op: the CREATE TABLE below failed there,
+-- so the table does not exist at all. It fires on a development machine running MySQL, where the
+-- generated form was accepted — and without it that machine would keep the old shape for ever,
+-- because `CREATE TABLE IF NOT EXISTS` does not alter an existing table.
+--
+-- Guarded on `EXTRA LIKE '%GENERATED%'` being true for BOTH columns, so a half-converted table is
+-- left alone to be looked at rather than quietly patched.
+SET @sql := IF(
+  (SELECT COUNT(*) FROM information_schema.COLUMNS
+    WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'mileage_trips'
+      AND COLUMN_NAME IN ('distance_km', 'amount')
+      AND EXTRA LIKE '%STORED GENERATED%') = 2,
+  'ALTER TABLE `mileage_trips`
+     MODIFY COLUMN `distance_km` INT UNSIGNED NOT NULL,
+     MODIFY COLUMN `amount` DECIMAL(10,2) NOT NULL',
+  'DO 0'
+)
+-- >>>
+PREPARE stmt FROM @sql
+-- >>>
+EXECUTE stmt
+-- >>>
+DEALLOCATE PREPARE stmt
+-- >>>
 -- 3. The ledger. Rows exist before and after any claim, which is what a claim LINE cannot do.
+--
+-- ══════════════════════════════════════════════════════════════════════════════
+-- `distance_km` AND `amount` ARE PLAIN COLUMNS, AND THAT IS A CORRECTION
+-- ══════════════════════════════════════════════════════════════════════════════
+--
+-- They shipped as MySQL STORED GENERATED columns and PRODUCTION REFUSED THE TABLE:
+--
+--   [#3] Function or expression '`odo_end` - `odo_start`' cannot be used in the
+--        GENERATED ALWAYS AS clause of `distance_km`
+--
+-- That is MariaDB error 1901. This development machine is MySQL 8.0.45 and the server is MariaDB,
+-- and MariaDB applies its own rules to what may appear in a generated-column expression. The other
+-- twelve statements applied, so production was left with `employee_vehicles` and `mileage_claims`
+-- present and the LEDGER missing — the screen reported
+-- `Table 'malaysiadev_ansar.mileage_trips' doesn't exist`.
+--
+-- The same class of dev-versus-host difference `tests/sql/sql-portability.test.js` already exists
+-- for: `innodb_default_row_format` is DYNAMIC here and COMPACT on the host, and nothing in an
+-- exported statement said so. This is the second one, and it is recorded in the same spirit.
+--
+-- WHY NOT A SECOND GENERATED-COLUMN ATTEMPT. Error 1901 also fires for CHECK clauses, and MariaDB's
+-- whitelist cannot be tested from here. A second guess would be a second failed deployment, so the
+-- column types become the ones every engine accepts: plain `INT UNSIGNED` and `DECIMAL(10,2)`.
+--
+-- WHAT WAS LOST, AND WHAT REPLACES IT. The generated columns meant the application COULD NOT write
+-- a figure that disagreed with the readings. That guarantee now lives in three places instead of
+-- one, none of which needs engine-specific DDL:
+--
+--   1. `tripFigures()` in `src/lib/mileage.ts` is the ONLY thing that computes either value, and
+--      both write paths go through it.
+--   2. `tests/sql/mileage.test.js` scans for any other writer of those two columns, and unit-checks
+--      the arithmetic — 42 km at RM 0.60 is RM 25.20.
+--   3. `chk_mtrip_odo` still refuses a journey of zero or negative length, which is the fault the
+--      readings themselves can carry. MariaDB accepted the two simple CHECKs in statements 1 and 2,
+--      so a column-to-column comparison is safe; arithmetic inside a CHECK is NOT attempted here
+--      for the reason above.
+--
+-- It is weaker. It is weaker in a way that is MECHANICALLY ENFORCED rather than hoped for, and it
+-- deploys.
 CREATE TABLE IF NOT EXISTS `mileage_trips` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `employee_id` INT NOT NULL,
@@ -209,9 +275,9 @@ CREATE TABLE IF NOT EXISTS `mileage_trips` (
   `project_id` INT DEFAULT NULL,
   `odo_start` INT UNSIGNED NOT NULL COMMENT 'Odometer at the start. Continuity: equals the previous trip odo_end for this vehicle.',
   `odo_end` INT UNSIGNED NOT NULL,
-  `distance_km` INT UNSIGNED GENERATED ALWAYS AS (`odo_end` - `odo_start`) STORED,
+  `distance_km` INT UNSIGNED NOT NULL COMMENT 'odo_end - odo_start. Written ONLY by tripFigures() in src/lib/mileage.ts',
   `rate_per_km` DECIMAL(5,2) NOT NULL COMMENT 'SNAPSHOT of the vehicle rate when the trip was logged',
-  `amount` DECIMAL(10,2) GENERATED ALWAYS AS (ROUND((`odo_end` - `odo_start`) * `rate_per_km`, 2)) STORED,
+  `amount` DECIMAL(10,2) NOT NULL COMMENT 'distance_km * rate_per_km, rounded. Written ONLY by tripFigures()',
   `remarks` TEXT,
   `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -354,4 +420,39 @@ UPDATE `accounting_preferences`
  WHERE `id` = 1
    AND `mileage_expense_account_id` IS NULL
    AND EXISTS (SELECT 1 FROM `chart_of_accounts` WHERE `code` = '9110/000')
+-- >>>
+-- 11. VERIFICATION. `scripts/run-sql.js` prints a row set, so this is what the operator reads back.
+--
+-- `db_version` and `payroll_generated` are here because of how this file failed the first time. The
+-- generated columns were measured on a MySQL 8.0.45 development machine and refused by MariaDB on the
+-- server, and the payroll work that preceded this release rests on `payroll_records.gross_salary`,
+-- `total_deductions` and `net_salary` being STORED GENERATED — measured on the SAME development
+-- machine.
+--
+-- So `payroll_generated` must read 3. If it reads 0, those three columns are PLAIN on the server, the
+-- arithmetic argument behind the payroll decision was made against the wrong database, and that has to
+-- be looked at before anything else. Printing it costs one line and answers it without a second trip.
+-- `EXTRA LIKE '%STORED GENERATED%'`, NOT `'%GENERATED%'`. The first version of this SELECT used the
+-- looser pattern and reported `trips_generated = 2` on a table whose two columns were correctly
+-- PLAIN: `created_at` and `updated_at` carry `EXTRA = 'DEFAULT_GENERATED'`, and that string contains
+-- the word. The same mistake made `payroll_generated` read 5 where the real answer is 3.
+--
+-- A diagnostic that reads wrong is worse than no diagnostic, because it is believed. The guard in
+-- statement 2b escapes this only because it is scoped to the two columns by name.
+SELECT VERSION() AS db_version,
+       (SELECT COUNT(*) FROM information_schema.TABLES
+         WHERE TABLE_SCHEMA = DATABASE()
+           AND TABLE_NAME IN ('employee_vehicles', 'mileage_claims', 'mileage_trips')) AS tables_3,
+       (SELECT COUNT(*) FROM information_schema.COLUMNS
+         WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'mileage_trips'
+           AND EXTRA LIKE '%STORED GENERATED%') AS trips_stored_gen_0,
+       (SELECT COUNT(*) FROM information_schema.COLUMNS
+         WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'payroll_records'
+           AND EXTRA LIKE '%STORED GENERATED%') AS payroll_stored_gen_3,
+       (SELECT COUNT(*) FROM `permissions` WHERE `module` LIKE 'mileage%') AS perms_16,
+       (SELECT COUNT(*) FROM `hr_approval_workflow` WHERE `module` = 'mileage') AS levels,
+       (SELECT `status` FROM `claim_types` WHERE `code` = 'MLG') AS mlg,
+       (SELECT COUNT(*) FROM information_schema.COLUMNS
+         WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'accounting_preferences'
+           AND COLUMN_NAME = 'mileage_expense_account_id') AS pref_col_1
 -- >>>
