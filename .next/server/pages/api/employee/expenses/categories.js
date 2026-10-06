@@ -1,5 +1,6 @@
 "use strict";(()=>{var a={};a.id=4384,a.ids=[4384],a.modules={3498:a=>{a.exports=require("mysql2/promise")},4586:(a,b,c)=>{c.r(b),c.d(b,{config:()=>o,default:()=>n,handler:()=>q});var d={};c.r(d),c.d(d,{default:()=>k});var e=c(29046),f=c(8667),g=c(33480),h=c(86435),i=c(88251),j=c(69486);async function k(a,b){if("GET"!==a.method)return b.setHeader("Allow","GET"),b.status(405).json({success:!1,error:"Method not allowed"});if(await (0,j.U)(a,b))try{let a=(await (0,i.P)(`SELECT c.id, c.code, c.name, c.name AS category, c.description, c.color,
-              c.budget_limit, c.requires_approval, c.approval_threshold, c.status,
+              c.budget_limit, c.requires_approval, c.approval_threshold,
+              c.requires_receipt, c.status,
               (SELECT COALESCE(SUM(e.total_amount), 0) FROM expenses e
                  WHERE e.category_id = c.id
                    AND e.status IN ('pending', 'approved', 'paid')

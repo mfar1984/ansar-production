@@ -12,14 +12,43 @@
               (SELECT COUNT(*) FROM purchase_requests pr
                 WHERE pr.project_id = ? AND pr.status IN (${o})) AS request_count,
 
-              (SELECT COALESCE(SUM(e.total_amount), 0) FROM expenses e
-                WHERE e.project_id = ? AND e.status IN (${l})) AS claimed,
-              (SELECT COUNT(*) FROM expenses e
-                WHERE e.project_id = ? AND e.status IN (${l})) AS claim_count,
-              (SELECT COALESCE(SUM(e.total_amount), 0) FROM expenses e
-                WHERE e.project_id = ? AND e.status IN (${m})) AS claims_pending,
-              (SELECT COUNT(*) FROM expenses e
-                WHERE e.project_id = ? AND e.status IN (${m})) AS claims_pending_count,
+              -- ── CLAIMED SPEND COMES FROM THE LINE, NOT THE HEADER ──
+              --
+              -- Identical to projects/cost.ts, which carries the argument in full. In short:
+              -- expenses.project_id has a foreign key and NO WRITER -- nothing in the codebase has
+              -- ever set it -- so this figure was a permanent RM 0.00 and nothing said so.
+              -- database/expenses_submission.sql moved the project onto expense_items, which is the
+              -- level that can answer the question, because one shopping trip can buy materials for
+              -- two jobs. The header column and fk_exp_project are KEPT; they are simply not what
+              -- this tab reads.
+              --
+              -- NO DOUBLE COUNTING: the total is taken over expense_items rows joined by
+              -- ei.expense_id -> e.id, a single-valued foreign key onto a PRIMARY KEY, so a line
+              -- joins to exactly one parent and appears once. The header total_amount is not added
+              -- up here at all -- ten lines contribute ten line totals, not one header figure ten
+              -- times.
+              --
+              -- The STATUS is on the parent, so the join is what applies the two sets, and they are
+              -- the same two as before. Tax is on the header and no line carries it, so these are
+              -- NET of SST; the list below returns each claim's own total beside its project share
+              -- so the gap is visible rather than silent.
+              --
+              -- COUNT(DISTINCT ei.expense_id): every label on this tab reads "N claim(s)", so the
+              -- count stays a number of DOCUMENTS and matches the length of the list below.
+              --
+              -- SQL comments and NO BACKTICKS: this is inside a template literal.
+              (SELECT COALESCE(SUM(ei.total_price), 0) FROM expense_items ei
+                 INNER JOIN expenses e ON e.id = ei.expense_id
+                WHERE ei.project_id = ? AND e.status IN (${l})) AS claimed,
+              (SELECT COUNT(DISTINCT ei.expense_id) FROM expense_items ei
+                 INNER JOIN expenses e ON e.id = ei.expense_id
+                WHERE ei.project_id = ? AND e.status IN (${l})) AS claim_count,
+              (SELECT COALESCE(SUM(ei.total_price), 0) FROM expense_items ei
+                 INNER JOIN expenses e ON e.id = ei.expense_id
+                WHERE ei.project_id = ? AND e.status IN (${m})) AS claims_pending,
+              (SELECT COUNT(DISTINCT ei.expense_id) FROM expense_items ei
+                 INNER JOIN expenses e ON e.id = ei.expense_id
+                WHERE ei.project_id = ? AND e.status IN (${m})) AS claims_pending_count,
 
               (SELECT COALESCE(SUM(a.purchase_cost), 0) FROM assets a
                 WHERE a.project_id = ?) AS equipment,
@@ -64,20 +93,31 @@
          FROM purchase_requests pr
         WHERE pr.project_id = ? AND pr.status IN (${o})
         ORDER BY pr.total_amount DESC, pr.id DESC
-        LIMIT 100`,[d]),D=await (0,i.P)(`SELECT e.id, e.expense_number, e.total_amount, e.status, e.vendor_name, e.description,
+        LIMIT 100`,[d]),D=await (0,i.P)(`SELECT e.id, e.expense_number, e.status, e.vendor_name, e.description,
               DATE_FORMAT(e.expense_date, '%Y-%m-%d') AS expense_date,
               /* employees.employee_id is the STAFF NUMBER, a varchar, not a foreign key. Eleven
                  other endpoints alias it the same way; the name is confusing and it is not this
                  file's to fix. NO BACKTICKS IN HERE: this comment is inside a template literal, and
                  one would end the string and report TS1005 on a line of prose. */
               emp.full_name AS claimant, emp.employee_id AS employee_no,
-              cat.name AS category
-         FROM expenses e
+              cat.name AS category,
+              /* The share tagged to THIS project, under the name the screen already reads, and the
+                 document's own total beside it. One line joins to one parent through a foreign key
+                 onto a PRIMARY KEY, so the grouping counts each line once. */
+              COALESCE(SUM(ei.total_price), 0) AS total_amount,
+              e.total_amount AS expense_total
+         FROM expense_items ei
+         INNER JOIN expenses e ON e.id = ei.expense_id
          LEFT JOIN employees emp ON emp.id = e.employee_id
          LEFT JOIN expense_categories cat ON cat.id = e.category_id
-        WHERE e.project_id = ?
+        WHERE ei.project_id = ?
           AND e.status IN (${l}, ${m})
-        ORDER BY e.total_amount DESC, e.id DESC
+        /* e.id is the PRIMARY KEY, so every other e. column is functionally dependent on it and
+           ONLY_FULL_GROUP_BY is satisfied without naming them. The three outer-joined columns ARE
+           named: their determinants sit in LEFT JOIN conditions, and relying on a server to detect
+           functional dependency across an outer join is relying on a version rather than on SQL. */
+        GROUP BY e.id, emp.full_name, emp.employee_id, cat.name
+        ORDER BY COALESCE(SUM(ei.total_price), 0) DESC, e.id DESC
         LIMIT 100`,[d]),E=await (0,i.P)(`SELECT a.id, a.asset_no, a.name, a.brand, a.model, a.serial_no, a.status, a.holder,
               a.ownership, a.purchase_cost, a.category,
               DATE_FORMAT(a.purchase_date, '%Y-%m-%d') AS purchase_date

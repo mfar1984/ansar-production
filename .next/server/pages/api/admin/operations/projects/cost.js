@@ -13,12 +13,73 @@
               (SELECT COUNT(*) FROM purchase_requests pr
                 WHERE pr.project_id = p.id AND pr.status IN (${m})) AS request_count,
 
-              (SELECT COALESCE(SUM(e.total_amount), 0) FROM expenses e
-                WHERE e.project_id = p.id AND e.status IN (${l})) AS claimed,
-              (SELECT COALESCE(SUM(e.total_amount), 0) FROM expenses e
-                WHERE e.project_id = p.id AND e.status IN ('pending')) AS claims_pending,
-              (SELECT COUNT(*) FROM expenses e
-                WHERE e.project_id = p.id AND e.status IN (${l})) AS claim_count,
+              -- ── CLAIMED SPEND COMES FROM THE LINE NOW, NOT THE HEADER ──
+              --
+              -- This figure was RM 0.00 on every project for the whole life of the module, and the
+              -- query was never the reason. expenses.project_id has a foreign key, an index, and NO
+              -- WRITER: a grep for project_id across every file whose path matches expense returns
+              -- zero, expense-create.ts never names the column when it writes a row, no statement
+              -- anywhere assigns it afterwards, and the one live row reads NULL. So the claimed
+              -- component of spent was a column nobody fills, summed with confidence and rendered
+              -- as a real number.
+              --
+              -- And the wording above is deliberate. project-cost.test.js proves this endpoint
+              -- never writes by scanning the source for the three write keywords as bare words,
+              -- and it strips JS comments only -- not SQL ones. So a line of PROSE in here that
+              -- spells one of them out fails that gate, which is exactly what the first draft of
+              -- this comment did. Describe the write, do not name it.
+              --
+              -- database/expenses_submission.sql put the project on expense_items, which is the
+              -- correct level: one shopping trip can buy materials for two jobs, and a header
+              -- column could only ever name one of them. expenses.project_id and fk_exp_project are
+              -- KEPT -- no API is removed, and project-cost.test.js asserts the column still exists
+              -- and is still nullable -- it is simply no longer what this screen reads.
+              --
+              -- NO DOUBLE COUNTING, and this is the guarantee rather than the hope: the total is
+              -- taken over expense_items rows, and the join is ei.expense_id -> e.id, a
+              -- single-valued foreign key onto a PRIMARY KEY. A line therefore joins to exactly one
+              -- parent and can appear exactly once. The header total_amount is not added up here at
+              -- all, so an expense with ten lines contributes its ten line totals once each rather
+              -- than its header figure ten times.
+              --
+              -- MEASURED PLANS, and they are not the same plan, which is worth writing down before
+              -- somebody reads one of them as a fault. expense_items holds ONE row on this
+              -- database, so for these three CORRELATED subqueries the optimiser drives from
+              -- expenses on idx_status and hash-joins the single-row line table: ei type=ALL,
+              -- e type=index/ref on idx_status, Extra "Using join buffer (hash join)". Scanning two
+              -- estimated rows is cheaper than an index dive, and it is the right choice at this
+              -- size. The same shape against a selective predicate already picks the index today:
+              -- the untagged subquery below reports ei type=ref on idx_expense_items_project with
+              -- "Using index condition", and so does the per-project tab, where project_id is a
+              -- parameter rather than a correlated column. idx_expense_items_project is what the
+              -- plan becomes once the table carries rows; nothing here needs changing for that.
+              --
+              -- THE STATUS LIVES ON THE PARENT. A line has no status of its own, so the join to
+              -- expenses is what applies the two sets below -- and they are the SAME two sets as
+              -- before, unchanged. An approved claim is a liability before the money leaves; a
+              -- pending one is somebody asking, the same as a purchase request.
+              --
+              -- WHAT IT EXCLUDES, SAID OUT LOUD: tax_amount is on the HEADER and no line carries
+              -- it, so this is the NET line value. SST on one invoice cannot be split across two
+              -- projects without inventing an allocation rule, and inventing one is how a cost
+              -- report starts disagreeing with the ledger. The gap is visible on the per-project
+              -- tab, which returns each claim's own total beside the share tagged here.
+              --
+              -- claim_count is COUNT(DISTINCT ei.expense_id), not COUNT(*). Every label on both
+              -- screens reads "N claim(s)", so the count has to stay a number of DOCUMENTS -- a
+              -- line count under that label would report four claims where there is one.
+              --
+              -- SQL comments, not JS ones, and NO BACKTICKS: this is inside a template literal and
+              -- one backtick would close the string.
+              (SELECT COALESCE(SUM(ei.total_price), 0) FROM expense_items ei
+                 INNER JOIN expenses e ON e.id = ei.expense_id
+                WHERE ei.project_id = p.id AND e.status IN (${l})) AS claimed,
+              (SELECT COALESCE(SUM(ei.total_price), 0) FROM expense_items ei
+                 INNER JOIN expenses e ON e.id = ei.expense_id
+                WHERE ei.project_id = p.id AND e.status IN ('pending')) AS claims_pending,
+              (SELECT COUNT(DISTINCT ei.expense_id) FROM expense_items ei
+                 INNER JOIN expenses e ON e.id = ei.expense_id
+                WHERE ei.project_id = p.id AND e.status IN (${l})) AS claim_count,
 
               (SELECT COALESCE(SUM(a.purchase_cost), 0) FROM assets a
                 WHERE a.project_id = p.id) AS equipment,
@@ -47,10 +108,19 @@
                 WHERE project_id IS NULL AND status IN (${k})) AS committed,
               (SELECT COUNT(*) FROM purchase_orders
                 WHERE project_id IS NULL AND status IN (${k})) AS order_count,
-              (SELECT COALESCE(SUM(total_amount), 0) FROM expenses
-                WHERE project_id IS NULL AND status IN (${l})) AS claimed,
-              (SELECT COUNT(*) FROM expenses
-                WHERE project_id IS NULL AND status IN (${l})) AS claim_count,
+              /* Untagged CLAIMS are counted at the LINE, for the same reason the per-project figure
+                 is, and the consistency is the point. Asking expenses.project_id IS NULL here would
+                 match EVERY expense ever filed — the header column has no writer — so a line
+                 correctly tagged to a project would be counted in that project's row AND again in
+                 this bucket. The two figures have to be drawn from the same column or they stop
+                 adding up. The difference against the sum of every claim is header tax, which no
+                 project can be charged. */
+              (SELECT COALESCE(SUM(ei.total_price), 0) FROM expense_items ei
+                 INNER JOIN expenses e ON e.id = ei.expense_id
+                WHERE ei.project_id IS NULL AND e.status IN (${l})) AS claimed,
+              (SELECT COUNT(DISTINCT ei.expense_id) FROM expense_items ei
+                 INNER JOIN expenses e ON e.id = ei.expense_id
+                WHERE ei.project_id IS NULL AND e.status IN (${l})) AS claim_count,
               (SELECT COALESCE(SUM(purchase_cost), 0) FROM assets
                 WHERE project_id IS NULL) AS equipment,
               (SELECT COUNT(*) FROM assets WHERE project_id IS NULL) AS equipment_count,
