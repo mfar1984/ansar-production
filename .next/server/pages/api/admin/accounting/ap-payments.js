@@ -69,4 +69,4 @@
        FROM journal_lines l
        JOIN journal_entries e ON e.id = l.journal_id
       WHERE l.account_id = ? AND e.status IN ('posted', 'reversed')
-      LIMIT 1`,[a]);return Number(b[0]?.n||0)>0}},75600:a=>{a.exports=require("next/dist/compiled/next-server/pages-api.runtime.prod.js")}};var b=require("../../../../webpack-api-runtime.js");b.C(a);var c=b.X(0,[7169,4560,1225,7068,3713,2164,5725,3557,6443],()=>b(b.s=21791));module.exports=c})();
+      LIMIT 1`,[a]);return Number(b[0]?.n||0)>0}},75600:a=>{a.exports=require("next/dist/compiled/next-server/pages-api.runtime.prod.js")}};var b=require("../../../../webpack-api-runtime.js");b.C(a);var c=b.X(0,[7169,4560,1803,7068,5394,2164,5725,3557,6443],()=>b(b.s=21791));module.exports=c})();

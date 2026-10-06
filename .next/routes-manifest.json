@@ -292,6 +292,14 @@
       "namedRegex": "^/api/admin/loans/(?<nxtPid>[^/]+?)(?:/)?$"
     },
     {
+      "page": "/api/admin/mileage/[id]",
+      "regex": "^/api/admin/mileage/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/mileage/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/api/admin/news/[id]",
       "regex": "^/api/admin/news/([^/]+?)(?:/)?$",
       "routeKeys": {

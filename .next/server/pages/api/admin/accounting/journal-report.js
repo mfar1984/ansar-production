@@ -14,40 +14,4 @@
        FROM journal_lines l
        JOIN journal_entries e ON e.id = l.journal_id
       WHERE l.account_id = ? AND e.status IN ('posted', 'reversed')
-      LIMIT 1`,[a]);return Number(b[0]?.n||0)>0}},75600:a=>{a.exports=require("next/dist/compiled/next-server/pages-api.runtime.prod.js")},84606:(a,b,c)=>{c.d(b,{Mh:()=>n,QY:()=>q,Qh:()=>o,ip:()=>p,pS:()=>m});var d=c(88251),e=c(35830);let f="('posted', 'reversed')",g=`l.id AS line_id, l.journal_id, e.journal_no,
-        DATE_FORMAT(e.entry_date, '%Y-%m-%d') AS entry_date,
-        e.status, e.source, e.description AS journal_description, e.reference,
-        l.description AS line_description, l.line_no,
-        l.account_id, a.code, a.name, a.account_type,
-        l.debit, l.credit, e.reverses_id, e.reversed_by_id,
-        e.source_table, e.source_id`,h=`FROM journal_lines l
-       JOIN journal_entries e ON e.id = l.journal_id
-       JOIN chart_of_accounts a ON a.id = l.account_id`;function i(a){return{line_id:Number(a.line_id),journal_id:Number(a.journal_id),journal_no:String(a.journal_no),entry_date:String(a.entry_date),status:String(a.status),source:String(a.source),journal_description:String(a.journal_description??""),reference:null===a.reference?null:String(a.reference),line_description:null===a.line_description?null:String(a.line_description),line_no:Number(a.line_no),account_id:Number(a.account_id),code:String(a.code),name:String(a.name),account_type:String(a.account_type),debit:(0,e.Fd)(a.debit)??0,credit:(0,e.Fd)(a.credit)??0,reverses_id:null===a.reverses_id?null:Number(a.reverses_id),reversed_by_id:null===a.reversed_by_id?null:Number(a.reversed_by_id),source_table:null===a.source_table||void 0===a.source_table?null:String(a.source_table),source_id:null===a.source_id||void 0===a.source_id?null:Number(a.source_id)}}async function j(a,b){if(!b)return{debit:0,credit:0,net:0};let c=await (0,d.P)(`SELECT COALESCE(SUM(l.debit), 0) AS dr, COALESCE(SUM(l.credit), 0) AS cr
-       FROM journal_lines l
-       JOIN journal_entries e ON e.id = l.journal_id
-      WHERE l.account_id = ?
-        AND e.status IN ${f}
-        AND e.entry_date < ?`,[a,b]),g=(0,e.Fd)(c[0]?.dr)??0,h=(0,e.Fd)(c[0]?.cr)??0;return{debit:g,credit:h,net:g-h}}async function k(a){let b=new Map;if(!a)return b;for(let c of(await (0,d.P)(`SELECT l.account_id,
-            COALESCE(SUM(l.debit), 0) AS dr, COALESCE(SUM(l.credit), 0) AS cr
-       FROM journal_lines l
-       JOIN journal_entries e ON e.id = l.journal_id
-      WHERE e.status IN ${f} AND e.entry_date < ?
-      GROUP BY l.account_id`,[a]))){let a=(0,e.Fd)(c.dr)??0,d=(0,e.Fd)(c.cr)??0;b.set(Number(c.account_id),{debit:a,credit:d,net:a-d})}return b}let l="ORDER BY e.entry_date ASC, e.journal_no ASC, l.line_no ASC, l.id ASC";async function m(a){let{clause:b,params:c}=function(a){let b=["l.account_id = ?",`e.status IN ${f}`,"e.entry_date <= ?"],c=[a.accountId,a.to];a.from&&(b.push("e.entry_date >= ?"),c.push(a.from));let d=(a.q||"").trim();if(d){b.push("(e.journal_no LIKE ? OR e.reference LIKE ? OR e.description LIKE ? OR l.description LIKE ?)");let a=`%${d}%`;c.push(a,a,a,a)}return{clause:`WHERE ${b.join(" AND ")}`,params:c}}(a),k=await (0,d.P)(`SELECT COUNT(*) AS n, COALESCE(SUM(l.debit), 0) AS dr, COALESCE(SUM(l.credit), 0) AS cr
-       ${h} ${b}`,c),m=await (0,d.P)(`SELECT ${g} ${h} ${b} ${l}
-      LIMIT ${Math.max(1,Math.trunc(a.limit))} OFFSET ${Math.max(0,Math.trunc(a.offset))}`,c),n=await j(a.accountId,a.from),o=0,p=Math.max(0,Math.trunc(a.offset));if(p>0){let a=await (0,d.P)(`SELECT COALESCE(SUM(t.debit), 0) AS dr, COALESCE(SUM(t.credit), 0) AS cr
-         FROM (
-           SELECT l.debit, l.credit ${h} ${b} ${l} LIMIT ${p}
-         ) t`,c);o=((0,e.Fd)(a[0]?.dr)??0)-((0,e.Fd)(a[0]?.cr)??0)}return{lines:m.map(i),total:Number(k[0]?.n||0),brought_forward:n,page_opening:n.net+o,period:{debit:(0,e.Fd)(k[0]?.dr)??0,credit:(0,e.Fd)(k[0]?.cr)??0}}}function n(a,b,c){let d=(0,e.Ku)(a)&&"credit"===e.jl[a]?-1:1,f=b*d,g=[];for(let a of c)f+=(a.debit-a.credit)*d,g.push(f);return g}function o(a,b){return(0,e.Ku)(a)&&"credit"===e.jl[a]?-b:b}async function p(a){let b=[`e.status IN ${f}`,"e.entry_date BETWEEN ? AND ?"],c=[a.from,a.to];a.accountType&&(b.push("a.account_type = ?"),c.push(a.accountType));let j=(a.q||"").trim();j&&(b.push("(a.code LIKE ? OR a.name LIKE ?)"),c.push(`%${j}%`,`%${j}%`));let l=`WHERE ${b.join(" AND ")}`,m=await (0,d.P)(`SELECT COUNT(*) AS n ${h} ${l}`,c),n=Number(m[0]?.n||0),p=Math.max(1,Math.trunc(a.maxLines)),q=n>p?[]:await (0,d.P)(`SELECT ${g} ${h} ${l}
-      ORDER BY a.code ASC, e.entry_date ASC, e.journal_no ASC, l.line_no ASC, l.id ASC`,c),r=await k(a.from),s=new Map,t=0,u=0;for(let a of q){let b=i(a),c=s.get(b.account_id);if(!c){let a=r.get(b.account_id);c={account_id:b.account_id,code:b.code,name:b.name,account_type:b.account_type,normal:(0,e.Ku)(b.account_type)?e.jl[b.account_type]:null,brought_forward:o(b.account_type,a?a.net:0),debit:0,credit:0,closing:0,lines:[]},s.set(b.account_id,c)}c.lines.push(b),c.debit+=b.debit,c.credit+=b.credit,t+=b.debit,u+=b.credit}for(let a of s.values())a.closing=a.brought_forward+o(a.account_type,a.debit-a.credit);if(a.includeZero)for(let a of(await (0,d.P)(`SELECT a.id, a.code, a.name, a.account_type FROM chart_of_accounts a
-        WHERE a.status = 'active' ORDER BY a.code ASC`))){let b=Number(a.id);if(s.has(b))continue;let c=r.get(b);if(!c||0===c.net)continue;let d=String(a.account_type),f=o(d,c.net);s.set(b,{account_id:b,code:String(a.code),name:String(a.name),account_type:d,normal:(0,e.Ku)(d)?e.jl[d]:null,brought_forward:f,debit:0,credit:0,closing:f,lines:[]})}let v=[...s.values()].sort((a,b)=>a.code.localeCompare(b.code));return{from:a.from,to:a.to,accounts:v,total_debit:t,total_credit:u,line_count:n,truncated:n>p}}async function q(a){let b=[`e.status IN ${f}`,"e.entry_date BETWEEN ? AND ?"],c=[a.from,a.to];a.source&&"all"!==a.source&&(b.push("e.source = ?"),c.push(a.source));let j=(a.q||"").trim();if(j){b.push("(e.journal_no LIKE ? OR e.reference LIKE ? OR e.description LIKE ?)");let a=`%${j}%`;c.push(a,a,a)}let k=`WHERE ${b.join(" AND ")}`,l=await (0,d.P)(`SELECT COUNT(*) AS n,
-            COALESCE(SUM(e.total_debit), 0) AS dr, COALESCE(SUM(e.total_credit), 0) AS cr
-       FROM journal_entries e ${k}`,c),m=await (0,d.P)(`SELECT e.id, e.journal_no, DATE_FORMAT(e.entry_date, '%Y-%m-%d') AS entry_date,
-            e.description, e.reference, e.source, e.status,
-            e.total_debit, e.total_credit,
-            DATE_FORMAT(e.posted_at, '%Y-%m-%d %H:%i') AS posted_at, e.posted_by,
-            e.reverses_id, e.reversed_by_id
-       FROM journal_entries e ${k}
-      ORDER BY e.entry_date ASC, e.journal_no ASC, e.id ASC
-      LIMIT ${Math.max(1,Math.trunc(a.limit))} OFFSET ${Math.max(0,Math.trunc(a.offset))}`,c),n=m.map(a=>Number(a.id)),o=0===n.length?[]:await (0,d.P)(`SELECT ${g} ${h}
-      WHERE l.journal_id IN (${n.map(()=>"?").join(",")})
-      ORDER BY l.journal_id ASC, l.line_no ASC, l.id ASC`,n),p=new Map;for(let a of o){let b=i(a),c=p.get(b.journal_id);c?c.push(b):p.set(b.journal_id,[b])}return{from:a.from,to:a.to,journals:m.map(a=>({id:Number(a.id),journal_no:String(a.journal_no),entry_date:String(a.entry_date),description:String(a.description??""),reference:null===a.reference?null:String(a.reference),source:String(a.source),status:String(a.status),total_debit:(0,e.Fd)(a.total_debit)??0,total_credit:(0,e.Fd)(a.total_credit)??0,posted_at:null===a.posted_at?null:String(a.posted_at),posted_by:null===a.posted_by?null:String(a.posted_by),reverses_id:null===a.reverses_id?null:Number(a.reverses_id),reversed_by_id:null===a.reversed_by_id?null:Number(a.reversed_by_id),lines:p.get(Number(a.id))||[]})),total:Number(l[0]?.n||0),total_debit:(0,e.Fd)(l[0]?.dr)??0,total_credit:(0,e.Fd)(l[0]?.cr)??0}}}};var b=require("../../../../webpack-api-runtime.js");b.C(a);var c=b.X(0,[7169,4560,1225,7068,2970],()=>b(b.s=69851));module.exports=c})();
+      LIMIT 1`,[a]);return Number(b[0]?.n||0)>0}},75600:a=>{a.exports=require("next/dist/compiled/next-server/pages-api.runtime.prod.js")}};var b=require("../../../../webpack-api-runtime.js");b.C(a);var c=b.X(0,[7169,4560,1803,7068,2970,3314],()=>b(b.s=69851));module.exports=c})();
