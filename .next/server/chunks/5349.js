@@ -1,0 +1,35 @@
+"use strict";exports.id=5349,exports.ids=[5349],exports.modules={69486:(a,b,c)=>{c.d(b,{Tw:()=>i,UD:()=>h,k_:()=>f,lD:()=>g});var d=c(88251);let e=["active","on_leave"],f="Your employee access has ended. Please contact HR if you believe this is incorrect.";function g(a){return e.includes(String(a))}async function h(a,b){let c="string"==typeof a.query.hash?a.query.hash:"";if(!c)return b.status(400).json({success:!1,error:"Session hash is required."}),null;let e=(await (0,d.P)(`SELECT s.username, s.user_type, s.employee_id, s.expires_at, e.status AS employment_status
+       FROM admin_sessions s
+       LEFT JOIN employees e ON e.id = s.employee_id
+      WHERE s.hash = ? LIMIT 1`,[c]))[0];return e?new Date(e.expires_at)<=new Date?(b.status(401).json({success:!1,error:"Your session has expired. Sign in again."}),null):"employee"===e.user_type&&e.employee_id?g(e.employment_status)?{employeeId:e.employee_id,username:e.username}:(b.status(403).json({success:!1,error:f}),null):(b.status(403).json({success:!1,error:"This endpoint is for employee accounts."}),null):(b.status(401).json({success:!1,error:"Invalid or expired session."}),null)}function i(a,b,c){return null==c||""===c||Number(c)===a.employeeId||(b.status(403).json({success:!1,error:"You can only access your own records."}),!1)}},85349:(a,b,c)=>{c.a(a,async(a,d)=>{try{c.r(b),c.d(b,{default:()=>m,getSession:()=>o,verifySession:()=>n});var e=c(93139),f=c(55511),g=c.n(f),h=c(88251),i=c(69486),j=a([e]);e=(j.then?(await j)():j)[0];let p=new Map;async function k(a,b){try{return await e.default.compare(b,a)}catch{return!1}}function l(){return g().randomBytes(32).toString("hex")}async function m(a,b){if("POST"!==a.method)return b.status(405).json({message:"Method not allowed"});try{let{username:c,password:d}=a.body,f=(c||"").trim().toLowerCase();if(!c||!d)return b.status(400).json({message:"Username and password are required"});let g=await (0,h.P)("SELECT id, email, password_hash, status, email_verified FROM client_users WHERE email = ? LIMIT 1",[f]);if(g&&g.length>0){let a=g[0];if("suspended"===a.status)return b.status(403).json({message:"Your Account is Suspended due to Suspicious Activity. Please email our team at support@ansartechnologies.my",supportEmail:"support@ansartechnologies.my"});if("active"!==a.status||1!==a.email_verified)return b.status(401).json({message:"Account not verified or inactive. Please check your email."});if(!await e.default.compare(d,a.password_hash))return await new Promise(a=>setTimeout(a,800)),b.status(401).json({message:"Invalid credentials"});let c=l();p.set(c,{username:f,createdAt:new Date,userType:"client",clientId:a.id,employeeId:null}),await (0,h.P)(`CREATE TABLE IF NOT EXISTS admin_sessions (
+          id INT AUTO_INCREMENT PRIMARY KEY,
+          hash VARCHAR(128) NOT NULL UNIQUE,
+          username VARCHAR(191) NOT NULL,
+          user_type ENUM('admin','client','employee') DEFAULT 'admin',
+          client_id INT NULL,
+          employee_id INT NULL,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          expires_at DATETIME NOT NULL,
+          INDEX idx_username (username),
+          INDEX idx_user_type (user_type),
+          INDEX idx_expires_at (expires_at)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;`);let i=new Date(Date.now()+864e5);return await (0,h.P)(`INSERT INTO admin_sessions (hash, username, user_type, client_id, employee_id, expires_at)
+         VALUES (?, ?, 'client', ?, NULL, ?)
+         ON DUPLICATE KEY UPDATE username = VALUES(username), user_type = VALUES(user_type), client_id = VALUES(client_id), employee_id = VALUES(employee_id), expires_at = VALUES(expires_at)`,[c,f,a.id,i.toISOString().slice(0,19).replace("T"," ")]),await (0,h.P)("DELETE FROM admin_sessions WHERE expires_at < NOW()"),b.status(200).json({success:!0,hash:c,message:"Login successful",userType:"client"})}let j=await (0,h.P)(`SELECT a.id, a.username, a.password_hash, a.user_type, a.employee_id, a.status,
+              e.status AS employment_status
+         FROM admins a
+         LEFT JOIN employees e ON e.id = a.employee_id
+        WHERE a.username = ? LIMIT 1`,[f]),m=j&&j.length>0?j[0]:void 0;if(!m)return await new Promise(a=>setTimeout(a,800)),b.status(401).json({message:"Invalid credentials"});if("suspended"===m.status)return b.status(403).json({message:"Your account has been suspended. Please contact your administrator."});if(!await k(m.password_hash,d))return await new Promise(a=>setTimeout(a,1e3)),b.status(401).json({message:"Invalid credentials"});if("employee"===m.user_type&&!(0,i.lD)(m.employment_status))return b.status(403).json({message:i.k_});let n=l(),o=m.user_type||"admin",q=m.employee_id||null;p.set(n,{username:c,createdAt:new Date,userType:o,clientId:null,employeeId:q}),await (0,h.P)(`CREATE TABLE IF NOT EXISTS admin_sessions (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        hash VARCHAR(128) NOT NULL UNIQUE,
+        username VARCHAR(191) NOT NULL,
+        user_type ENUM('admin','client','employee') DEFAULT 'admin',
+        client_id INT NULL,
+        employee_id INT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        expires_at DATETIME NOT NULL,
+        INDEX idx_username (username),
+        INDEX idx_user_type (user_type),
+        INDEX idx_expires_at (expires_at)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;`);let r=new Date(Date.now()+864e5);await (0,h.P)(`INSERT INTO admin_sessions (hash, username, user_type, employee_id, expires_at) VALUES (?, ?, ?, ?, ?)
+       ON DUPLICATE KEY UPDATE username = VALUES(username), user_type = VALUES(user_type), employee_id = VALUES(employee_id), expires_at = VALUES(expires_at)`,[n,f,o,q,r.toISOString().slice(0,19).replace("T"," ")]),await (0,h.P)("UPDATE admins SET last_login = NOW() WHERE id = ?",[m.id]),await (0,h.P)("DELETE FROM admin_sessions WHERE expires_at < NOW()");let s=new Date(Date.now()-864e5);for(let[a,b]of p.entries())b.createdAt<s&&p.delete(a);return b.status(200).json({success:!0,hash:n,message:"Login successful",userType:o,employeeId:q})}catch(a){return console.error("Login error:",a),b.status(500).json({message:"Internal server error"})}}function n(a){let b=p.get(a);if(!b)return!1;let c=new Date(Date.now()-864e5);return!(b.createdAt<c)||(p.delete(a),!1)}function o(a){return p.get(a)}d()}catch(a){d(a)}})},88251:(a,b,c)=>{c.d(b,{Ay:()=>i,G$:()=>h,P:()=>f,rN:()=>g});var d=c(3498);let e=c.n(d)().createPool({host:process.env.DB_HOST||"localhost",user:process.env.DB_USER||"root",password:process.env.DB_PASSWORD||"root",database:process.env.DB_NAME||"ansar",waitForConnections:!0,connectionLimit:10,queueLimit:0});async function f(a,b){let[c]=b&&b.length>0?await e.query(a,b):await e.query(a);return c}async function g(){try{return(await e.getConnection()).release(),!0}catch(a){return console.error("Database connection test failed:",a),!1}}function h(){return{totalConnections:10,activeConnections:0,idleConnections:0,queuedRequests:0}}let i=e}};
