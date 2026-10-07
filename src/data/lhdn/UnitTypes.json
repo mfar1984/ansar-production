@@ -3861,15 +3861,15 @@
     },
     {
         "Code": "J40",
-        "Name": "British thermal unit (international table) foot per hourÂ square foot degree Fahrenheit"
+        "Name": "British thermal unit (international table) foot per hour square foot degree Fahrenheit"
     },
     {
         "Code": "J41",
-        "Name": "British thermal unit (international table) inch per hour squareÂ foot degree Fahrenheit"
+        "Name": "British thermal unit (international table) inch per hour square foot degree Fahrenheit"
     },
     {
         "Code": "J42",
-        "Name": "British thermal unit (international table) inch per second squareÂ foot degree Fahrenheit"
+        "Name": "British thermal unit (international table) inch per second square foot degree Fahrenheit"
     },
     {
         "Code": "J43",
@@ -3885,7 +3885,7 @@
     },
     {
         "Code": "J46",
-        "Name": "British thermal unit (thermochemical) foot per hour squareÂ foot degree Fahrenheit"
+        "Name": "British thermal unit (thermochemical) foot per hour square foot degree Fahrenheit"
     },
     {
         "Code": "J47",
@@ -3893,11 +3893,11 @@
     },
     {
         "Code": "J48",
-        "Name": "British thermal unit (thermochemical) inch per hour squareÂ foot degree Fahrenheit"
+        "Name": "British thermal unit (thermochemical) inch per hour square foot degree Fahrenheit"
     },
     {
         "Code": "J49",
-        "Name": "British thermal unit (thermochemical) inch per secondÂ square foot degree Fahrenheit"
+        "Name": "British thermal unit (thermochemical) inch per second square foot degree Fahrenheit"
     },
     {
         "Code": "J50",
@@ -5641,7 +5641,7 @@
     },
     {
         "Code": "MWH",
-        "Name": "megawatt hour (1000Â kW.h)"
+        "Name": "megawatt hour (1000 kW.h)"
     },
     {
         "Code": "N1",
@@ -5661,31 +5661,31 @@
     },
     {
         "Code": "N13",
-        "Name": "centimetre of mercury (0 ÂºC)"
+        "Name": "centimetre of mercury (0 ºC)"
     },
     {
         "Code": "N14",
-        "Name": "centimetre of water (4 ÂºC)"
+        "Name": "centimetre of water (4 ºC)"
     },
     {
         "Code": "N15",
-        "Name": "foot of water (39.2 ÂºF)"
+        "Name": "foot of water (39.2 ºF)"
     },
     {
         "Code": "N16",
-        "Name": "inch of mercury (32 ÂºF)"
+        "Name": "inch of mercury (32 ºF)"
     },
     {
         "Code": "N17",
-        "Name": "inch of mercury (60 ÂºF)"
+        "Name": "inch of mercury (60 ºF)"
     },
     {
         "Code": "N18",
-        "Name": "inch of water (39.2 ÂºF)"
+        "Name": "inch of water (39.2 ºF)"
     },
     {
         "Code": "N19",
-        "Name": "inch of water (60 ÂºF)"
+        "Name": "inch of water (60 ºF)"
     },
     {
         "Code": "N20",
@@ -5877,19 +5877,19 @@
     },
     {
         "Code": "N66",
-        "Name": "British thermal unit (39 ÂºF)"
+        "Name": "British thermal unit (39 ºF)"
     },
     {
         "Code": "N67",
-        "Name": "British thermal unit (59 ÂºF)"
+        "Name": "British thermal unit (59 ºF)"
     },
     {
         "Code": "N68",
-        "Name": "British thermal unit (60 ÂºF)"
+        "Name": "British thermal unit (60 ºF)"
     },
     {
         "Code": "N69",
-        "Name": "calorie (20 ÂºC)"
+        "Name": "calorie (20 ºC)"
     },
     {
         "Code": "N70",
@@ -6461,11 +6461,11 @@
     },
     {
         "Code": "P91",
-        "Name": "perm (0 ÂºC)"
+        "Name": "perm (0 ºC)"
     },
     {
         "Code": "P92",
-        "Name": "perm (23 ÂºC)"
+        "Name": "perm (23 ºC)"
     },
     {
         "Code": "P93",
@@ -7861,7 +7861,7 @@
     },
     {
         "Code": "XOI",
-        "Name": "Pallet ISO 2 â€“ 2\/1 EURO Pallet"
+        "Name": "Pallet ISO 2 – 2\/1 EURO Pallet"
     },
     {
         "Code": "XOJ",
@@ -8297,7 +8297,7 @@
     },
     {
         "Code": "XVG",
-        "Name": "Bulk, gas (at 1031 mbar and 15Â°C)"
+        "Name": "Bulk, gas (at 1031 mbar and 15°C)"
     },
     {
         "Code": "XVI",
@@ -8317,7 +8317,7 @@
     },
     {
         "Code": "XVO",
-        "Name": "Bulk, solid, large particles (â€œnodulesâ€)"
+        "Name": "Bulk, solid, large particles (“nodules”)"
     },
     {
         "Code": "XVP",
@@ -8329,7 +8329,7 @@
     },
     {
         "Code": "XVR",
-        "Name": "Bulk, solid, granular particles (â€œgrainsâ€)"
+        "Name": "Bulk, solid, granular particles (“grains”)"
     },
     {
         "Code": "XVS",
@@ -8337,7 +8337,7 @@
     },
     {
         "Code": "XVY",
-        "Name": "Bulk, solid, fine particles (â€œpowdersâ€)"
+        "Name": "Bulk, solid, fine particles (“powders”)"
     },
     {
         "Code": "XWA",
