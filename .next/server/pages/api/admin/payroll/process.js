@@ -7,7 +7,7 @@
       ORDER BY p.module, p.action
     `,[d]);return e.map(a=>`${a.module}_${a.action}`)}finally{b.release()}}async function p(a){let[b]=await i.Ay.query("SELECT id FROM admins WHERE username = ? LIMIT 1",[a]);return b[0]?.id||0}async function q(a,b){let{hash:c}=a.query,d=await n(c);if(!d)return b.status(401).json({error:"Unauthorized"});let e=await o(d.username);if("POST"===a.method){if(!(0,j._m)(e,"payroll_process"))return b.status(403).json({error:"Forbidden"});let c=await i.Ay.getConnection();try{let{period_id:e}=a.body;if(!e)return b.status(400).json({error:"Period ID is required"});let[f]=await c.query('SELECT * FROM payroll_periods WHERE id = ? AND status = "draft"',[e]);if(!f||0===f.length)return b.status(400).json({error:"Period not found or already processed"});let g=f[0],h=new Date(Number(g.period_year),Number(g.period_month)-1,1),i=await (0,k.fo)(),[j]=await c.query(`SELECT 
           id, employee_id, full_name, basic_salary, date_of_birth, status,
-          epf_number, socso_number, tax_number,
+          epf_number, socso_number, lindung24_enrolled, tax_number,
           bank_name, bank_account_number
         FROM employees`),n=["active","on_leave"],o={resigned:"Employment ended (resigned). Final pay is settled separately and is not produced by a monthly run.",terminated:"Employment ended (terminated). Final pay is settled separately and is not produced by a monthly run."},q=[],r=[];for(let a of j||[]){let b=null===a.status||void 0===a.status?null:String(a.status);if(null!==b&&n.includes(b)){q.push(a);continue}r.push({id:Number(a.id),employee_id:String(a.employee_id??""),full_name:String(a.full_name??""),status:b,reason:null===b?"Employment status is not set on the employee record, so the run cannot tell whether a salary is owed. Set it under Human Resources > Employee Management.":o[b]||`Employment status "${b}" is not one this payroll run pays. It was added to the employee record after this run was written, so a decision is needed on whether it earns a salary.`})}let s=new Map;for(let a of r){let b=null===a.status?"with no status set":a.status;s.set(b,(s.get(b)||0)+1)}let t=Array.from(s.entries()).map(([a,b])=>`${b} ${a}`).join(", ");if(0===q.length)return b.status(400).json({error:0===r.length?"No active employees found":`No active employees found. ${r.length} employee(s) exist but none hold a payable status: ${t}.`,total_skipped:r.length,skipped:r});await c.beginTransaction();let u=0,v=0,w=0;for(let a of q){let b=`${g.period_year}${String(g.period_month).padStart(2,"0")}`,d=`PS-${b}-`,[f]=await c.query(`SELECT payslip_number FROM payroll_records 
            WHERE payslip_number LIKE ? 
@@ -34,21 +34,21 @@
            LIMIT 1`,[a.id]),F=E[0]||null,G=F?parseFloat(F.monthly_installment):0,[H]=await c.query(`SELECT id, monthly_deduction, remaining_balance, paid_months
            FROM employee_advances
            WHERE employee_id = ? AND status = 'active'
-           LIMIT 1`,[a.id]),I=H[0]||null,J=I?parseFloat(I.monthly_deduction):0,K=(0,m.j0)(a.date_of_birth,h),L=(0,l.Oj)({basicSalary:n,housingAllowance:r,transportAllowance:s,mealAllowance:t,otherAllowances:x,overtimeAmount:p,bonusAmount:z,commissionAmount:D},{taxDeduction:0,loanDeduction:G,advanceDeduction:J,otherDeductions:0},i,K),M=L.epfEmployee,N=L.epfEmployer,O=L.socsoEmployee,P=L.socsoEmployer,Q=L.eisEmployee,R=L.eisEmployer;if(await c.query(`INSERT INTO payroll_records (
+           LIMIT 1`,[a.id]),I=H[0]||null,J=I?parseFloat(I.monthly_deduction):0,K=(0,m.j0)(a.date_of_birth,h),L=1===Number(a.lindung24_enrolled),M=(0,l.Oj)({basicSalary:n,housingAllowance:r,transportAllowance:s,mealAllowance:t,otherAllowances:x,overtimeAmount:p,bonusAmount:z,commissionAmount:D},{taxDeduction:0,loanDeduction:G,advanceDeduction:J,otherDeductions:0},i,K,L),N=M.epfEmployee,O=M.epfEmployer,P=M.socsoEmployee,Q=M.socsoEmployer,R=M.eisEmployee,S=M.eisEmployer,T=M.socsoNeiEmployee;if(await c.query(`INSERT INTO payroll_records (
             payroll_period_id, employee_id, payslip_number,
             basic_salary, housing_allowance, transport_allowance, 
             meal_allowance, other_allowances, overtime_amount,
             bonus_amount, commission_amount,
-            epf_employee, socso_employee, eis_employee,
+            epf_employee, socso_employee, eis_employee, socso_nei_employee,
             tax_deduction, loan_deduction, advance_deduction, other_deductions,
             epf_employer, socso_employer, eis_employer,
             payment_method, status
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft')`,[e,a.id,k,n,r,s,t,x,p,z,D,M,O,Q,0,G,J,0,N,P,R,"bank_transfer"]),F&&G>0){let a=parseFloat(F.remaining_balance)-G,b=parseInt(F.paid_installments)+1,d=a<=.01?"completed":"active";await c.query(`UPDATE employee_loans 
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft')`,[e,a.id,k,n,r,s,t,x,p,z,D,N,P,R,T,0,G,J,0,O,Q,S,"bank_transfer"]),F&&G>0){let a=parseFloat(F.remaining_balance)-G,b=parseInt(F.paid_installments)+1,d=a<=.01?"completed":"active";await c.query(`UPDATE employee_loans 
              SET remaining_balance = ?, paid_installments = ?, status = ?
              WHERE id = ?`,[Math.max(0,a),b,d,F.id])}if(I&&J>0){let a=parseFloat(I.remaining_balance)-J,b=parseInt(I.paid_months)+1,d=a<=.01?"completed":"active";await c.query(`UPDATE employee_advances 
              SET remaining_balance = ?, paid_months = ?, status = ?
              WHERE id = ?`,[Math.max(0,a),b,d,I.id])}B.length>0&&await c.query(`UPDATE kpi_results SET bonus_paid = 1
-              WHERE id IN (${B.map(()=>"?").join(",")})`,B),u+=L.gross,v+=L.totalDeductions,w+=L.net}let x=await p(d.username);return await c.query(`UPDATE payroll_periods SET
+              WHERE id IN (${B.map(()=>"?").join(",")})`,B),u+=M.gross,v+=M.totalDeductions,w+=M.net}let x=await p(d.username);return await c.query(`UPDATE payroll_periods SET
           status = 'processing',
           total_employees = ?,
           total_gross_salary = ?,
