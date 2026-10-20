@@ -644,6 +644,14 @@
       "namedRegex": "^/api/employee/claims/(?<nxtPid>[^/]+?)(?:/)?$"
     },
     {
+      "page": "/api/employee/expenses/[id]",
+      "regex": "^/api/employee/expenses/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/employee/expenses/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/api/employee/payslips/[id]",
       "regex": "^/api/employee/payslips/([^/]+?)(?:/)?$",
       "routeKeys": {
