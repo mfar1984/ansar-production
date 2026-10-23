@@ -41,7 +41,7 @@
             ${e?`, ${e}`:""}
        FROM \`${a.table}\` d WHERE d.id = ? LIMIT 1`,[b]);f[0]&&D(a,f[0]);let g=f[0];if(!g)return c.status(404).json({success:!1,error:`That ${a.noun} does not exist.`});let h=await (0,d.P)(`SELECT i.id, i.line_no, i.product_id, i.item_code, i.description, i.quantity, i.uom, i.unit_price,
             i.discount_percent, i.discount_amount, i.tax_code_id, i.tax_code, i.tax_rate, i.tax_amount,
-            i.line_total,
+            i.line_total, i.line_type,
             dt.source_table, dt.source_id, dt.source_item_id
        FROM \`${a.items}\` i
        LEFT JOIN document_transfers dt
@@ -51,7 +51,8 @@
             ${a.hasSalesperson?"d.salesperson, d.salesperson_id,":""}
             COALESCE(NULLIF(TRIM(cbe.full_name), ''), cb.username) AS created_by_name,
             DATE_FORMAT(d.\`${a.dateColumn}\`, '%Y-%m-%d') AS document_date,
-            (SELECT COUNT(*) FROM \`${a.items}\` i WHERE i.\`${a.parentKey}\` = d.id) AS line_count
+            (SELECT COUNT(*) FROM \`${a.items}\` i
+              WHERE i.\`${a.parentKey}\` = d.id AND i.line_type = 'item') AS line_count
             ${E?`, ${E}`:""}
        FROM \`${a.table}\` d
        LEFT JOIN admins cb     ON cb.id = d.created_by
@@ -72,7 +73,7 @@
               s.\`${l.noColumn}\` AS document_no
          FROM \`${l.itemsTable}\` i
          JOIN \`${f}\` s ON s.id = i.\`${l.itemsFk}\`
-        WHERE i.id = ? LIMIT 1`,[i]);if(0===m.length)return{rows:[],error:`A line imported from a ${l.noun} no longer exists. Remove it and import again — the ${l.noun} has been edited since this document was opened.`};let n=m[0],o=(0,j.Qw)(n.status,l.noun);if(o)return{rows:[],error:`${n.document_no}: ${o}`};let p=await (0,d.P)(`SELECT target_table, target_id, quantity
+        WHERE i.id = ? AND i.line_type = 'item' LIMIT 1`,[i]);if(0===m.length)return{rows:[],error:`A line imported from a ${l.noun} no longer exists. Remove it and import again — the ${l.noun} has been edited since this document was opened.`};let n=m[0],o=(0,j.Qw)(n.status,l.noun);if(o)return{rows:[],error:`${n.document_no}: ${o}`};let p=await (0,d.P)(`SELECT target_table, target_id, quantity
          FROM document_transfers
         WHERE source_table = ? AND source_item_id = ?
           AND NOT (target_table = ? AND target_id = ?)`,[f,i,a.table,c]),q=(0,j.Eu)((0,j.F)(n.quantity)||0,p,g),r=(0,j.ud)(e,q,`${n.document_no} line ${n.line_no}`);if(r)return{rows:[],error:r}}return{rows:f,error:null}}async function K(a,b,c){let d=await (0,e.OC)(a,b);if(!d)return;b.setHeader("Cache-Control","no-store");let g=Number(a.query.id)||0,h=function(a){let b=l.lC[a.party],c=[a.table,a.items,a.parentKey,a.noColumn,a.dateColumn,b.id,b.code,b.name,b.address,...a.theirNoColumn?[a.theirNoColumn]:[],...a.extras.map(a=>a.column),...a.extras.flatMap(a=>a.snapshot?[a.snapshot.codeColumn,a.snapshot.nameColumn]:[]),...a.payable?.appliedTo?[a.payable.appliedTo]:[],...a.receivable?.appliedTo?[a.receivable.appliedTo]:[]].find(a=>!k.d6.test(a));return c?`"${c}" is not a plain identifier`:null}(c);if(h)return b.status(500).json({success:!1,error:`Refusing to run: ${h}.`});try{if("GET"===a.method){if(!(0,e.OD)(d,b,c.module,"view"))return;if("1"===a.query.issuer)return b.status(200).json({success:!0,issuer:await (0,k.rC)()});if(g)return await E(c,g,b);return await F(c,a,b)}let h=(0,f.gx)(a.query.action,20);if("POST"===a.method&&h){if(!(0,e.OD)(d,b,c.module,"edit"))return;if(!g)return b.status(400).json({success:!1,error:`Which ${c.noun}?`});return await G(c,a,b,g,h)}if("POST"===a.method||"PUT"===a.method){let f="POST"===a.method;if(!(0,e.OD)(d,b,c.module,f?"create":"edit"))return;if(f&&c.noNewDocuments)return b.status(400).json({success:!1,error:c.noNewDocuments,no_new_documents:!0});return await H(c,a,b,d,g)}if("DELETE"===a.method){if(!(0,e.OD)(d,b,c.module,"delete"))return;if(!g)return b.status(400).json({success:!1,error:`Which ${c.noun}?`});return await I(c,a,b,g)}return b.setHeader("Allow","GET, POST, PUT, DELETE"),b.status(405).json({success:!1,error:"Method not allowed."})}catch(a){return console.error(`${c.label} error:`,a),b.status(500).json({success:!1,error:a instanceof Error?a.message:`Failed to read the ${c.plural.toLowerCase()}`})}}},73698:(a,b,c)=>{c.d(b,{A5:()=>i,M9:()=>n,UU:()=>k,UY:()=>h,Wu:()=>f,_T:()=>j,d$:()=>l,hj:()=>m,kM:()=>o,pr:()=>g,uw:()=>p});var d=c(88251),e=c(35830);let f={module:"GENERAL LEDGER",type:"Journal Entry"},g={module:"GENERAL LEDGER",type:"Opening Balance"},h={module:"GENERAL LEDGER",type:"Year End Close"};async function i(a,b){return j(a,b)}async function j(a,b=f){let[c]=await a.query(`SELECT id, prefix, padding, next_number, last_number_used
