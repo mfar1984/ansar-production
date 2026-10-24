@@ -492,6 +492,14 @@
       "namedRegex": "^/api/admin/operations/work\\-orders/(?<nxtPid>[^/]+?)/approval(?:/)?$"
     },
     {
+      "page": "/api/admin/operations/work-orders/[id]/crew",
+      "regex": "^/api/admin/operations/work\\-orders/([^/]+?)/crew(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/work\\-orders/(?<nxtPid>[^/]+?)/crew(?:/)?$"
+    },
+    {
       "page": "/api/admin/operations/work-orders/[id]/items",
       "regex": "^/api/admin/operations/work\\-orders/([^/]+?)/items(?:/)?$",
       "routeKeys": {
@@ -690,6 +698,22 @@
         "nxtPid": "nxtPid"
       },
       "namedRegex": "^/api/employee/payslips/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/employee/work-orders/[id]",
+      "regex": "^/api/employee/work\\-orders/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/employee/work\\-orders/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/employee/work-orders/[id]/items",
+      "regex": "^/api/employee/work\\-orders/([^/]+?)/items(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/employee/work\\-orders/(?<nxtPid>[^/]+?)/items(?:/)?$"
     },
     {
       "page": "/api/public/achievement-awards/view/[hash]",
