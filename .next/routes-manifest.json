@@ -476,6 +476,38 @@
       "namedRegex": "^/api/admin/operations/vendors/(?<nxtPid>[^/]+?)(?:/)?$"
     },
     {
+      "page": "/api/admin/operations/work-orders/[id]",
+      "regex": "^/api/admin/operations/work\\-orders/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/work\\-orders/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/admin/operations/work-orders/[id]/approval",
+      "regex": "^/api/admin/operations/work\\-orders/([^/]+?)/approval(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/work\\-orders/(?<nxtPid>[^/]+?)/approval(?:/)?$"
+    },
+    {
+      "page": "/api/admin/operations/work-orders/[id]/items",
+      "regex": "^/api/admin/operations/work\\-orders/([^/]+?)/items(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/work\\-orders/(?<nxtPid>[^/]+?)/items(?:/)?$"
+    },
+    {
+      "page": "/api/admin/operations/work-orders/[id]/transition",
+      "regex": "^/api/admin/operations/work\\-orders/([^/]+?)/transition(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/work\\-orders/(?<nxtPid>[^/]+?)/transition(?:/)?$"
+    },
+    {
       "page": "/api/admin/overtime/rates/[id]",
       "regex": "^/api/admin/overtime/rates/([^/]+?)(?:/)?$",
       "routeKeys": {
