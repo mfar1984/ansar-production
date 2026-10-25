@@ -1,7 +1,11 @@
-"use strict";(()=>{var a={};a.id=7849,a.ids=[7849],a.modules={3498:a=>{a.exports=require("mysql2/promise")},60258:(a,b,c)=>{c.r(b),c.d(b,{config:()=>p,default:()=>o,handler:()=>r});var d={};c.r(d),c.d(d,{default:()=>l});var e=c(29046),f=c(8667),g=c(33480),h=c(86435),i=c(88251),j=c(69486),k=c(85643);async function l(a,b){if((0,k.e)(a,b,["GET"]))return;if("GET"!==a.method)return b.setHeader("Allow","GET"),b.status(405).json({success:!1,error:"Method not allowed"});b.setHeader("Cache-Control","no-store");let c=await (0,j.UD)(a,b);if(!c)return;let d=Number(a.query.id);if(!Number.isInteger(d)||d<=0)return b.status(400).json({success:!1,error:"Which claim? Pass a numeric id."});try{let a=await (0,i.P)(`SELECT c.id, c.claim_number, c.submission_ref, c.claim_date,
-              c.period_from, c.period_to, c.total_amount, c.description, c.remarks,
+"use strict";(()=>{var a={};a.id=7849,a.ids=[7849],a.modules={3498:a=>{a.exports=require("mysql2/promise")},60258:(a,b,c)=>{c.r(b),c.d(b,{config:()=>p,default:()=>o,handler:()=>r});var d={};c.r(d),c.d(d,{default:()=>l});var e=c(29046),f=c(8667),g=c(33480),h=c(86435),i=c(88251),j=c(69486),k=c(85643);async function l(a,b){if((0,k.e)(a,b,["GET"]))return;if("GET"!==a.method)return b.setHeader("Allow","GET"),b.status(405).json({success:!1,error:"Method not allowed"});b.setHeader("Cache-Control","no-store");let c=await (0,j.UD)(a,b);if(!c)return;let d=Number(a.query.id);if(!Number.isInteger(d)||d<=0)return b.status(400).json({success:!1,error:"Which claim? Pass a numeric id."});try{let a=await (0,i.P)(`SELECT c.id, c.claim_number, c.submission_ref,
+              DATE_FORMAT(c.claim_date, '%Y-%m-%d')   AS claim_date,
+              DATE_FORMAT(c.period_from, '%Y-%m-%d')  AS period_from,
+              DATE_FORMAT(c.period_to, '%Y-%m-%d')    AS period_to,
+              c.total_amount, c.description, c.remarks,
               c.status, c.current_level, c.applied_date, c.reviewed_date, c.review_remarks,
-              c.payment_date, c.payment_method, c.payment_reference,
+              DATE_FORMAT(c.payment_date, '%Y-%m-%d') AS payment_date,
+              c.payment_method, c.payment_reference,
               ct.name AS claim_type,
               ct.code AS claim_type_code,
               ct.color AS claim_type_color,
@@ -11,7 +15,9 @@
          LEFT JOIN admins ra     ON ra.id = c.reviewed_by
          LEFT JOIN employees re  ON re.id = ra.employee_id
         WHERE c.id = ? AND c.employee_id = ?
-        LIMIT 1`,[d,c.employeeId]);if(0===a.length)return b.status(404).json({success:!1,error:"Claim not found"});let e=await (0,i.P)(`SELECT ci.id, ci.item_date, ci.description,
+        LIMIT 1`,[d,c.employeeId]);if(0===a.length)return b.status(404).json({success:!1,error:"Claim not found"});let e=await (0,i.P)(`SELECT ci.id,
+              DATE_FORMAT(ci.item_date, '%Y-%m-%d') AS item_date,
+              ci.description,
               ci.project_id, p.title AS project_title, p.project_no,
               ci.amount, ci.receipt_path, ci.remarks
          FROM claim_items ci

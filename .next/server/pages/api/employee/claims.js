@@ -1,4 +1,8 @@
 "use strict";(()=>{var a={};a.id=1589,a.ids=[1589],a.modules={3498:a=>{a.exports=require("mysql2/promise")},21572:a=>{a.exports=require("nodemailer")},36110:(a,b,c)=>{c.r(b),c.d(b,{config:()=>q,default:()=>p,handler:()=>s});var d={};c.r(d),c.d(d,{default:()=>m});var e=c(29046),f=c(8667),g=c(33480),h=c(86435),i=c(88251),j=c(69486),k=c(85643),l=c(13813);async function m(a,b){if((0,k.e)(a,b,["GET"]))return;if("GET"!==a.method)return b.setHeader("Allow","GET"),b.status(405).json({success:!1,error:"Method not allowed"});let c=await (0,j.UD)(a,b);if(c&&(0,j.Tw)(c,b,a.query.employee_id))try{let a=await (0,i.P)(`SELECT c.*,
+              DATE_FORMAT(c.claim_date, '%Y-%m-%d')   AS claim_date,
+              DATE_FORMAT(c.period_from, '%Y-%m-%d')  AS period_from,
+              DATE_FORMAT(c.period_to, '%Y-%m-%d')    AS period_to,
+              DATE_FORMAT(c.payment_date, '%Y-%m-%d') AS payment_date,
               ct.name AS claim_type,
               ct.code AS claim_type_code,
               ct.color AS claim_type_color,
