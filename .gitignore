@@ -57,6 +57,41 @@ public/downloads/*
 !public/downloads/.gitkeep
 
 
+# ── PRIVATE RUNTIME DATA: outside public/ on purpose, and still the server's ──
+#
+# `.uploads-private/` holds files that must NOT be reachable by URL. Next serves
+# everything under `public/`, with no session and no permission check, so a
+# client's signed handover form, an employee's IC copy and a claim receipt go
+# here instead and are read only through an endpoint that checks the session and
+# the owning row.
+#
+# HR receipts moved here from `public/uploads/claims` and
+# `public/uploads/expenses`, where they were readable by anyone who knew the
+# path — and the claim filenames carried no random part at all, so one seen file
+# let its siblings be guessed. `src/lib/hr-receipts.ts` records the measurement.
+#
+# Withheld for both of the reasons the public upload folders are. They are
+# PERSONAL records — medical bills, invoices, IC and passport scans — and this
+# repository is public. They are also runtime data: the development machine's
+# copies are a developer's test files, and production accumulates its own.
+#
+# The DIRECTORIES are kept, because the package creates them and the server
+# needs the path to exist before the first upload rather than after a failed one.
+.uploads-private/*
+!.uploads-private/*/
+.uploads-private/*/*
+!.uploads-private/*/.gitkeep
+
+
+# ── The pre-validation staging directory is never deployment content ──
+#
+# `.uploads-tmp/` holds an upload for the few milliseconds between arriving and
+# being accepted. Unlike `.uploads-private/` it is disposable and may be emptied
+# at will, so nothing in it belongs in git — not even a `.gitkeep`, because
+# `operations-upload.ts` creates it with `mkdir -p` on every parse.
+.uploads-tmp/
+
+
 # ── Build cache: 4.7 GB, and never needed to run ──
 #
 # The assembly step excludes it with `robocopy /XD cache`, so it should never
