@@ -11,7 +11,30 @@
               (SELECT COUNT(*) FROM work_order_items i
                 WHERE i.work_order_id = w.id)                         AS steps_total,
               (SELECT COUNT(*) FROM work_order_items i
-                WHERE i.work_order_id = w.id AND i.state = 'pending') AS steps_pending
+                WHERE i.work_order_id = w.id AND i.state = 'pending') AS steps_pending,
+              /* HOW MANY UNITS, AND HOW MANY ARE FINISHED.
+
+                 The asset join above still resolves the ORIGIN ANCHOR, which is what gives a
+                 single-unit job its asset_no and asset_name on the list row exactly as before. On a
+                 preventive round it is one of 115, so these two figures are what the list card
+                 actually shows: "26 of 115 done".
+
+                 assets_decided, not assets_done: a SKIPPED unit is finished with as far as the
+                 technician is concerned, and a progress bar that never reaches the end because one
+                 unit was legitimately skipped is a bar that stops meaning anything. The breakdown is
+                 on the detail screen, where there is room to say which.
+
+                 Correlated subqueries over idx_woas_state, not a join: a LEFT JOIN
+                 work_order_assets would return the work order 115 times, which is the same trap the
+                 crew EXISTS in ON_THIS_JOB exists to avoid.
+
+                 NO BACKTICKS in here: this comment is inside a template literal and one would end
+                 the string. */
+              (SELECT COUNT(*) FROM work_order_assets wa
+                WHERE wa.work_order_id = w.id)                        AS assets_total,
+              (SELECT COUNT(*) FROM work_order_assets wa
+                WHERE wa.work_order_id = w.id
+                  AND wa.state <> 'pending')                          AS assets_decided
          FROM work_orders w
          LEFT JOIN employees e        ON e.id = w.assignee_employee_id
          LEFT JOIN assets a           ON a.id = w.asset_id

@@ -708,6 +708,14 @@
       "namedRegex": "^/api/employee/work\\-orders/(?<nxtPid>[^/]+?)(?:/)?$"
     },
     {
+      "page": "/api/employee/work-orders/[id]/assets",
+      "regex": "^/api/employee/work\\-orders/([^/]+?)/assets(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/employee/work\\-orders/(?<nxtPid>[^/]+?)/assets(?:/)?$"
+    },
+    {
       "page": "/api/employee/work-orders/[id]/items",
       "regex": "^/api/employee/work\\-orders/([^/]+?)/items(?:/)?$",
       "routeKeys": {
