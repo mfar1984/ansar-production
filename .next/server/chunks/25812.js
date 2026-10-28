@@ -1,0 +1,1 @@
+"use strict";exports.id=25812,exports.ids=[25812],exports.modules={25812:(a,b,c)=>{c.r(b),c.d(b,{default:()=>g});var d=c(21124),e=c(85816),f=c(18464);function g({hash:a,hasPermission:b}){return(0,d.jsx)(e.A,{kind:f.z0["sales-order"],hash:a,hasPermission:b,extraSheets:[{type:"sales-order-proforma",title:"Proforma Invoice",label:"Proforma Invoice",icon:"bi-receipt"}]})}}};

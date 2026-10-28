@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[9495],{79495:(s,e,n)=>{n.r(e),n.d(e,{default:()=>h});var a=n(95155),i=n(75334),u=n(33408);function h(s){let{hash:e,hasPermission:n}=s;return(0,a.jsx)(i.A,{kind:u.z0["sales-invoice"],hash:e,hasPermission:n})}}}]);

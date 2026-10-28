@@ -1,0 +1,1 @@
+"use strict";exports.id=99887,exports.ids=[99887],exports.modules={99887:(a,b,c)=>{c.r(b),c.d(b,{default:()=>g});var d=c(21124),e=c(93114),f=c(46260);function g({hash:a,hasPermission:b}){return(0,d.jsx)(e.A,{kind:f.I0["cash-payment"],hash:a,hasPermission:b})}}};

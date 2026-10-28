@@ -1,0 +1,1 @@
+"use strict";exports.id=25571,exports.ids=[25571],exports.modules={25571:(a,b,c)=>{c.r(b),c.d(b,{default:()=>g});var d=c(21124),e=c(85816),f=c(18464);function g({hash:a,hasPermission:b}){return(0,d.jsx)(e.A,{kind:f.z0["proforma-invoice"],hash:a,hasPermission:b})}}};

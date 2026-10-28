@@ -1,0 +1,1 @@
+"use strict";exports.id=26068,exports.ids=[26068],exports.modules={3687:(a,b,c)=>{c.r(b),c.d(b,{default:()=>g});var d=c(21124),e=c(85816),f=c(18464);function g({hash:a,hasPermission:b}){return(0,d.jsx)(e.A,{kind:f.z0["delivery-order"],hash:a,hasPermission:b})}}};

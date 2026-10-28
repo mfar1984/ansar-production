@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[5133],{75133:(e,s,n)=>{n.r(s),n.d(s,{default:()=>u});var r=n(95155),a=n(75334),i=n(33408);function u(e){let{hash:s,hasPermission:n}=e;return(0,r.jsx)(a.A,{kind:i.z0["proforma-invoice"],hash:s,hasPermission:n})}}}]);

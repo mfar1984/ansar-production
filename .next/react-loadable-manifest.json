@@ -3,7 +3,7 @@
     "id": 11482,
     "files": [
       "static/chunks/bc98253f.d6fc8a0138855acd.js",
-      "static/chunks/4199.32814a8538d6155b.js"
+      "static/chunks/4199.1e55321e82efc022.js"
     ]
   },
   "..\\node_modules\\jspdf\\dist\\jspdf.es.min.js -> dompurify": {
@@ -28,6 +28,2268 @@
     "id": 31646,
     "files": [
       "static/chunks/1646.a93085a0445ba909.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/AchievementAwardsManagement": {
+    "id": 53277,
+    "files": [
+      "static/css/648157f215ffdf02.css",
+      "static/css/efc39b794c82d1bd.css",
+      "static/css/1ac462fd18a1f8c0.css",
+      "static/chunks/5879.407a7d6b8c6b23e3.js",
+      "static/chunks/3277.0db7a16f6802fd8c.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/AdvanceManagement": {
+    "id": 47348,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/chunks/7025.78cd32e5208ae01e.js",
+      "static/chunks/7348.2dccf3ad564aecd2.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/AllowancesManagement": {
+    "id": 52569,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/chunks/7025.78cd32e5208ae01e.js",
+      "static/chunks/2569.002b583908f96cc9.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/ApplicantsManagement": {
+    "id": 54733,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/04e7b1668d77a6ce.css",
+      "static/chunks/4733.d104791574a6406c.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/ArchiveManagement": {
+    "id": 48540,
+    "files": [
+      "static/css/51672f7bc2283f7a.css",
+      "static/chunks/8540.b9acf3d07d805df6.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/BonusManagement": {
+    "id": 43323,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/chunks/7025.78cd32e5208ae01e.js",
+      "static/chunks/3323.94027a2efcc69251.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/CareerManagement": {
+    "id": 8826,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/04e7b1668d77a6ce.css",
+      "static/chunks/8826.53fc420aa0ac2dbc.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/CertificatesManagement": {
+    "id": 37560,
+    "files": [
+      "static/css/648157f215ffdf02.css",
+      "static/css/efc39b794c82d1bd.css",
+      "static/css/1ac462fd18a1f8c0.css",
+      "static/chunks/5879.407a7d6b8c6b23e3.js",
+      "static/chunks/7560.fa574b3cf5746003.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/ClaimManagement": {
+    "id": 83390,
+    "files": [
+      "static/css/648157f215ffdf02.css",
+      "static/css/efc39b794c82d1bd.css",
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/chunks/5879.407a7d6b8c6b23e3.js",
+      "static/chunks/849.929695a54f09f4bc.js",
+      "static/chunks/3390.ed881d35850954e2.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/CommissionManagement": {
+    "id": 9031,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/chunks/7025.78cd32e5208ae01e.js",
+      "static/chunks/9031.1b04e9714fb19de7.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/DepartmentManagement": {
+    "id": 21830,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/1830.6d896f8c3889f134.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/DownloadsManagement": {
+    "id": 57229,
+    "files": [
+      "static/css/648157f215ffdf02.css",
+      "static/css/efc39b794c82d1bd.css",
+      "static/css/7b909728d0619b31.css",
+      "static/chunks/5879.407a7d6b8c6b23e3.js",
+      "static/chunks/7229.28c083dcab42de90.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/EmployeeClaims": {
+    "id": 99386,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/efc39b794c82d1bd.css",
+      "static/css/0d16e87b547bfb72.css",
+      "static/chunks/3197.8e75b477355fb885.js",
+      "static/chunks/2199.5e32a2a5734e9825.js",
+      "static/chunks/9386.b403cd216fea1dcf.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/EmployeeEquipment": {
+    "id": 77719,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/chunks/7719.51c8bc9134c4e242.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/EmployeeExpenses": {
+    "id": 4978,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/efc39b794c82d1bd.css",
+      "static/css/0d16e87b547bfb72.css",
+      "static/chunks/3197.8e75b477355fb885.js",
+      "static/chunks/9365.2371207f70f5719f.js",
+      "static/chunks/2199.5e32a2a5734e9825.js",
+      "static/chunks/4978.802c35795001ac1c.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/EmployeeKpis": {
+    "id": 87612,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/chunks/7612.cbb6038f046670ae.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/EmployeeLeave": {
+    "id": 42142,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/chunks/2142.c4110e4c1857a009.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/EmployeeManagement": {
+    "id": 80341,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/a1397575844f12f6.css",
+      "static/chunks/2769.5b75c7bddf7ca30a.js",
+      "static/chunks/341.120bf9f663054f0f.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/EmployeeMileage": {
+    "id": 79995,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/0d16e87b547bfb72.css",
+      "static/chunks/3197.8e75b477355fb885.js",
+      "static/chunks/2199.5e32a2a5734e9825.js",
+      "static/chunks/9995.1be33dd27f31a6b3.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/EmployeeOvertime": {
+    "id": 16048,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/0d16e87b547bfb72.css",
+      "static/chunks/3197.8e75b477355fb885.js",
+      "static/chunks/44.51057c2fdfada583.js",
+      "static/chunks/2199.5e32a2a5734e9825.js",
+      "static/chunks/6048.b8522a9f5e31befd.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/EmployeePayslips": {
+    "id": 99234,
+    "files": [
+      "static/css/c2d1eef6ad47b0b6.css",
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/chunks/164f4fb6.32fa297d9a2ab88f.js",
+      "static/chunks/2f0b94e8.3186a98eb4c9012b.js",
+      "static/chunks/9745.6bd4046746fbcaf8.js",
+      "static/chunks/336.5526de6d4ee9fdb1.js",
+      "static/chunks/9234.adf357c71e58b227.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/EmployeePettyCash": {
+    "id": 63276,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/efc39b794c82d1bd.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/chunks/3197.8e75b477355fb885.js",
+      "static/chunks/9365.2371207f70f5719f.js",
+      "static/chunks/3276.82b8b37d8eddd899.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/EmployeeProfile": {
+    "id": 39840,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/chunks/9840.82adb1647938358e.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/EmployeeWorkOrders": {
+    "id": 47093,
+    "files": [
+      "static/css/efc39b794c82d1bd.css",
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/chunks/7093.7b81553d78e8c5a6.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/ExpensesManagement": {
+    "id": 41891,
+    "files": [
+      "static/css/648157f215ffdf02.css",
+      "static/css/efc39b794c82d1bd.css",
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/chunks/5879.407a7d6b8c6b23e3.js",
+      "static/chunks/9365.2371207f70f5719f.js",
+      "static/chunks/849.929695a54f09f4bc.js",
+      "static/chunks/1891.e3a78336ce76c4ba.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/HelpdeskManagement": {
+    "id": 72322,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/80f330191347dc23.css",
+      "static/chunks/2322.665a14a7be72678d.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/HelpdeskSettings": {
+    "id": 34892,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/4892.757bb0edfded964b.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/Integrations": {
+    "id": 31910,
+    "files": [
+      "static/chunks/1910.43d892743e6cb9cf.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/KpiAssignmentsManagement": {
+    "id": 93328,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/chunks/3328.63dd421ceec80964.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/KpiPeriodsManagement": {
+    "id": 1820,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/chunks/1820.5405ac80d274b8a1.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/KpiResultsManagement": {
+    "id": 80340,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/chunks/340.e0a07cac9c381c84.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/KpiReviewsManagement": {
+    "id": 32869,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/chunks/8105.f6a99662527ef167.js",
+      "static/chunks/2869.25dedd32df606bb1.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/KpiTemplatesManagement": {
+    "id": 95911,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/chunks/8105.f6a99662527ef167.js",
+      "static/chunks/5911.e42f644719e4ec07.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/LeaveManagement": {
+    "id": 2842,
+    "files": [
+      "static/css/648157f215ffdf02.css",
+      "static/css/efc39b794c82d1bd.css",
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/chunks/5879.407a7d6b8c6b23e3.js",
+      "static/chunks/849.929695a54f09f4bc.js",
+      "static/chunks/2842.0d59e05cab8f7afc.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/LoanManagement": {
+    "id": 36146,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/chunks/7025.78cd32e5208ae01e.js",
+      "static/chunks/6146.6c6e4d3c0099575d.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/MileageManagement": {
+    "id": 64914,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/chunks/4914.1d4cc3f20d3511df.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/NewsManagement": {
+    "id": 99245,
+    "files": [
+      "static/css/648157f215ffdf02.css",
+      "static/css/efc39b794c82d1bd.css",
+      "static/css/77e8fdb2e0fd9a46.css",
+      "static/css/8b7b938241edff69.css",
+      "static/chunks/5879.407a7d6b8c6b23e3.js",
+      "static/chunks/1626.f648fcd5478f6c9a.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/NewsSubscribersManagement": {
+    "id": 45064,
+    "files": [
+      "static/css/77e8fdb2e0fd9a46.css",
+      "static/css/8ed9560d15ceee34.css",
+      "static/chunks/5064.3a81310e9abe683c.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/OvertimeDetails": {
+    "id": 35006,
+    "files": [
+      "static/css/648157f215ffdf02.css",
+      "static/css/efc39b794c82d1bd.css",
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/chunks/44.51057c2fdfada583.js",
+      "static/chunks/849.929695a54f09f4bc.js",
+      "static/chunks/5006.670f80d19b584e18.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/OvertimeManagement": {
+    "id": 12365,
+    "files": [
+      "static/css/648157f215ffdf02.css",
+      "static/css/efc39b794c82d1bd.css",
+      "static/css/f992ca9ad9455279.css",
+      "static/chunks/44.51057c2fdfada583.js",
+      "static/chunks/2365.062bf761b2f7d512.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/PayrollManagement": {
+    "id": 29825,
+    "files": [
+      "static/css/c2d1eef6ad47b0b6.css",
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/cbd918c6d953094c.css",
+      "static/chunks/164f4fb6.32fa297d9a2ab88f.js",
+      "static/chunks/2f0b94e8.3186a98eb4c9012b.js",
+      "static/chunks/9745.6bd4046746fbcaf8.js",
+      "static/chunks/336.5526de6d4ee9fdb1.js",
+      "static/chunks/9825.e7dc52dbb212a749.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/ProjectRecordsManagement": {
+    "id": 72471,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/chunks/2471.82782f71d2d7158f.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/UsersManagement": {
+    "id": 91530,
+    "files": [
+      "static/chunks/1530.6c92dd6cfe0f377f.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/AccountInquiry": {
+    "id": 83297,
+    "files": [
+      "static/css/1ab4b029f6f158a4.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/5918e480a950ecc2.css",
+      "static/chunks/8569.42bca40b38fc145f.js",
+      "static/chunks/8059.8aa3a1fbd143ec56.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/AccountingDashboard": {
+    "id": 86358,
+    "files": [
+      "static/css/1f2b4496b6d7ce3a.css",
+      "static/chunks/6358.ad8c9be2e70dadab.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/AccountingPreferences": {
+    "id": 11288,
+    "files": [
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/chunks/8569.42bca40b38fc145f.js",
+      "static/chunks/1288.b36d2ebc11d3e56e.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/ApAgeing": {
+    "id": 12829,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/4840b0b19c14dc63.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/3278-d6e986883b2a39aa.js",
+      "static/chunks/2829.29bcf224b8bc53f0.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/ApRefunds": {
+    "id": 98975,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/161b9981a2c4e927.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/ebb598f2b9d8b813.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/3278-d6e986883b2a39aa.js",
+      "static/chunks/7248.77190264b54dbf2a.js",
+      "static/chunks/8975.d6243e9e0e363c45.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/ArAgeing": {
+    "id": 33547,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/4840b0b19c14dc63.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/3547.f3063b4d3147408c.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/ArApContra": {
+    "id": 30254,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/ebb598f2b9d8b813.css",
+      "static/css/c652b5cd0f6d08d5.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/254.37d088efc3f3c68c.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/ArRefunds": {
+    "id": 47669,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/161b9981a2c4e927.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/ebb598f2b9d8b813.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/7248.77190264b54dbf2a.js",
+      "static/chunks/7669.9eb5075491cf55e2.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/BankReconciliation": {
+    "id": 77536,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/8010092f581adcb6.css",
+      "static/css/b1b58272b1eef9e7.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/7762f317a44361fc.css",
+      "static/css/e592bbbfc09bf822.css",
+      "static/chunks/897-d70023669718bd93.js",
+      "static/chunks/7804-337ae9893af1c567.js",
+      "static/chunks/7536.1f065b756541e8da.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/CashBankInquiry": {
+    "id": 86457,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/8010092f581adcb6.css",
+      "static/css/67acef5286dbd4ba.css",
+      "static/css/7762f317a44361fc.css",
+      "static/chunks/897-d70023669718bd93.js",
+      "static/chunks/3315-fd3e9a533a40be97.js",
+      "static/chunks/6457.ce1796fc01729a3c.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/CashPayments": {
+    "id": 32285,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/4cfdc836323eed39.css",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3510.387cc0a729d36893.js",
+      "static/chunks/2285.4d4e77e98de23154.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/CashPurchases": {
+    "id": 33864,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/2260d1d9eccf1269.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3888.1a1292782e07d07a.js",
+      "static/chunks/5334.e90b5257cb997dda.js",
+      "static/chunks/3278-d6e986883b2a39aa.js",
+      "static/chunks/3864.33f35a076ff010ea.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/CashReceipts": {
+    "id": 3147,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/4cfdc836323eed39.css",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3510.387cc0a729d36893.js",
+      "static/chunks/3147.74114c523b5c38cd.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/CashSales": {
+    "id": 99872,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/2260d1d9eccf1269.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3888.1a1292782e07d07a.js",
+      "static/chunks/5334.e90b5257cb997dda.js",
+      "static/chunks/9872.bc344e9b9c77e0f4.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/ChartOfAccounts": {
+    "id": 2512,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/5918e480a950ecc2.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8569.42bca40b38fc145f.js",
+      "static/chunks/2512.590a40a767aabaa5.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/CustomerGroups": {
+    "id": 12485,
+    "files": [
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/0ee807042870a544.css",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/2485.6f45ecf2ba85550b.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/Customers": {
+    "id": 34952,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/0ee807042870a544.css",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/8569.42bca40b38fc145f.js",
+      "static/chunks/4952.d9123a94814beef8.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/DeliveryOrders": {
+    "id": 74266,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/2260d1d9eccf1269.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3888.1a1292782e07d07a.js",
+      "static/chunks/5334.e90b5257cb997dda.js",
+      "static/chunks/4266.9053ecec4862b6d7.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/DocumentBranding": {
+    "id": 51820,
+    "files": [
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/c3c341a6d4acad66.css",
+      "static/chunks/9439.237583407494be0d.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/DocumentFlow": {
+    "id": 74647,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/393f5f042732c3f2.css",
+      "static/chunks/3888.1a1292782e07d07a.js",
+      "static/chunks/8569.42bca40b38fc145f.js",
+      "static/chunks/4647.455c1d216bbd2539.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/DocumentNumbers": {
+    "id": 29604,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/chunks/8569.42bca40b38fc145f.js",
+      "static/chunks/9604.4834cab8c4b01650.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/DocumentPosting": {
+    "id": 29028,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/1ab4b029f6f158a4.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/5918e480a950ecc2.css",
+      "static/css/e5021ba6daca5e5f.css",
+      "static/chunks/8569.42bca40b38fc145f.js",
+      "static/chunks/9028.2a38e406e5a8685d.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/EinvoiceSubmissions": {
+    "id": 46307,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ed2eedd75cba5065.css",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/6307.a2074ebca6577250.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/FinancialReports": {
+    "id": 26990,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/5918e480a950ecc2.css",
+      "static/css/ea65872577933538.css",
+      "static/css/1ab4b029f6f158a4.css",
+      "static/chunks/8569.42bca40b38fc145f.js",
+      "static/chunks/6990.18510a43d558d6a5.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/GoodsReceivedNotes": {
+    "id": 2835,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/2260d1d9eccf1269.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3888.1a1292782e07d07a.js",
+      "static/chunks/5334.e90b5257cb997dda.js",
+      "static/chunks/3278-d6e986883b2a39aa.js",
+      "static/chunks/2835.deac1478dfe05a3b.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/JournalEntries": {
+    "id": 45310,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/5918e480a950ecc2.css",
+      "static/css/a62dff0fc1f9703a.css",
+      "static/chunks/8569.42bca40b38fc145f.js",
+      "static/chunks/5310.8a4a2da71c33b2fc.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/LhdnCodes": {
+    "id": 49907,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/5918e480a950ecc2.css",
+      "static/chunks/9907.c855a8c852d3964f.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/MakePayments": {
+    "id": 23822,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/0b359ffe28153f68.css",
+      "static/css/af7e39156200cc21.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/3278-d6e986883b2a39aa.js",
+      "static/chunks/3822.76aca8a30d9db2a1.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/OpeningBalances": {
+    "id": 20548,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/5918e480a950ecc2.css",
+      "static/css/e5021ba6daca5e5f.css",
+      "static/chunks/8569.42bca40b38fc145f.js",
+      "static/chunks/548.39ad07275d39f9ea.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/PaymentTerms": {
+    "id": 19502,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/chunks/8569.42bca40b38fc145f.js",
+      "static/chunks/9502.b6a2779e0a9c1aab.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/ProformaInvoices": {
+    "id": 75133,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/2260d1d9eccf1269.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3888.1a1292782e07d07a.js",
+      "static/chunks/5334.e90b5257cb997dda.js",
+      "static/chunks/5133.b15ee03b7eeffe78.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/PurchaseOrders": {
+    "id": 17323,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/2260d1d9eccf1269.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3888.1a1292782e07d07a.js",
+      "static/chunks/5334.e90b5257cb997dda.js",
+      "static/chunks/3278-d6e986883b2a39aa.js",
+      "static/chunks/7323.7befe3df704a0c97.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/PurchaseReports": {
+    "id": 39565,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/3002ea9b0d11632f.css",
+      "static/chunks/4218.3229d5d9bf942ece.js",
+      "static/chunks/9565.2d92adf783f7da26.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/PurchaseRequests": {
+    "id": 68402,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/2260d1d9eccf1269.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3888.1a1292782e07d07a.js",
+      "static/chunks/5334.e90b5257cb997dda.js",
+      "static/chunks/3278-d6e986883b2a39aa.js",
+      "static/chunks/8402.d84dbd9e8df69073.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/Quotations": {
+    "id": 56052,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/2260d1d9eccf1269.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3888.1a1292782e07d07a.js",
+      "static/chunks/5334.e90b5257cb997dda.js",
+      "static/chunks/6052.c2f68c4684b8f7ce.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/ReceivePayments": {
+    "id": 78237,
+    "files": [
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/0b359ffe28153f68.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/8237.63d6ced196422551.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/SalesCreditNotes": {
+    "id": 12051,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/2260d1d9eccf1269.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3888.1a1292782e07d07a.js",
+      "static/chunks/5334.e90b5257cb997dda.js",
+      "static/chunks/2051.c53a03bad4820a70.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/SalesDebitNotes": {
+    "id": 68898,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/2260d1d9eccf1269.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3888.1a1292782e07d07a.js",
+      "static/chunks/5334.e90b5257cb997dda.js",
+      "static/chunks/8898.fbe497c92239fb70.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/SalesInvoices": {
+    "id": 79495,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/2260d1d9eccf1269.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3888.1a1292782e07d07a.js",
+      "static/chunks/5334.e90b5257cb997dda.js",
+      "static/chunks/9495.161980a3642aa828.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/SalesOrders": {
+    "id": 55704,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/2260d1d9eccf1269.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3888.1a1292782e07d07a.js",
+      "static/chunks/5334.e90b5257cb997dda.js",
+      "static/chunks/5704.aa77994972a92d09.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/SalesReports": {
+    "id": 16328,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/3002ea9b0d11632f.css",
+      "static/chunks/4218.3229d5d9bf942ece.js",
+      "static/chunks/6328.82e0689b01c15dcd.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/Salespersons": {
+    "id": 26267,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/9a73c2359b8eef1c.css",
+      "static/chunks/6267.65820591f3fb366c.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/SstReturnSummary": {
+    "id": 11269,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/f5ecba61632334c2.css",
+      "static/chunks/1863.351d5537a9df133a.js",
+      "static/chunks/1269.ea3aaae5a1900ccd.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/SstTransactionListing": {
+    "id": 96593,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/f5ecba61632334c2.css",
+      "static/chunks/1863.351d5537a9df133a.js",
+      "static/chunks/1355.91691db32631c8fa.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/SupplierCreditNotes": {
+    "id": 29793,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/2260d1d9eccf1269.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3888.1a1292782e07d07a.js",
+      "static/chunks/5334.e90b5257cb997dda.js",
+      "static/chunks/3278-d6e986883b2a39aa.js",
+      "static/chunks/9793.40f427a338b90954.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/SupplierDebitNotes": {
+    "id": 19208,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/2260d1d9eccf1269.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3888.1a1292782e07d07a.js",
+      "static/chunks/5334.e90b5257cb997dda.js",
+      "static/chunks/3278-d6e986883b2a39aa.js",
+      "static/chunks/9208.7fc63b3be77ea8d5.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/SupplierGroups": {
+    "id": 2837,
+    "files": [
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/0ee807042870a544.css",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/2837.08c6306467adfb91.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/SupplierInvoices": {
+    "id": 14577,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/ef2d1a98683ba18a.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/2260d1d9eccf1269.css",
+      "static/chunks/9400.7c20be032f92b74e.js",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/3408-5e53abde935e165e.js",
+      "static/chunks/4514-da3961b026fe070b.js",
+      "static/chunks/3888.1a1292782e07d07a.js",
+      "static/chunks/5334.e90b5257cb997dda.js",
+      "static/chunks/3278-d6e986883b2a39aa.js",
+      "static/chunks/4577.f7f57c829172bf93.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/Suppliers": {
+    "id": 13048,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/0ee807042870a544.css",
+      "static/chunks/8720.3940c96694a7dbc5.js",
+      "static/chunks/8569.42bca40b38fc145f.js",
+      "static/chunks/3048.c5fb5b4b57d1ef57.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/TaxCodes": {
+    "id": 31914,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/chunks/8569.42bca40b38fc145f.js",
+      "static/chunks/1914.d2eac35d921fc296.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/TransferFunds": {
+    "id": 43908,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/4cfdc836323eed39.css",
+      "static/chunks/3908.b027b710fb6caf9c.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/UnitsOfMeasure": {
+    "id": 63007,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/daefb4617b1e1080.css",
+      "static/chunks/8569.42bca40b38fc145f.js",
+      "static/chunks/3007.cad62a6d60b358a5.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/accounting/YearEnd": {
+    "id": 44941,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/1ab4b029f6f158a4.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/48cb6bd8d6563d17.css",
+      "static/css/5918e480a950ecc2.css",
+      "static/chunks/8569.42bca40b38fc145f.js",
+      "static/chunks/4941.7a8f21aa5b0d4d23.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/application/PartnerApplications": {
+    "id": 43875,
+    "files": [
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/ea65872577933538.css",
+      "static/chunks/3875.08d73bda63b58242.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/application/PartnerSettings": {
+    "id": 14912,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/3cf1d9dedbabbb33.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/4472.85543fc792066e22.js",
+      "static/chunks/4912.570332a9f29afeb6.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/application/ProcurementApplications": {
+    "id": 80951,
+    "files": [
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/ea65872577933538.css",
+      "static/chunks/3332.74da6e7edb48da38.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/application/ProcurementSettings": {
+    "id": 96018,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/3cf1d9dedbabbb33.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/4472.85543fc792066e22.js",
+      "static/chunks/6018.b3eda3a4f2eb463d.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/client/ClientProject": {
+    "id": 19513,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/6fb1a80736768c16.css",
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/9443.b3cebd9970802d73.js",
+      "static/chunks/9513.515c2b2fc445c46e.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/client/ClientProjects": {
+    "id": 42996,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/2996.9dd3348714874f92.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/hr/CareerSettings": {
+    "id": 5844,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/3cf1d9dedbabbb33.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/4472.85543fc792066e22.js",
+      "static/chunks/9201.bf6a16f63b24364e.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/hr/ClaimSettings": {
+    "id": 92471,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/3cf1d9dedbabbb33.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/4472.85543fc792066e22.js",
+      "static/chunks/4852.50e0f809ca7534b3.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/hr/ExpensesSettings": {
+    "id": 64707,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/3cf1d9dedbabbb33.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/4472.85543fc792066e22.js",
+      "static/chunks/9365.2371207f70f5719f.js",
+      "static/chunks/4707.066a625289397cad.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/hr/KpiSettings": {
+    "id": 60020,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/8105.f6a99662527ef167.js",
+      "static/chunks/20.bf1579d0ee885f8c.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/hr/LeaveSettings": {
+    "id": 44606,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/3cf1d9dedbabbb33.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/4472.85543fc792066e22.js",
+      "static/chunks/4606.43651c60c81c02d2.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/hr/MileageSettings": {
+    "id": 70021,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/3cf1d9dedbabbb33.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/4472.85543fc792066e22.js",
+      "static/chunks/18.b7ea43492b016a5b.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/hr/OvertimeSettings": {
+    "id": 7883,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/3cf1d9dedbabbb33.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/4472.85543fc792066e22.js",
+      "static/chunks/44.51057c2fdfada583.js",
+      "static/chunks/7883.2837ce94edbfa6b9.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/hr/PayrollSettings": {
+    "id": 99065,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/9065.f23cfbbf90922cc4.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/hr/PettyCashApplications": {
+    "id": 11848,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/efc39b794c82d1bd.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/chunks/9365.2371207f70f5719f.js",
+      "static/chunks/1848.7f22387a5470e93e.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/hr/PettyCashSettings": {
+    "id": 10553,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/3cf1d9dedbabbb33.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/4472.85543fc792066e22.js",
+      "static/chunks/574.93bed071b623807e.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/AssetApprovalSettings": {
+    "id": 10039,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/3cf1d9dedbabbb33.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/4472.85543fc792066e22.js",
+      "static/chunks/3000.6622eec354146338.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/AssetCategorySettings": {
+    "id": 61156,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/chunks/1156.b7befffef81cd44f.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/AssetCheckout": {
+    "id": 31902,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/848f5573dd1217c7.css",
+      "static/css/bc4756fd35a07d44.css",
+      "static/css/f2d86922d10c65bf.css",
+      "static/css/3fd67688575d09bd.css",
+      "static/chunks/8394.865e4b094fb7b6f4.js",
+      "static/chunks/1902.3f5b72cd4a2282f0.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/AssetDisposal": {
+    "id": 89391,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/848f5573dd1217c7.css",
+      "static/css/de31da7cb445fb37.css",
+      "static/css/3fd67688575d09bd.css",
+      "static/chunks/8394.865e4b094fb7b6f4.js",
+      "static/chunks/9391.243837bd186fc9bb.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/AssetLoanRequests": {
+    "id": 31862,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/848f5573dd1217c7.css",
+      "static/css/3fd67688575d09bd.css",
+      "static/chunks/8394.865e4b094fb7b6f4.js",
+      "static/chunks/1862.6c97c274c1a5b0bc.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/AssetLoanSettings": {
+    "id": 12830,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/3cf1d9dedbabbb33.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/4472.85543fc792066e22.js",
+      "static/chunks/1327.129dfe026865ed0f.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/AssetLocationSettings": {
+    "id": 78020,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/848f5573dd1217c7.css",
+      "static/chunks/8020.2f392f0e6f315d77.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/AssetMaintenance": {
+    "id": 91299,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/848f5573dd1217c7.css",
+      "static/css/de31da7cb445fb37.css",
+      "static/css/3fd67688575d09bd.css",
+      "static/chunks/8394.865e4b094fb7b6f4.js",
+      "static/chunks/1299.92b0f9bf9d908889.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/AssetModels": {
+    "id": 28984,
+    "files": [
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/chunks/8984.928374e4a129b2b3.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/AssetObligations": {
+    "id": 79057,
+    "files": [
+      "static/css/e0aa2bc205878590.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/848f5573dd1217c7.css",
+      "static/css/3fd67688575d09bd.css",
+      "static/css/ea65872577933538.css",
+      "static/chunks/8394.865e4b094fb7b6f4.js",
+      "static/chunks/9057.0935981f8732cd0d.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/AssetRegister": {
+    "id": 79237,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/751c70ab43e56e5e.css",
+      "static/css/248d30da34af635d.css",
+      "static/css/b0e7e029ac66cfda.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/3448495d7e523f7a.css",
+      "static/css/ae7e609e9c96cf0b.css",
+      "static/css/848f5573dd1217c7.css",
+      "static/css/3fd67688575d09bd.css",
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/chunks/8394.865e4b094fb7b6f4.js",
+      "static/chunks/9237.7c4d8440ae5f5b0f.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/AssetReports": {
+    "id": 20783,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/848f5573dd1217c7.css",
+      "static/chunks/783.65a263281ef5d928.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/AssetStockTake": {
+    "id": 82565,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/848f5573dd1217c7.css",
+      "static/css/3fd67688575d09bd.css",
+      "static/chunks/8394.865e4b094fb7b6f4.js",
+      "static/chunks/2565.b8af74a229fc4713.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/AssetStockTakeSheet": {
+    "id": 19594,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/bd8728874076391b.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/bc4756fd35a07d44.css",
+      "static/css/bda7a15a96fc8cc7.css",
+      "static/css/848f5573dd1217c7.css",
+      "static/css/3fd67688575d09bd.css",
+      "static/chunks/8394.865e4b094fb7b6f4.js",
+      "static/chunks/1788.8abc9cff405af27b.js",
+      "static/chunks/9594.0ac6500e0eb377da.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/AssetTransitions": {
+    "id": 18522,
+    "files": [
+      "static/css/e0aa2bc205878590.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/848f5573dd1217c7.css",
+      "static/css/3fd67688575d09bd.css",
+      "static/css/ea65872577933538.css",
+      "static/chunks/8394.865e4b094fb7b6f4.js",
+      "static/chunks/8522.8b4bbe8b8b3bd295.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/BusinessDevelopment": {
+    "id": 9591,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/9591.8997815c4e561d51.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/MarketPlaceProductForm": {
+    "id": 55390,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/3e4333af9181b1e8.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/03bbae410a36d30e.css",
+      "static/chunks/6830-9977c841ced25634.js",
+      "static/chunks/5390.fbdf383694cdb4ad.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/MarketPlaceProducts": {
+    "id": 41263,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/848f5573dd1217c7.css",
+      "static/chunks/6830-9977c841ced25634.js",
+      "static/chunks/1263.69aa2fadd6702e09.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/MarketPlaceSettings": {
+    "id": 24359,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/ea65872577933538.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/3cf1d9dedbabbb33.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/4472.85543fc792066e22.js",
+      "static/chunks/6830-9977c841ced25634.js",
+      "static/chunks/5112.6f2e445e522c75aa.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectChangeRequests": {
+    "id": 60415,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/415.6d6f6e1326af59d4.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectClientApprovals": {
+    "id": 53744,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/3744.9468aadcb669fe72.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectCostBoard": {
+    "id": 86338,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/6338.aaf3b4a1c81c6d94.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectDocumentBoard": {
+    "id": 75030,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/5030.1253f03d667cee09.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectInbox": {
+    "id": 17151,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/7151.a5ab12337cc299b7.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectMilestoneBoard": {
+    "id": 33703,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/3703.ded4a815d9ff14e5.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectPortfolio": {
+    "id": 71255,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/3636.9c252785cfcc122b.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectProcurementBoard": {
+    "id": 55375,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/5375.0bea4d3e0d1530d9.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectProgressReports": {
+    "id": 34141,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/6522.bfb53dec9e6c1972.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectQuality": {
+    "id": 97020,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/7020.24a3f0b00773fb33.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectRegister": {
+    "id": 2770,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/76eeafd195c879d5.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/2770.fdfbf6519d460fde.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectResourceBoard": {
+    "id": 73007,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/5388.d8cc2ba936656428.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectRiskBoard": {
+    "id": 11232,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/1232.e4f0a77e61964b89.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectScheduleBoard": {
+    "id": 18526,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/3968.5bc1c7620f5370ea.js",
+      "static/chunks/8526.1355433004ff06ee.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectSettings": {
+    "id": 59246,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/3cf1d9dedbabbb33.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/4472.85543fc792066e22.js",
+      "static/chunks/9246.9abf57e51e72bdeb.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectTaskBoard": {
+    "id": 23742,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/3968.5bc1c7620f5370ea.js",
+      "static/chunks/3742.22e7720e5477c10e.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectTimesheets": {
+    "id": 43254,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/3254.cf6577696bc1b8f9.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ProjectWorkspace": {
+    "id": 55173,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/ace638468d134617.css",
+      "static/css/6fb1a80736768c16.css",
+      "static/chunks/8442.85575c4bf4a89c66.js",
+      "static/chunks/3968.5bc1c7620f5370ea.js",
+      "static/chunks/9443.b3cebd9970802d73.js",
+      "static/chunks/5173.69c5c94716155eed.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ShopOrders": {
+    "id": 2043,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/848f5573dd1217c7.css",
+      "static/css/bd8728874076391b.css",
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/6830-9977c841ced25634.js",
+      "static/chunks/1788.8abc9cff405af27b.js",
+      "static/chunks/2043.224f884191ef6804.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/ShopTracking": {
+    "id": 99013,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/848f5573dd1217c7.css",
+      "static/chunks/6830-9977c841ced25634.js",
+      "static/chunks/9013.bcd03d9cc38b2477.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/TenderCategories": {
+    "id": 62400,
+    "files": [
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/chunks/2400.618733e047a92740.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/TenderManagement": {
+    "id": 82961,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/2961.6a6b090c9a7c4558.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/VendorRegister": {
+    "id": 15739,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/chunks/5739.524a21926261d63b.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/WorkOrderForm": {
+    "id": 964,
+    "files": [
+      "static/css/606bf0568914fb3c.css",
+      "static/css/808258e6326f1a97.css",
+      "static/chunks/964.d991a9591319d0c6.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/WorkOrderRegister": {
+    "id": 24880,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/190b3c29dc0eae63.css",
+      "static/chunks/615.cd48ea194a9d8c28.js",
+      "static/chunks/4880.c6cc38147c2a90fd.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/WorkOrderSettings": {
+    "id": 75284,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/bab68d96470c35a5.css",
+      "static/css/3cf1d9dedbabbb33.css",
+      "static/css/72afa0019df22414.css",
+      "static/chunks/4709.cdd83b3ed64f2657.js",
+      "static/chunks/4472.85543fc792066e22.js",
+      "static/chunks/5284.6a76c8c29d9aae77.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/operations/WorkOrderShow": {
+    "id": 55635,
+    "files": [
+      "static/css/ea65872577933538.css",
+      "static/css/606bf0568914fb3c.css",
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/e0aa2bc205878590.css",
+      "static/css/6841e43a8257f227.css",
+      "static/css/8010092f581adcb6.css",
+      "static/css/53162b29545f57db.css",
+      "static/chunks/897-d70023669718bd93.js",
+      "static/chunks/615.cd48ea194a9d8c28.js",
+      "static/chunks/5635.451c5872189d204c.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/ConfigBackup": {
+    "id": 89733,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/chunks/9733.296a1fc488375c8a.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/ConfigBranding": {
+    "id": 93962,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/chunks/3962.0d5e4d7e1c2b4b5f.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/ConfigGeneral": {
+    "id": 35229,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/chunks/5229.60b4cfafb8c898f9.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/ConfigMaintenance": {
+    "id": 1860,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/chunks/1860.b43c18d0b2103dd0.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/ConfigSocialSeo": {
+    "id": 58993,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/chunks/8993.506daa597d6fa728.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/IntegrationApi": {
+    "id": 82491,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/chunks/9073.88b1154798913b7a.js",
+      "static/chunks/2491.45ad7a43816e083f.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/IntegrationEasyparcel": {
+    "id": 6236,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/chunks/9073.88b1154798913b7a.js",
+      "static/chunks/6236.e424d1a973fbb8af.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/IntegrationEinvoice": {
+    "id": 73574,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/chunks/9073.88b1154798913b7a.js",
+      "static/chunks/3574.cf3cdcada05e694a.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/IntegrationEmail": {
+    "id": 72400,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/chunks/9073.88b1154798913b7a.js",
+      "static/chunks/19.4d1315f8816e6248.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/IntegrationHolidays": {
+    "id": 21914,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/chunks/9073.88b1154798913b7a.js",
+      "static/chunks/9533.eea278059180bf89.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/IntegrationPayments": {
+    "id": 23670,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/chunks/9073.88b1154798913b7a.js",
+      "static/chunks/3670.59b954a02e24163e.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/IntegrationRecycleBin": {
+    "id": 2159,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/chunks/9073.88b1154798913b7a.js",
+      "static/chunks/2159.89584517f7b524fe.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/IntegrationSms": {
+    "id": 72544,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/chunks/9073.88b1154798913b7a.js",
+      "static/chunks/2544.fbc6888c0530b6b0.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/IntegrationTelegram": {
+    "id": 7252,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/chunks/9073.88b1154798913b7a.js",
+      "static/chunks/7252.301f1e85f0dac0f3.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/IntegrationWeather": {
+    "id": 53375,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/chunks/9073.88b1154798913b7a.js",
+      "static/chunks/3375.9d315be00c02257a.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/LogsActivity": {
+    "id": 77991,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/chunks/1166.ee7725b6904157f2.js",
+      "static/chunks/7991.687f5ce1b94edad8.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/LogsAudit": {
+    "id": 1649,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/chunks/1166.ee7725b6904157f2.js",
+      "static/chunks/1649.f74cd9a377d5439d.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/RolesManagement": {
+    "id": 52203,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/47809f7591e72b99.css",
+      "static/chunks/2203.e6aa48a122605f78.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/UsersManagement": {
+    "id": 7106,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/76eeafd195c879d5.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/47809f7591e72b99.css",
+      "static/chunks/7106.af36ef62d554250c.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/settings/UsersSalespersons": {
+    "id": 43973,
+    "files": [
+      "static/css/a92b3e2dc9b503dc.css",
+      "static/css/51672f7bc2283f7a.css",
+      "static/css/47809f7591e72b99.css",
+      "static/css/1f04936cdcc8c543.css",
+      "static/chunks/3973.66f9697bfa1c93ee.js"
+    ]
+  },
+  "app\\(auth)\\auth\\[hash]\\page.tsx -> @/components/admin/web/WebPageEditor": {
+    "id": 41328,
+    "files": [
+      "static/css/f992ca9ad9455279.css",
+      "static/css/acd4ddd88384f142.css",
+      "static/css/c32b5f5994f16cdb.css",
+      "static/css/a93dcde173bec10d.css",
+      "static/chunks/1328.613e0cfd099f48f6.js"
     ]
   },
   "components\\admin\\CareerManagement.tsx -> ./TinyMCEWrapper": {

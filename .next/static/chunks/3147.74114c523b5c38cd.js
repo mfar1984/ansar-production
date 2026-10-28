@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[3147],{3147:(e,s,a)=>{a.r(s),a.d(s,{default:()=>t});var h=a(95155),n=a(83510),r=a(93594);function t(e){let{hash:s,hasPermission:a}=e;return(0,h.jsx)(n.A,{kind:r.I0["cash-receipt"],hash:s,hasPermission:a})}}}]);

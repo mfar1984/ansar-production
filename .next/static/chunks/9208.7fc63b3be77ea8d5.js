@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[9208],{19208:(e,s,n)=>{n.r(s),n.d(s,{default:()=>r});var t=n(95155),u=n(75334),i=n(70897);function r(e){let{hash:s,hasPermission:n}=e;return(0,t.jsx)(u.A,{kind:i.sI["supplier-debit-note"],hash:s,hasPermission:n})}}}]);

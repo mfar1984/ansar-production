@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[2835],{2835:(e,s,n)=>{n.r(s),n.d(s,{default:()=>a});var r=n(95155),t=n(75334),u=n(70897);function a(e){let{hash:s,hasPermission:n}=e;return(0,r.jsx)(t.A,{kind:u.sI["goods-received-note"],hash:s,hasPermission:n})}}}]);

@@ -1,0 +1,1 @@
+"use strict";exports.id=89165,exports.ids=[89165],exports.modules={89165:(a,b,c)=>{c.r(b),c.d(b,{default:()=>g});var d=c(21124),e=c(85816),f=c(70495);function g({hash:a,hasPermission:b}){return(0,d.jsx)(e.A,{kind:f.sI["supplier-credit-note"],hash:a,hasPermission:b})}}};

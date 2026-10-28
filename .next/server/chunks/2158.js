@@ -1,0 +1,1 @@
+"use strict";exports.id=2158,exports.ids=[2158],exports.modules={2158:(a,b,c)=>{c.r(b),c.d(b,{default:()=>g});var d=c(21124),e=c(85816),f=c(18464);function g({hash:a,hasPermission:b}){return(0,d.jsx)(e.A,{kind:f.z0["sales-debit-note"],hash:a,hasPermission:b})}}};

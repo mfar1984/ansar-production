@@ -1,0 +1,1 @@
+"use strict";exports.id=87579,exports.ids=[87579],exports.modules={87579:(a,b,c)=>{c.r(b),c.d(b,{default:()=>g});var d=c(21124),e=c(85816),f=c(18464);function g({hash:a,hasPermission:b}){return(0,d.jsx)(e.A,{kind:f.z0["sales-invoice"],hash:a,hasPermission:b})}}};

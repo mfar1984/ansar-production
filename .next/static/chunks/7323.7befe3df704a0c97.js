@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[7323],{17323:(s,e,r)=>{r.r(e),r.d(e,{default:()=>n});var u=r(95155),a=r(75334),h=r(70897);function n(s){let{hash:e,hasPermission:r}=s;return(0,u.jsx)(a.A,{kind:h.sI["purchase-order"],hash:e,hasPermission:r})}}}]);

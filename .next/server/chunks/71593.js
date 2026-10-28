@@ -1,0 +1,1 @@
+"use strict";exports.id=71593,exports.ids=[71593],exports.modules={71593:(a,b,c)=>{c.r(b),c.d(b,{default:()=>g});var d=c(21124),e=c(85816),f=c(70495);function g({hash:a,hasPermission:b}){return(0,d.jsx)(e.A,{kind:f.sI["goods-received-note"],hash:a,hasPermission:b})}}};

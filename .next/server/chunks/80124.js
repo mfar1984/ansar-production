@@ -1,0 +1,1 @@
+"use strict";exports.id=80124,exports.ids=[80124],exports.modules={80124:(a,b,c)=>{c.r(b),c.d(b,{default:()=>g});var d=c(21124),e=c(85816),f=c(18464);function g({hash:a,hasPermission:b}){return(0,d.jsx)(e.A,{kind:f.z0["cash-sale"],hash:a,hasPermission:b})}}};
