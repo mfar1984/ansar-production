@@ -281,7 +281,11 @@ CREATE TABLE IF NOT EXISTS `project_phase_log` (
 --   project_messages       cols 8   fks 1   uniques 0
 --                          (9 sebelum project_management_chat_files.sql membuang
 --                           `attachments` — lihat nota atas CREATE TABLE di atas)
---   project_phase_log      cols 7   fks 1   uniques 0
+--   project_phase_log      cols 8   fks 1   uniques 0
+--                          (7 sebelum project_phase_reversal.sql menambah `action` —
+--                           satu pasangan `closing -> closing` kini boleh bermakna
+--                           gate Closing ditandatangani ATAU penutupan dibuka
+--                           semula, dan hanya lajur itu membezakannya)
 --
 -- `uniques` tidak mengira PRIMARY: information_schema melabelkannya 'PRIMARY KEY'.
 SELECT t.TABLE_NAME,
