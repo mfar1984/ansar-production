@@ -508,6 +508,22 @@
       "namedRegex": "^/api/admin/operations/work\\-orders/(?<nxtPid>[^/]+?)/items(?:/)?$"
     },
     {
+      "page": "/api/admin/operations/work-orders/[id]/sheet-file",
+      "regex": "^/api/admin/operations/work\\-orders/([^/]+?)/sheet\\-file(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/work\\-orders/(?<nxtPid>[^/]+?)/sheet\\-file(?:/)?$"
+    },
+    {
+      "page": "/api/admin/operations/work-orders/[id]/sheets",
+      "regex": "^/api/admin/operations/work\\-orders/([^/]+?)/sheets(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/operations/work\\-orders/(?<nxtPid>[^/]+?)/sheets(?:/)?$"
+    },
+    {
       "page": "/api/admin/operations/work-orders/[id]/transition",
       "regex": "^/api/admin/operations/work\\-orders/([^/]+?)/transition(?:/)?$",
       "routeKeys": {
@@ -722,6 +738,30 @@
         "nxtPid": "nxtPid"
       },
       "namedRegex": "^/api/employee/work\\-orders/(?<nxtPid>[^/]+?)/items(?:/)?$"
+    },
+    {
+      "page": "/api/employee/work-orders/[id]/sheet-photos",
+      "regex": "^/api/employee/work\\-orders/([^/]+?)/sheet\\-photos(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/employee/work\\-orders/(?<nxtPid>[^/]+?)/sheet\\-photos(?:/)?$"
+    },
+    {
+      "page": "/api/employee/work-orders/[id]/sheet-submit",
+      "regex": "^/api/employee/work\\-orders/([^/]+?)/sheet\\-submit(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/employee/work\\-orders/(?<nxtPid>[^/]+?)/sheet\\-submit(?:/)?$"
+    },
+    {
+      "page": "/api/employee/work-orders/[id]/sheets",
+      "regex": "^/api/employee/work\\-orders/([^/]+?)/sheets(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/employee/work\\-orders/(?<nxtPid>[^/]+?)/sheets(?:/)?$"
     },
     {
       "page": "/api/public/achievement-awards/view/[hash]",
