@@ -3,21 +3,24 @@
               ac.id             AS category_id,
               ac.parent_id      AS category_parent_id,
               COALESCE(parent.name, ac.name) AS top_category_name,
-              t.id              AS template_id,
-              t.name            AS template_name,
-              t.form_title      AS form_title
+              COALESCE(t.id, fb.id)                  AS template_id,
+              COALESCE(t.name, fb.name)              AS template_name,
+              COALESCE(t.form_title, fb.form_title)  AS form_title,
+              (t.id IS NULL AND fb.id IS NOT NULL)   AS used_fallback
          FROM assets a
          LEFT JOIN asset_categories ac     ON ac.name = a.category
          LEFT JOIN asset_categories parent ON parent.id = ac.parent_id
          LEFT JOIN work_order_form_templates t
-                ON t.category_id = COALESCE(ac.parent_id, ac.id) AND t.is_active = 1`;async function j(a,b){if(0===b.length)return[];let c=b.map(()=>"?").join(", ");return await a(`${i} WHERE a.id IN (${c})`,b)}async function k(a,b){let c=(await a("SELECT DATE_FORMAT(CURDATE(), '%y%m%d') AS stamp"))[0].stamp,d=`${b}-${c}-`,e=await a(`SELECT COALESCE(MAX(CAST(SUBSTRING(form_no, ?) AS UNSIGNED)), 0) AS top
+                ON t.category_id = COALESCE(ac.parent_id, ac.id) AND t.is_active = 1
+         LEFT JOIN work_order_form_templates fb
+                ON fb.category_id IS NULL AND fb.is_active = 1`;async function j(a,b){if(0===b.length)return[];let c=b.map(()=>"?").join(", ");return await a(`${i} WHERE a.id IN (${c})`,b)}async function k(a,b){let c=(await a("SELECT DATE_FORMAT(CURDATE(), '%y%m%d') AS stamp"))[0].stamp,d=`${b}-${c}-`,e=await a(`SELECT COALESCE(MAX(CAST(SUBSTRING(form_no, ?) AS UNSIGNED)), 0) AS top
        FROM work_order_service_sheets
       WHERE form_no LIKE ?`,[d.length+1,`${d}%`]),f=Number(e[0]?.top||0)+1;return`${d}${String(f).padStart(3,"0")}`}async function l(){let a=await (0,d.P)("SELECT prefix FROM work_order_numbering WHERE table_key = ? LIMIT 1",["work_orders"]);return String(a[0]?.prefix||"").trim().replace(/[^A-Za-z0-9]/g,"")||"WO"}async function m(a,b){let c=await a(`SELECT wa.id, wa.asset_id
        FROM work_order_assets wa
       WHERE wa.work_order_id = ?
         AND NOT EXISTS (SELECT 1 FROM work_order_service_sheets s
                          WHERE s.work_order_asset_id = wa.id)
-      ORDER BY wa.id ASC`,[b]);if(0===c.length)return[];let d=await j(a,c.map(a=>Number(a.asset_id))),e=new Map;for(let a of d)e.set(Number(a.asset_id),a);return c.map(a=>{let b=e.get(Number(a.asset_id));return{work_order_asset_id:Number(a.id),asset_id:Number(a.asset_id),asset_no:b?.asset_no||String(a.asset_id),asset_name:b?.asset_name||"",serial_no:b?.serial_no??null,category:b?.category??null,category_id:b?.category_id??null,category_parent_id:b?.category_parent_id??null,top_category_name:b?.top_category_name??null,template_id:b?.template_id??null,template_name:b?.template_name??null,form_title:b?.form_title??null}})}async function n(a,b){let c=await m(a,b);if(0===c.length)return{raised:0,skipped_no_template:0,skipped_assets:[]};let d=c.map(a=>a.asset_id),e=await a("SELECT work_order_no FROM work_orders WHERE id = ? LIMIT 1",[b]),g=String(e[0]?.work_order_no||""),h=Array.from(new Set(c.map(a=>a.template_id).filter(a=>null!==a)));if(0===h.length)return{raised:0,skipped_no_template:c.length,skipped_assets:c.map(a=>a.asset_no).slice(0,12)};let i=h.map(()=>"?").join(", "),j=await a(`SELECT template_id, label, field_key, input_type, autofill_from, is_required, sort_order
+      ORDER BY wa.id ASC`,[b]);if(0===c.length)return[];let d=await j(a,c.map(a=>Number(a.asset_id))),e=new Map;for(let a of d)e.set(Number(a.asset_id),a);return c.map(a=>{let b=e.get(Number(a.asset_id));return{work_order_asset_id:Number(a.id),asset_id:Number(a.asset_id),asset_no:b?.asset_no||String(a.asset_id),asset_name:b?.asset_name||"",serial_no:b?.serial_no??null,category:b?.category??null,category_id:b?.category_id??null,category_parent_id:b?.category_parent_id??null,top_category_name:b?.top_category_name??null,template_id:b?.template_id??null,template_name:b?.template_name??null,form_title:b?.form_title??null,used_fallback:Number(b?.used_fallback||0)}})}async function n(a,b){let c=await m(a,b);if(0===c.length)return{raised:0,skipped_no_template:0,skipped_assets:[]};let d=c.map(a=>a.asset_id),e=await a("SELECT work_order_no FROM work_orders WHERE id = ? LIMIT 1",[b]),g=String(e[0]?.work_order_no||""),h=Array.from(new Set(c.map(a=>a.template_id).filter(a=>null!==a)));if(0===h.length)return{raised:0,skipped_no_template:c.length,skipped_assets:c.map(a=>a.asset_no).slice(0,12)};let i=h.map(()=>"?").join(", "),j=await a(`SELECT template_id, label, field_key, input_type, autofill_from, is_required, sort_order
        FROM work_order_form_fields
       WHERE template_id IN (${i})
       ORDER BY template_id ASC, sort_order ASC, id ASC`,h),n=await a(`SELECT g.template_id, g.title AS group_title, g.sort_order AS group_sort,
