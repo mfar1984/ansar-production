@@ -1,4 +1,4 @@
-"use strict";exports.id=46982,exports.ids=[46982],exports.modules={46982:(a,b,c)=>{c.d(b,{JL:()=>p,JM:()=>o,JN:()=>n,Qb:()=>r,T4:()=>h,bZ:()=>s,cG:()=>m,dg:()=>g,vy:()=>e});var d=c(88251);let e=["id","asset_no","holder","ownership","name","category","asset_class","brand","model","serial_no","tag_no","label_printed_at","description","purchase_date","purchase_cost","useful_life_years","vendor_id","tender_id","invoice_no","employee_id","department_id","location","location_id","client_id","site_id","project_id","site_name","site_address","installed_on","pic_name","pic_position","handed_over_on","status","is_loanable","condition_note","photo_path","notes","created_by","created_at","updated_at"];function f(a){return!!a&&e.includes(a)}let g=["pending","done","na"],h=["before","after"],i=`SELECT a.id              AS asset_id,
+"use strict";exports.id=46982,exports.ids=[46982],exports.modules={46982:(a,b,c)=>{c.d(b,{JL:()=>q,JM:()=>p,JN:()=>o,Lk:()=>m,Qb:()=>s,T4:()=>h,bZ:()=>t,cG:()=>n,dg:()=>g,vy:()=>e});var d=c(88251);let e=["id","asset_no","holder","ownership","name","category","asset_class","brand","model","serial_no","tag_no","label_printed_at","description","purchase_date","purchase_cost","useful_life_years","vendor_id","tender_id","invoice_no","employee_id","department_id","location","location_id","client_id","site_id","project_id","site_name","site_address","installed_on","pic_name","pic_position","handed_over_on","status","is_loanable","condition_note","photo_path","notes","created_by","created_at","updated_at"];function f(a){return!!a&&e.includes(a)}let g=["pending","done","na"],h=["before","after"],i=`SELECT a.id              AS asset_id,
               a.asset_no, a.name AS asset_name, a.serial_no, a.category,
               ac.id             AS category_id,
               ac.parent_id      AS category_parent_id,
@@ -17,31 +17,31 @@
       WHERE wa.work_order_id = ?
         AND NOT EXISTS (SELECT 1 FROM work_order_service_sheets s
                          WHERE s.work_order_asset_id = wa.id)
-      ORDER BY wa.id ASC`,[b]);if(0===c.length)return{raised:0,skipped_no_template:0,skipped_assets:[]};let d=c.map(a=>Number(a.asset_id)),e=await j(a,d),g=new Map;for(let a of e)g.set(Number(a.asset_id),a);let h=await a("SELECT work_order_no FROM work_orders WHERE id = ? LIMIT 1",[b]),i=String(h[0]?.work_order_no||""),m=Array.from(new Set(e.map(a=>a.template_id).filter(a=>null!==a)));if(0===m.length)return{raised:0,skipped_no_template:c.length,skipped_assets:c.map(a=>g.get(Number(a.asset_id))?.asset_no||String(a.asset_id)).slice(0,12)};let n=m.map(()=>"?").join(", "),o=await a(`SELECT template_id, label, field_key, input_type, autofill_from, is_required, sort_order
+      ORDER BY wa.id ASC`,[b]);if(0===c.length)return[];let d=await j(a,c.map(a=>Number(a.asset_id))),e=new Map;for(let a of d)e.set(Number(a.asset_id),a);return c.map(a=>{let b=e.get(Number(a.asset_id));return{work_order_asset_id:Number(a.id),asset_id:Number(a.asset_id),asset_no:b?.asset_no||String(a.asset_id),asset_name:b?.asset_name||"",serial_no:b?.serial_no??null,category:b?.category??null,category_id:b?.category_id??null,category_parent_id:b?.category_parent_id??null,top_category_name:b?.top_category_name??null,template_id:b?.template_id??null,template_name:b?.template_name??null,form_title:b?.form_title??null}})}async function n(a,b){let c=await m(a,b);if(0===c.length)return{raised:0,skipped_no_template:0,skipped_assets:[]};let d=c.map(a=>a.asset_id),e=await a("SELECT work_order_no FROM work_orders WHERE id = ? LIMIT 1",[b]),g=String(e[0]?.work_order_no||""),h=Array.from(new Set(c.map(a=>a.template_id).filter(a=>null!==a)));if(0===h.length)return{raised:0,skipped_no_template:c.length,skipped_assets:c.map(a=>a.asset_no).slice(0,12)};let i=h.map(()=>"?").join(", "),j=await a(`SELECT template_id, label, field_key, input_type, autofill_from, is_required, sort_order
        FROM work_order_form_fields
-      WHERE template_id IN (${n})
-      ORDER BY template_id ASC, sort_order ASC, id ASC`,m),p=await a(`SELECT g.template_id, g.title AS group_title, g.sort_order AS group_sort,
+      WHERE template_id IN (${i})
+      ORDER BY template_id ASC, sort_order ASC, id ASC`,h),n=await a(`SELECT g.template_id, g.title AS group_title, g.sort_order AS group_sort,
             i.title, i.notes, i.is_required, i.sort_order
        FROM work_order_form_items i
        JOIN work_order_form_groups g ON g.id = i.group_id
-      WHERE g.template_id IN (${n})
-      ORDER BY g.template_id ASC, g.sort_order ASC, i.sort_order ASC, i.id ASC`,m),q=Array.from(new Set(o.map(a=>a.autofill_from).filter(f))),r=new Map;{let b=["id",...q.filter(a=>"id"!==a)].map(a=>`\`${a}\``).join(", "),c=d.map(()=>"?").join(", ");for(let e of(await a(`SELECT ${b} FROM assets WHERE id IN (${c})`,d)))r.set(Number(e.id),e)}let s=await l(),t=0,u=[];for(let d of c){let c=g.get(Number(d.asset_id));if(!c||null===c.template_id){u.push(c?.asset_no||String(d.asset_id));continue}let e=r.get(Number(d.asset_id))||{},h=o.filter(a=>Number(a.template_id)===Number(c.template_id)).map((a,b)=>{let c=f(a.autofill_from)?a.autofill_from:null;return{label:a.label,field_key:a.field_key,input_type:a.input_type,source_column:c,is_required:+!!Number(a.is_required),sort_order:Number(a.sort_order)||b+1,value:null===c?null:function(a){if(null==a)return null;if(a instanceof Date){let b=a=>String(a).padStart(2,"0");return`${a.getFullYear()}-${b(a.getMonth()+1)}-${b(a.getDate())}`}let b=String(a).trim();return 0===b.length?null:b.slice(0,500)}(e[c])}}),j=p.filter(a=>Number(a.template_id)===Number(c.template_id)).map((a,b)=>({group_title:a.group_title,group_sort:Number(a.group_sort)||1,title:a.title,notes:a.notes,is_required:+!!Number(a.is_required),sort_order:Number(a.sort_order)||b+1})),l=0,m=null;for(let e=0;e<5&&0===l;e+=1){let e=await k(a,s);try{let f=await a(`INSERT INTO work_order_service_sheets
+      WHERE g.template_id IN (${i})
+      ORDER BY g.template_id ASC, g.sort_order ASC, i.sort_order ASC, i.id ASC`,h),o=Array.from(new Set(j.map(a=>a.autofill_from).filter(f))),p=new Map;{let b=["id",...o.filter(a=>"id"!==a)].map(a=>`\`${a}\``).join(", "),c=d.map(()=>"?").join(", ");for(let e of(await a(`SELECT ${b} FROM assets WHERE id IN (${c})`,d)))p.set(Number(e.id),e)}let q=await l(),r=0,s=[];for(let d of c){if(null===d.template_id){s.push(d.asset_no);continue}let c=p.get(d.asset_id)||{},e=j.filter(a=>Number(a.template_id)===Number(d.template_id)).map((a,b)=>{let d=f(a.autofill_from)?a.autofill_from:null;return{label:a.label,field_key:a.field_key,input_type:a.input_type,source_column:d,is_required:+!!Number(a.is_required),sort_order:Number(a.sort_order)||b+1,value:null===d?null:function(a){if(null==a)return null;if(a instanceof Date){let b=a=>String(a).padStart(2,"0");return`${a.getFullYear()}-${b(a.getMonth()+1)}-${b(a.getDate())}`}let b=String(a).trim();return 0===b.length?null:b.slice(0,500)}(c[d])}}),h=n.filter(a=>Number(a.template_id)===Number(d.template_id)).map((a,b)=>({group_title:a.group_title,group_sort:Number(a.group_sort)||1,title:a.title,notes:a.notes,is_required:+!!Number(a.is_required),sort_order:Number(a.sort_order)||b+1})),i=0,l=null;for(let c=0;c<5&&0===i;c+=1){let c=await k(a,q);try{let e=await a(`INSERT INTO work_order_service_sheets
              (work_order_asset_id, work_order_id, asset_id, template_id, form_no,
               template_name, form_title, category_name,
               asset_no, asset_name, serial_no, work_order_no)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,[d.id,b,d.asset_id,c.template_id,e,c.template_name||"",c.form_title||"",c.top_category_name,c.asset_no,c.asset_name,c.serial_no,i]);l=Number(f?.insertId||0)}catch(a){if(m=a,a?.code!=="ER_DUP_ENTRY"||!String(a.sqlMessage||"").includes("uq_woss_form_no"))throw a}}if(0===l)throw m instanceof Error?m:Error("Could not allocate a service sheet number.");if(h.length>0){let b=h.map(()=>"(?, ?, ?, ?, ?, ?, ?, ?)").join(", "),c=[];for(let a of h)c.push(l,a.label,a.field_key,a.input_type,a.source_column,a.is_required,a.sort_order,a.value);await a(`INSERT INTO work_order_sheet_fields
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,[d.work_order_asset_id,b,d.asset_id,d.template_id,c,d.template_name||"",d.form_title||"",d.top_category_name,d.asset_no,d.asset_name,d.serial_no,g]);i=Number(e?.insertId||0)}catch(a){if(l=a,a?.code!=="ER_DUP_ENTRY"||!String(a.sqlMessage||"").includes("uq_woss_form_no"))throw a}}if(0===i)throw l instanceof Error?l:Error("Could not allocate a service sheet number.");if(e.length>0){let b=e.map(()=>"(?, ?, ?, ?, ?, ?, ?, ?)").join(", "),c=[];for(let a of e)c.push(i,a.label,a.field_key,a.input_type,a.source_column,a.is_required,a.sort_order,a.value);await a(`INSERT INTO work_order_sheet_fields
            (sheet_id, label, field_key, input_type, source_column, is_required, sort_order, value)
-         VALUES ${b}`,c)}if(j.length>0){let b=j.map(()=>"(?, ?, ?, ?, ?, ?, ?)").join(", "),c=[];for(let a of j)c.push(l,a.group_title,a.group_sort,a.title,a.notes,a.is_required,a.sort_order);await a(`INSERT INTO work_order_sheet_items
+         VALUES ${b}`,c)}if(h.length>0){let b=h.map(()=>"(?, ?, ?, ?, ?, ?, ?)").join(", "),c=[];for(let a of h)c.push(i,a.group_title,a.group_sort,a.title,a.notes,a.is_required,a.sort_order);await a(`INSERT INTO work_order_sheet_items
            (sheet_id, group_title, group_sort, title, notes, is_required, sort_order)
-         VALUES ${b}`,c)}t+=1}return{raised:t,skipped_no_template:u.length,skipped_assets:u.slice(0,12)}}function n(a){if(null===a)return"";let b=[];if(a.raised>0&&b.push(`${a.raised} service sheet${1===a.raised?"":"s"} raised.`),a.skipped_no_template>0){let c=a.skipped_assets.join(", ");b.push(`${a.skipped_no_template} asset${1===a.skipped_no_template?"":"s"} got no sheet because that device category has no active service form${c?`: ${c}`:""}${a.skipped_no_template>a.skipped_assets.length?", and others":""}.`)}return b.length>0?` ${b.join(" ")}`:""}async function o(a,b,c){let d=c.length>0?c.map(()=>"?").join(", "):null;return await a(`SELECT s.form_no, s.asset_no
+         VALUES ${b}`,c)}r+=1}return{raised:r,skipped_no_template:s.length,skipped_assets:s.slice(0,12)}}function o(a){if(null===a)return"";let b=[];if(a.raised>0&&b.push(`${a.raised} service sheet${1===a.raised?"":"s"} raised.`),a.skipped_no_template>0){let c=a.skipped_assets.join(", ");b.push(`${a.skipped_no_template} asset${1===a.skipped_no_template?"":"s"} got no sheet because that device category has no active service form${c?`: ${c}`:""}${a.skipped_no_template>a.skipped_assets.length?", and others":""}.`)}return b.length>0?` ${b.join(" ")}`:""}async function p(a,b,c){let d=c.length>0?c.map(()=>"?").join(", "):null;return await a(`SELECT s.form_no, s.asset_no
        FROM work_order_service_sheets s
       WHERE s.work_order_id = ?
         AND s.submitted_at IS NOT NULL
         ${null===d?"":`AND s.asset_id NOT IN (${d})`}
-      ORDER BY s.form_no ASC`,[b,...c])}async function p(a){let b=(await (0,d.P)(`SELECT COUNT(*)                                AS total,
+      ORDER BY s.form_no ASC`,[b,...c])}async function q(a){let b=(await (0,d.P)(`SELECT COUNT(*)                                AS total,
             SUM(submitted_at IS NOT NULL)           AS submitted,
             SUM(not_required_at IS NOT NULL)        AS not_required
-       FROM work_order_service_sheets WHERE work_order_id = ?`,[a]))[0]||{},c=Number(b.total||0),e=Number(b.submitted||0),f=Number(b.not_required||0);return{total:c,submitted:e,not_required:f,outstanding:c-e-f}}let q=`SELECT s.id, s.work_order_asset_id, s.asset_id, s.form_no,
+       FROM work_order_service_sheets WHERE work_order_id = ?`,[a]))[0]||{},c=Number(b.total||0),e=Number(b.submitted||0),f=Number(b.not_required||0);return{total:c,submitted:e,not_required:f,outstanding:c-e-f}}let r=`SELECT s.id, s.work_order_asset_id, s.asset_id, s.form_no,
               s.template_name, s.form_title, s.category_name,
               s.asset_no, s.asset_name, s.serial_no,
               DATE_FORMAT(s.submitted_at, '%Y-%m-%d %H:%i')    AS submitted_at,
@@ -65,16 +65,16 @@
               (SELECT COUNT(*) FROM work_order_sheet_photos p
                 WHERE p.sheet_id = s.id AND p.kind = 'after')  AS photos_after
          FROM work_order_service_sheets s
-         LEFT JOIN employees e ON e.id = s.submitted_by_employee_id`;async function r(a){return await (0,d.P)(`${q}
+         LEFT JOIN employees e ON e.id = s.submitted_by_employee_id`;async function s(a){return await (0,d.P)(`${r}
       WHERE s.work_order_id = ?
-      ORDER BY s.form_no ASC`,[a])}async function s(a,b={fullIc:!1}){let c=await (0,d.P)(`SELECT s.id, s.work_order_asset_id, s.work_order_id, s.asset_id, s.template_id, s.form_no,
+      ORDER BY s.form_no ASC`,[a])}async function t(a,b={fullIc:!1}){let c=await (0,d.P)(`SELECT s.id, s.work_order_asset_id, s.work_order_id, s.asset_id, s.template_id, s.form_no,
             s.template_name, s.form_title, s.category_name,
             s.asset_no, s.asset_name, s.serial_no, s.work_order_no,
             DATE_FORMAT(s.commence_at,  '%Y-%m-%d %H:%i') AS commence_at,
             DATE_FORMAT(s.completed_at, '%Y-%m-%d %H:%i') AS completed_at,
             s.attended_by, s.customer_remarks, s.arrival_note, s.completion_summary, s.notes,
             s.customer_name, s.customer_designation,
-            ${t} AS customer_ic_masked,
+            ${u} AS customer_ic_masked,
             ${b.fullIc?"s.customer_ic,":""}
             (s.signature_path IS NOT NULL) AS signed,
             s.no_signature_reason,
@@ -102,6 +102,6 @@
               e.full_name AS taken_by_name
          FROM work_order_sheet_photos p
          LEFT JOIN employees e ON e.id = p.taken_by_employee_id
-        WHERE p.sheet_id = ? ORDER BY p.kind ASC, p.sort_order ASC, p.id ASC`,[a])]);return{sheet:c[0],fields:e,items:f,photos:g}}let t=`CONCAT(
+        WHERE p.sheet_id = ? ORDER BY p.kind ASC, p.sort_order ASC, p.id ASC`,[a])]);return{sheet:c[0],fields:e,items:f,photos:g}}let u=`CONCAT(
   LEFT(REPLACE(s.customer_ic, ' ', ''), 6), '-**-**',
   RIGHT(REPLACE(s.customer_ic, ' ', ''), 2))`}};
