@@ -84,15 +84,75 @@
 -- ══════════════════════════════════════════════════════════════════════════════
 --
 -- Satu jadual yang tertinggal tanpa `chk_ppr_forward` akan membenarkan SEBARANG
--- pasangan lalu — lebih buruk daripada ciri ini tidak wujud. Jadi kedua-dua belah
--- dilakukan dalam SATU pernyataan ALTER:
+-- pasangan lalu — lebih buruk daripada ciri ini tidak wujud.
 --
---   ALTER TABLE ... DROP CHECK `chk_ppr_forward`, ADD CONSTRAINT `chk_ppr_forward` CHECK (...)
+-- ── VERSI PERTAMA FAIL INI GAGAL DI PRODUKSI, DAN INILAH SEBABNYA ──
 --
--- DIUJI pada MySQL 8.0.45 atas satu jadual ujian sebelum ditulis di sini: satu ALTER
--- menerima gugur-dan-tambah nama yang SAMA, dan DDL InnoDB 8.0 bersifat atomik — jadi
--- tiada tetingkap di mana jadual itu tidak berkekangan. Dua pernyataan berasingan ADA
--- tetingkap itu, dan separuh kedua yang gagal meninggalkan jadual terbuka.
+-- Ia melakukan kedua-dua belah dalam SATU pernyataan ALTER, dengan sintaks
+-- `DROP CHECK`. Produksi menjawab:
+--
+--   ER_PARSE_ERROR: ... check the manual that corresponds to your MariaDB server
+--   version for the right syntax to use near 'CHECK `chk_ppr_forward`, ADD ...'
+--
+-- `ALTER TABLE ... DROP CHECK <nama>` ialah sintaks MySQL SAHAJA. Produksi ialah
+-- MariaDB 11.4.13 — direkodkan dalam `tests/sql/sql-portability.test.js` — dan
+-- MariaDB tidak mengenal `DROP CHECK` sama sekali. Yang diterima oleh KEDUA-DUA
+-- enjin ialah `DROP CONSTRAINT`:
+--
+--   MySQL     8.0.19+   ALTER TABLE menerima `DROP CONSTRAINT <simbol>` untuk
+--                       sebarang jenis kekangan, termasuk CHECK (WL#12798).
+--   MariaDB   10.2+     `DROP CONSTRAINT <nama>` ialah satu-satunya bentuk.
+--
+-- `IF EXISTS` TIDAK dipakai selepas `DROP CONSTRAINT`: MariaDB menerimanya, MySQL
+-- tidak. Pengawal `information_schema` di bawah melakukan kerja yang sama dan
+-- berjalan pada kedua-dua enjin.
+--
+-- Kegagalan itu meninggalkan keadaan yang LEBIH BURUK daripada migrasi yang tidak
+-- pernah dijalankan: ENUM `action` SUDAH mendapat ''revert'' (pernyataan #5 berjaya)
+-- tetapi klausa CHECK TIDAK (pernyataan #9 gagal). Jadi aplikasi menghantar
+-- `action = 'revert'` dan pangkalan data menolaknya. Dua belah tidak bersetuju.
+--
+-- ── EMPAT ALTER BERPENGAWAL, DAN JADUAL TIDAK PERNAH TANPA KEKANGAN ──
+--
+-- Satu ALTER yang membawa `DROP CONSTRAINT x, ADD CONSTRAINT x` TIDAK dipakai,
+-- kerana kelakuan itu tidak dapat disahkan pada MariaDB daripada dokumentasi dan
+-- mesin ini menjalankan MySQL 8.0.45 — jadi ia tidak boleh diuji sampai gagal di
+-- sini. Mengandaikan ia berfungsi ialah kesilapan yang sama yang menyebabkan
+-- kecacatan ini.
+--
+-- Jadi nama ditukar melalui satu kekangan JAMBATAN yang memegang peraturan LEBAR
+-- semasa nama itu bertukar tangan. Pada setiap saat sekurang-kurangnya SATU
+-- kekangan sedang menguatkuasakan, dan tiada satu pun daripada empat langkah
+-- bergantung pada langkah sebelumnya BERJAYA — setiap satu membaca
+-- `information_schema` semula:
+--
+--   mula    chk_ppr_forward (sempit)
+--   2a      + chk_ppr_forward_bridge (lebar)     sempit AND lebar = sempit
+--   2b      - chk_ppr_forward                    lebar, melalui jambatan
+--   2c      + chk_ppr_forward (lebar)            lebar AND lebar = lebar
+--   2d      - chk_ppr_forward_bridge             lebar, melalui namanya sendiri
+--
+-- Kegagalan di mana-mana titik meninggalkan jadual BERKEKANGAN, dan larian semula
+-- menyelesaikan apa yang tinggal. Itu termasuk keadaan separuh-terpakai di
+-- produksi: 2a menambah jambatan, 2b menggugurkan klausa sempit, 2c menambah
+-- klausa lebar di bawah nama asal, 2d mengemas. Tiada satu pun pengawal bertanya
+-- "adakah ENUM sudah lebar" atau "adakah kekangan itu ADA" — soalan yang betul
+-- ialah "adakah KLAUSA itu menyebut revert", dan itulah yang ditanya.
+--
+-- Klausa itu hidup dalam SATU pemboleh ubah, `@ppr_rule`, kerana 2a dan 2c
+-- memerlukan teks yang sama. Dua salinan bermakna dua tempat untuk satu pasangan
+-- tercicir.
+--
+-- ── MENAMBAH CHECK PADA JADUAL YANG SUDAH ADA BARIS ──
+--
+-- Klausa lebar ialah SUPERSET klausa sempit: ia menambah cabang ''revert'' dan
+-- tidak mengubah apa-apa dalam cabang ''advance'' atau ''complete''. Jadi setiap
+-- baris yang memenuhi klausa sempit memenuhi klausa lebar, dan 2a tidak boleh
+-- gagal atas baris yang sudah ada. Produksi memegang 2 baris pending; pembangunan
+-- 13 baris merentas 5 pasangan ke hadapan. Kalau satu baris PERNAH gagal di sini,
+-- ALTER itu ditolak dengan ER_CHECK_CONSTRAINT_VIOLATED dan jadual kekal dengan
+-- klausa sempitnya — migrasi berhenti, tiada apa yang rosak, dan baris yang
+-- menyalahi itu mesti diperiksa dengan tangan sebelum mencuba lagi.
 --
 -- ── NAMANYA KEKAL `chk_ppr_forward`, DAN ITU BUKAN KEMALASAN ──
 --
@@ -158,32 +218,9 @@ DEALLOCATE PREPARE s
 
 -- >>>
 -- ══════════════════════════════════════════════════════════════════════════════
--- 2. `chk_ppr_forward` DIGANTIKAN DALAM SATU ALTER
+-- 2. `chk_ppr_forward` DILEBARKAN MELALUI SATU KEKANGAN JAMBATAN
 -- ══════════════════════════════════════════════════════════════════════════════
 --
--- Dua pengawal dibaca, bukan satu:
---
---   @ppr_chk_wide     klausa sudah menyebut ''revert''  -> tiada apa dibuat
---   @ppr_chk_present  nama itu ada                      -> GUGUR dahulu, dalam ALTER yang sama
---
--- Pengawal kedua itu penting. Tanpa ia, satu pangkalan data yang entah bagaimana
--- kehilangan kekangan itu akan dapat `ER_CANT_DROP_FIELD_OR_KEY` dan ALTER penuh
--- gagal — jadi lajur `action` dilebarkan dan TIADA kekangan dicipta. Itu keadaan
--- paling buruk yang fail ini wujud untuk mengelak.
-SET @ppr_chk_present := (
-  SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
-   WHERE CONSTRAINT_SCHEMA = DATABASE() AND TABLE_NAME = 'project_phase_requests'
-     AND CONSTRAINT_NAME = 'chk_ppr_forward'
-)
-
--- >>>
-SET @ppr_chk_wide := (
-  SELECT COUNT(*) FROM information_schema.CHECK_CONSTRAINTS
-   WHERE CONSTRAINT_SCHEMA = DATABASE() AND CONSTRAINT_NAME = 'chk_ppr_forward'
-     AND CHECK_CLAUSE LIKE '%revert%'
-)
-
--- >>>
 -- Kesepuluh pasangan DISENARAIKAN dan bukan dikira dengan `FIELD()`, atas sebab
 -- `project_phase_approval.sql` sendiri rekodkan: aritmetik atas kedudukan ENUM
 -- memaksa pembaca mempercayai urutan pengisytiharan, dan menyusun semula ENUM itu
@@ -193,12 +230,10 @@ SET @ppr_chk_wide := (
 -- peraturannya. `tests/sql/project-phase-approval.test.js` MENCUBA pasangan itu dan
 -- mengesahkan ia masih ditolak — satu klausa yang dibaca bukan satu klausa yang
 -- diuji.
-SET @sql := IF(@ppr_chk_wide = 1, 'DO 0',
-  CONCAT(
-    IF(@ppr_chk_present = 1,
-      'ALTER TABLE `project_phase_requests` DROP CHECK `chk_ppr_forward`, ADD CONSTRAINT ',
-      'ALTER TABLE `project_phase_requests` ADD CONSTRAINT '),
-    '`chk_ppr_forward` CHECK (
+--
+-- SATU salinan teks, dipakai oleh 2a dan 2c. Lihat tajuk: dua salinan ialah dua
+-- tempat untuk satu pasangan tercicir.
+SET @ppr_rule := '(
        (`action` = ''advance'' AND (
             (`from_phase` = ''initiation'' AND `to_phase` = ''planning'')
          OR (`from_phase` = ''planning''   AND `to_phase` = ''executing'')
@@ -213,7 +248,150 @@ SET @sql := IF(@ppr_chk_wide = 1, 'DO 0',
          OR (`from_phase` = ''closing''    AND `to_phase` = ''monitoring'')
          OR (`from_phase` = ''closing''    AND `to_phase` = ''closing'')
        ))
-     )'))
+     )'
+
+-- >>>
+-- ── 2a. Jambatan dinaikkan, memegang peraturan LEBAR ──
+--
+-- Pengawalnya ialah KLAUSA dan bukan kewujudan: `@ppr_fwd_wide` bertanya sama ada
+-- `chk_ppr_forward` sudah menyebut ''revert''. Satu pengawal atas kewujudan sahaja
+-- akan dipenuhi oleh klausa SEMPIT yang masih terpasang di produksi, dan memutuskan
+-- tiada apa perlu dibuat — meninggalkan pelayan rosak selama-lamanya. Itulah
+-- soalan yang salah, dan ia soalan yang mudah ditanya tanpa sengaja.
+SET @ppr_fwd_wide := (
+  SELECT COUNT(*) FROM information_schema.CHECK_CONSTRAINTS
+   WHERE CONSTRAINT_SCHEMA = DATABASE() AND CONSTRAINT_NAME = 'chk_ppr_forward'
+     AND CHECK_CLAUSE LIKE '%revert%'
+)
+
+-- >>>
+-- `TABLE_CONSTRAINTS` dan bukan `CHECK_CONSTRAINTS` untuk soalan kewujudan: versi
+-- MySQL bagi `CHECK_CONSTRAINTS` tiada lajur `TABLE_NAME`, jadi menapis atas nama
+-- jadual di situ ialah ralat pada satu enjin daripada dua. `CHECK_CONSTRAINTS`
+-- dipakai HANYA untuk `CHECK_CLAUSE`, yang hanya ada di situ, dan ditapis atas
+-- skema + nama kekangan sahaja.
+SET @ppr_bridge := (
+  SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+   WHERE CONSTRAINT_SCHEMA = DATABASE() AND TABLE_NAME = 'project_phase_requests'
+     AND CONSTRAINT_NAME = 'chk_ppr_forward_bridge'
+)
+
+-- >>>
+SET @sql := IF(@ppr_fwd_wide = 0 AND @ppr_bridge = 0,
+  CONCAT('ALTER TABLE `project_phase_requests` ',
+         'ADD CONSTRAINT `chk_ppr_forward_bridge` CHECK ', @ppr_rule),
+  'DO 0')
+
+-- >>>
+PREPARE s FROM @sql
+
+-- >>>
+EXECUTE s
+
+-- >>>
+DEALLOCATE PREPARE s
+
+-- >>>
+-- ── 2b. Klausa sempit digugurkan, dengan jambatan memegang peraturan ──
+--
+-- Setiap pengawal DIBACA SEMULA di sini. Ia tidak boleh diwarisi daripada 2a:
+-- kalau 2a tidak berjaya, jambatan tidak ada, dan menggugurkan `chk_ppr_forward`
+-- ketika itu meninggalkan jadual TANPA kekangan — perkara tunggal yang keseluruhan
+-- fail ini wujud untuk mengelak. Jadi `@ppr_bridge = 1` ialah syarat pertama.
+SET @ppr_bridge := (
+  SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+   WHERE CONSTRAINT_SCHEMA = DATABASE() AND TABLE_NAME = 'project_phase_requests'
+     AND CONSTRAINT_NAME = 'chk_ppr_forward_bridge'
+)
+
+-- >>>
+SET @ppr_fwd_any := (
+  SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+   WHERE CONSTRAINT_SCHEMA = DATABASE() AND TABLE_NAME = 'project_phase_requests'
+     AND CONSTRAINT_NAME = 'chk_ppr_forward'
+)
+
+-- >>>
+SET @ppr_fwd_wide := (
+  SELECT COUNT(*) FROM information_schema.CHECK_CONSTRAINTS
+   WHERE CONSTRAINT_SCHEMA = DATABASE() AND CONSTRAINT_NAME = 'chk_ppr_forward'
+     AND CHECK_CLAUSE LIKE '%revert%'
+)
+
+-- >>>
+-- `DROP CONSTRAINT`, bukan `DROP CHECK`. Lihat tajuk — `DROP CHECK` ialah sebab
+-- fail ini gagal di produksi, dan `tests/sql/sql-portability.test.js` kini
+-- mengimbas setiap fail dalam `database/` untuknya.
+SET @sql := IF(@ppr_bridge = 1 AND @ppr_fwd_any = 1 AND @ppr_fwd_wide = 0,
+  'ALTER TABLE `project_phase_requests` DROP CONSTRAINT `chk_ppr_forward`',
+  'DO 0')
+
+-- >>>
+PREPARE s FROM @sql
+
+-- >>>
+EXECUTE s
+
+-- >>>
+DEALLOCATE PREPARE s
+
+-- >>>
+-- ── 2c. Nama asal dikembalikan, membawa klausa lebar ──
+--
+-- Namanya kekal `chk_ppr_forward` dan itu bukan kemalasan — lihat bahagian di bawah.
+-- Pengawal: jambatan ada (peraturan sedang dikuatkuasakan) DAN nama asal tiada.
+SET @ppr_bridge := (
+  SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+   WHERE CONSTRAINT_SCHEMA = DATABASE() AND TABLE_NAME = 'project_phase_requests'
+     AND CONSTRAINT_NAME = 'chk_ppr_forward_bridge'
+)
+
+-- >>>
+SET @ppr_fwd_any := (
+  SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+   WHERE CONSTRAINT_SCHEMA = DATABASE() AND TABLE_NAME = 'project_phase_requests'
+     AND CONSTRAINT_NAME = 'chk_ppr_forward'
+)
+
+-- >>>
+SET @sql := IF(@ppr_bridge = 1 AND @ppr_fwd_any = 0,
+  CONCAT('ALTER TABLE `project_phase_requests` ',
+         'ADD CONSTRAINT `chk_ppr_forward` CHECK ', @ppr_rule),
+  'DO 0')
+
+-- >>>
+PREPARE s FROM @sql
+
+-- >>>
+EXECUTE s
+
+-- >>>
+DEALLOCATE PREPARE s
+
+-- >>>
+-- ── 2d. Jambatan dibongkar ──
+--
+-- HANYA selepas `chk_ppr_forward` disahkan ADA dan LEBAR. Kalau 2c tidak berjaya,
+-- jambatan kekal dan peraturan kekal dikuatkuasakan di bawah nama lain — keadaan
+-- yang pelik untuk dibaca tetapi SELAMAT, dan larian semula membetulkannya.
+-- `bridge_left` dalam SELECT verifikasi melaporkannya supaya ia tidak senyap.
+SET @ppr_bridge := (
+  SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+   WHERE CONSTRAINT_SCHEMA = DATABASE() AND TABLE_NAME = 'project_phase_requests'
+     AND CONSTRAINT_NAME = 'chk_ppr_forward_bridge'
+)
+
+-- >>>
+SET @ppr_fwd_wide := (
+  SELECT COUNT(*) FROM information_schema.CHECK_CONSTRAINTS
+   WHERE CONSTRAINT_SCHEMA = DATABASE() AND CONSTRAINT_NAME = 'chk_ppr_forward'
+     AND CHECK_CLAUSE LIKE '%revert%'
+)
+
+-- >>>
+SET @sql := IF(@ppr_bridge = 1 AND @ppr_fwd_wide = 1,
+  'ALTER TABLE `project_phase_requests` DROP CONSTRAINT `chk_ppr_forward_bridge`',
+  'DO 0')
 
 -- >>>
 PREPARE s FROM @sql
@@ -314,14 +492,20 @@ SELECT r.`id`, p.`id`
 --
 -- Jangkaan pada pangkalan data pembangunan ketika fail ini ditulis:
 --
---   action_enum 1   fwd_chk 1   revert_clause 1   log_action 1
+--   action_enum 1   fwd_chk 1   revert_clause 1   bridge_left 0   log_action 1
 --   log_complete 22   log_revert 0   reopen_perm 1   reopen_granted 1
 --   pending_now 1
 --
 -- `fwd_chk 1` ialah baris yang MESTI dibaca setiap kali. Satu SIFAR di situ bermakna
--- gugur-dan-tambah tidak berjaya dan jadual itu kini TANPA kekangan — setiap
--- pasangan, termasuk `closing -> initiation`, akan lalu. Itu lebih buruk daripada
--- ciri ini tidak wujud.
+-- nama asal tiada. Dengan reka bentuk jambatan, `bridge_left 1` pada masa yang sama
+-- bermakna peraturan MASIH dikuatkuasakan di bawah nama lain dan larian semula akan
+-- membetulkannya. `fwd_chk 0` DAN `bridge_left 0` bersama ialah satu-satunya
+-- bacaan yang bermakna jadual itu TANPA kekangan — setiap pasangan, termasuk
+-- `closing -> initiation`, akan lalu. Itu lebih buruk daripada ciri ini tidak wujud.
+--
+-- `revert_clause 1` ialah baris yang membuktikan pembaikan. Produksi melaporkan
+-- `action_enum 1  fwd_chk 1  revert_clause 0` — ENUM lebar, klausa sempit, dua belah
+-- tidak bersetuju. Selepas fail ini dijalankan semula ia mesti membaca 1.
 --
 -- `log_complete 22` ialah penamaan semula di bahagian 3a. Pada larian kedua ia kekal
 -- 22, yang membuktikan UPDATE itu idempotent.
@@ -348,6 +532,9 @@ SELECT
   (SELECT COUNT(*) FROM information_schema.CHECK_CONSTRAINTS
     WHERE CONSTRAINT_SCHEMA = DATABASE() AND CONSTRAINT_NAME = 'chk_ppr_forward'
       AND CHECK_CLAUSE LIKE '%revert%')                                        AS revert_clause,
+  (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+    WHERE CONSTRAINT_SCHEMA = DATABASE() AND TABLE_NAME = 'project_phase_requests'
+      AND CONSTRAINT_NAME = 'chk_ppr_forward_bridge')                          AS bridge_left,
   (SELECT COUNT(*) FROM information_schema.COLUMNS
     WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'project_phase_log'
       AND COLUMN_NAME = 'action' AND COLUMN_TYPE LIKE '%revert%')              AS log_action,

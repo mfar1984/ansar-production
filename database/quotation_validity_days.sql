@@ -77,6 +77,28 @@
 
 -- >>>
 -- ── 1. The months CHECK goes first, because it constrains the column below it ──
+--
+-- `DROP CONSTRAINT`, not `DROP CHECK`. `DROP CHECK` is MySQL-only syntax and production is
+-- MariaDB 11.4.13, recorded in `tests/sql/sql-portability.test.js`. MariaDB answers
+-- ER_PARSE_ERROR — measured, not theorised: the same shape in
+-- `database/project_phase_reversal.sql` failed on the live server and left that migration
+-- half applied.
+--
+-- `DROP CONSTRAINT <symbol>` is accepted by MySQL 8.0.19+ (WL#12798) and by MariaDB 10.2+,
+-- so it is the one form both engines take. `IF EXISTS` after it is MariaDB-only and is NOT
+-- used; the `EXISTS` guard below does that job on both.
+--
+-- ── NOTHING IS LEFT UNCONSTRAINED HERE, AND THAT IS NOT LUCK ──
+--
+-- Unlike the two status CHECKs in `bank_voucher_fields.sql`, this constraint is not being
+-- REPLACED — it and the column it guards are both being removed, in this statement and the
+-- next. There is no window to protect because there is nothing left to protect: step 2 drops
+-- `valid_months` itself.
+--
+-- The two steps are nonetheless ordered and separately guarded, because the order is forced:
+-- a column named by a CHECK cannot be dropped while the CHECK exists. If this statement had
+-- failed, step 2 would have failed too and `valid_months` would have survived beside
+-- `valid_days` — the divergence this syntax fix closes.
 SET @sql := (
   SELECT IF(
     EXISTS (
@@ -84,7 +106,7 @@ SET @sql := (
        WHERE CONSTRAINT_SCHEMA = DATABASE() AND TABLE_NAME = 'sales_quotations'
          AND CONSTRAINT_NAME = 'ck_sq_valid_months' AND CONSTRAINT_TYPE = 'CHECK'
     ),
-    'ALTER TABLE `sales_quotations` DROP CHECK `ck_sq_valid_months`',
+    'ALTER TABLE `sales_quotations` DROP CONSTRAINT `ck_sq_valid_months`',
     'SELECT ''ck_sq_valid_months is not there'' AS note'
   )
 )
